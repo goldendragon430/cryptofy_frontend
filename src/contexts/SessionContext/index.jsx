@@ -27,10 +27,25 @@ export const AuthProvider = ({ children }) => {
     }
     return true;
   };
+  const isAdmin = () => {
+    if (user) {
+      if (!user.token || user.role == 1) return false;
+    } else {
+      const data = checkLocalStorage();
+      if (data) {
+        if (data['role'] == 0)
+            return true
+      }
+      return false;
+    }
+    return true;
+  };
+
   const functions = {
     login,
     logout,
     isAuthed,
+    isAdmin
   };
 
   useEffect(() => {

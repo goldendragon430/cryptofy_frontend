@@ -24,6 +24,7 @@ import { FaQuestionCircle } from "react-icons/fa";
 import { RiFolderWarningLine } from "react-icons/ri";
 import { GiCircleClaws } from "react-icons/gi";
 import { TiMessages } from "react-icons/ti";
+import {useAuth} from '../../contexts/SessionContext'
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -97,7 +98,6 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Dashboard() {
   const [open, setOpen] = useState(true);
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };

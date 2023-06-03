@@ -14,7 +14,7 @@ import Terms from "./components/Terms";
 import Contacts from "./components/Contacts";
 import Pricing from "./components/Pricing";
 import { ToastContainer } from "react-toastify";
-import { ProtectedRoute } from './utils';
+import { ProtectedRoute, AdminRoute } from './utils';
 import "react-toastify/dist/ReactToastify.css";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import UsersTable from "./components/admin/UsersTable";
@@ -40,7 +40,7 @@ const App = () => {
           <Route path="/terms" element={<Terms />} />
           <Route path="/contacts" element={<Contacts />} />
         </Route>
-        <Route path="admin" element={<AdminDashboard />}>
+        <Route path="admin" element={<AdminRoute children={<AdminDashboard />} />}>
           <Route path="" element={<UsersTable />} />
           <Route path="management" element={<Management />} />
         </Route>
