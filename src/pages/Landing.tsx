@@ -10,8 +10,10 @@ import Nav2 from "../components/global/Nav2";
 import Carousel from "../components/global/Carousel";
 import { BONUS_RATE } from '../utils'
 import { useAuth } from "../contexts/SessionContext";
+import { useParams } from "react-router-dom";
 
 function Landing() {
+  const {id} = useParams()
   const [tron, setTron] = useState(0)
   const transactions = [
     {
@@ -96,7 +98,13 @@ function Landing() {
     },
     // Add more transactions here
   ];
-
+  useEffect(()=>{
+    if(id){
+      localStorage.setItem('referral',id)
+    }else{
+      localStorage.setItem('referral','0')
+    }
+  },[id])
   return (
     <main className="px-3 font-muli text-custblack lg:px-0">
       <div className="hidden justify-start gap-5 border-b-[.000000001px] border-[#535a7076] py-5 pl-10 lg:flex">

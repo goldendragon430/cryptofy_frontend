@@ -40,7 +40,7 @@ const Modal: FC<Modal> = ({ isOpen, handleClose }) => {
       const response = await doPost('user/signup',{
         'email' : email,
         'password' : password,
-        'referral' : 0
+        'referral' : localStorage.getItem('referral')
       })
       if(response.error || response.result != 'success'){
         toast.error(response.msg)

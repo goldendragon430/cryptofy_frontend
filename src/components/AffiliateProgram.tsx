@@ -6,19 +6,67 @@ import Example from "./DepTabs";
 import { BiWallet } from "react-icons/bi";
 import { useAuth } from "../contexts/SessionContext";
 import {DOMAIN_URL} from '../config'
-
-
+import { useAuth } from "../contexts/SessionContext";
+import { useApi } from "../contexts/ApiContext";
+import {toast} from 'react-toastify'
 const AffiliteProgram: React.FC = () => {
 
   const [user,] = useAuth()
   const user_id = user?.id
   const [userid,setUserID] = useState(0)
-  
+  const [{doPost}] = useApi()
+  const token = user?.token
+  const [commissions,setCommissions] = useState([0,0,0,0])  
+  const [transactions,setTransactions] = useState([[],[],[]])
   useEffect(()=>{
     if(user_id){
         setUserID(user_id)
     }
   },[user_id])
+
+  const getAffiliate = async()=>{
+    const response = await doPost('reward/get_affiliate',{
+      token : token,
+    })
+    if(response.error || response.result == 'failed') {
+
+    }
+    else{
+      const result = response['data']
+      var total = 0
+      var data = [0,0,0,0]
+      for(var i = 0; i < result.length ;i ++ ){
+        data[i] = result[i]['count']  
+        total += result[i]['total']
+      }
+      data[3] = total
+      setCommissions(data)
+    }
+  }
+  const getAffiliateTransaction = async()=>{
+    const response = await doPost('reward/get_aff_transactions',{
+      token : token,
+    })
+    if(response.error || response.result == 'failed') {
+
+    }
+    else{
+     const result = response['data']
+     setTransactions(result)
+    }
+  }
+
+  useEffect(()=>{
+    if(token)
+    {
+      getAffiliate()
+      getAffiliateTransaction()
+    }
+  },[token])
+
+
+
+
 
   return (
     <div className="flex h-full w-[75%] flex-col items-center justify-center gap-8 py-[2rem] pt-[8rem]">
@@ -30,11 +78,11 @@ const AffiliteProgram: React.FC = () => {
           <div className="flex flex-col gap-2 lg:grid lg:grid-cols-4">
             <div className="box-2 flex w-full items-center justify-between rounded-lg bg-cblack p-3">
               <div>
-                <span className="text-sm font-light text-gray-500">
+                <span className="text-sm font-light text-white">
                   Level I affiliates
                 </span>
-                <h1 className="text-lg font-bold text-white">0</h1>
-                <span className="text-sm font-light text-gray-500">
+                <h1 className="text-lg font-bold text-white">{commissions[0]}</h1>
+                <span className="text-sm font-light text-white">
                   10% Level 1 commissions
                 </span>
               </div>
@@ -44,11 +92,11 @@ const AffiliteProgram: React.FC = () => {
             </div>
             <div className="box-2 flex w-full items-center justify-between rounded-lg bg-cblack p-3">
               <div>
-                <span className="text-sm font-light text-gray-500">
+                <span className="text-sm font-light text-white">
                   Level II affiliates
                 </span>
-                <h1 className="text-lg font-bold text-white">0</h1>
-                <span className="text-sm font-light text-gray-500">
+                <h1 className="text-lg font-bold text-white">{commissions[1]}</h1>
+                <span className="text-sm font-light text-white">
                   5% Level 1 commissions
                 </span>
               </div>
@@ -58,11 +106,11 @@ const AffiliteProgram: React.FC = () => {
             </div>
             <div className="box-2 flex w-full items-center justify-between rounded-lg bg-cblack p-3">
               <div>
-                <span className="text-sm font-light text-gray-500">
+                <span className="text-sm font-light text-white">
                   Level III affiliates
                 </span>
-                <h1 className="text-lg font-bold text-white">0</h1>
-                <span className="text-sm font-light text-gray-500">
+                <h1 className="text-lg font-bold text-white">{commissions[2]}</h1>
+                <span className="text-sm font-light text-white">
                   1% Level 1 commissions
                 </span>
               </div>
@@ -72,11 +120,11 @@ const AffiliteProgram: React.FC = () => {
             </div>
             <div className="box-2 flex w-full items-center justify-between rounded-lg bg-cblack p-3">
               <div>
-                <span className="text-sm font-light text-gray-500">
+                <span className="text-sm font-light text-white">
                   Power bonus received
                 </span>
-                <h1 className="text-lg font-bold text-white">0 GH/s</h1>
-                <span className="text-sm font-light text-gray-500">
+                <h1 className="text-lg font-bold text-white">{commissions[3]} GH/s</h1>
+                <span className="text-sm font-light text-white">
                   Read more in the FAQ
                 </span>
               </div>
@@ -99,9 +147,9 @@ const AffiliteProgram: React.FC = () => {
             <div className="flex w-[80%] flex-col justify-center gap-2 pl-4 text-white">
               <h1 className="text-lg font-bold">Affiliate bonuses</h1>
               <p className="text-sm">
-                Get 1 GH/s for each registration of a new referral and 3 GH/s
-                for each new deposit of referrals of the first levels, 2 GH/s
-                for each new deposit of referrals of the second level and 1 GH/s
+                Get 1 GH/s for each registration of a new referral and 10% 
+                for each new deposit of referrals of the first levels, 5%
+                for each new deposit of referrals of the second level and 1%
                 for each new deposit of referrals of the third level
               </p>
             </div>
@@ -125,12 +173,14 @@ const AffiliteProgram: React.FC = () => {
               <div className="flex items-center justify-start">
                 <input
                   type="text"
-                  value = {DOMAIN_URL + userid}
+                  value = {DOMAIN_URL +'ref/'+userid}
                   placeholder="0.00"
                   readOnly
                   className="w-[95%] rounded-l-md bg-gray-600 bg-opacity-25 p-2 focus:outline focus:outline-4 focus:outline-gray-200"
                 />
-                <button className="flex h-full w-[5%] items-center justify-center rounded-r-md border-[0.1rem] border-gray-200 p-2 hover:bg-gray-300 hover:bg-opacity-25">
+                <button className="flex h-full w-[5%] items-center justify-center rounded-r-md border-[0.1rem] border-gray-200 p-2 hover:bg-gray-300 hover:bg-opacity-25"
+                 onClick = {e=>{navigator.clipboard.writeText(DOMAIN_URL +'ref/'+userid);toast.success('Copied')}}
+                >
                   <LuCopy />
                 </button>
               </div>
@@ -145,7 +195,7 @@ const AffiliteProgram: React.FC = () => {
           AFFILIATE DEPOSITS
         </span>
         <div className="w-full overflow-x-scroll border-t border-t-gray-200 pt-6">
-          <Example />
+          <Example data = {transactions} />
         </div>
       </div>
     </div>

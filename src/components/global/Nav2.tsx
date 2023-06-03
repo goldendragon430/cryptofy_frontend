@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SignUpModal from "../Register";
 import LoginModal from "../Login";
-
+import {useAuth} from '../../contexts/SessionContext'
+import { useNavigate } from "react-router-dom";
 const Nav2 = () => {
+  const [, { isAuthed }] = useAuth();
   const [isLOpen, setIsLOpen] = useState(false);
   const [isSOpen, setIsSOpen] = useState(false);
 
@@ -11,7 +13,10 @@ const Nav2 = () => {
 
   const handleSClose = () => setIsSOpen(false);
   const handleSOpen = () => setIsSOpen(true);
+  const navigate = useNavigate()
+  useEffect(()=>{
 
+  },[])
   return (
     <header className="sticky top-0 z-10 hidden w-full items-center justify-between bg-white px-10 shadow-lg lg:flex">
       <a href="#">
@@ -56,6 +61,7 @@ const Nav2 = () => {
       </nav>
       <SignUpModal isOpen={isSOpen} handleClose={handleSClose} />
       <LoginModal isOpen={isLOpen} handleClose={handleLClose} />
+      {isAuthed() == false ? 
       <div className="flex h-fit gap-4">
         <button
           className="btn cornered-border m-3 px-8 py-4 text-white hover:bg-left"
@@ -69,7 +75,13 @@ const Nav2 = () => {
         >
          Register 
         </button>
-      </div>
+      </div>:
+      <button
+          className="btn cornered-border m-3 px-8 py-4 text-white hover:bg-left"
+          onClick={e=>navigate('/dashboard')}
+        >
+         Dashboard 
+        </button>}
     </header>
   );
 };
