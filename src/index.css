@@ -1,0 +1,121 @@
+@import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;0,1000;1,700;1,800;1,900;1,1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .cornered-border {
+    border-radius: 0 0.55rem 0 0.55rem;
+  }
+  .cornered-border-l {
+    border-radius: 0 2rem 0 2rem;
+  }
+  .cornered-border-r-b {
+    border-radius: 0 0 2rem 0;
+  }
+  .box-shadow {
+    box-shadow: 0 0 15px rgb(0 0 0 / 10%);
+  }
+  .an-animation {
+    animation: 100ms ease-in-out 0s normal none 1 running fadeInDown;
+  }
+  .bg-custom {
+    background-size: 200%;
+  }
+  .btn {
+    background-size: 200%;
+    transition: 0.6s;
+    box-shadow: 0px 7px 21px 0px rgba(245, 24, 24, 0.4);
+    background-image: linear-gradient(to left, #ff4c31, #d60939, #ff4c31);
+    background-position: right;
+  }
+  .bg-btn {
+    background-image: linear-gradient(to left, #ff4c31, #d60939, #ff4c31);
+    background-position: right;
+    background-size: 200%;
+  }
+  .bg-gradient-moonlit {
+    background: linear-gradient(to right, #2c5364, #203a43, #0f2027) !important;
+  }
+  .box-2 {
+    box-shadow: 0 0.1rem 0.7rem rgb(0 0 0 / 32%);
+  }
+
+  .bg-gradient-ibiza {
+    background: #ee0979;
+    background: -webkit-linear-gradient(45deg, #ee0979, #ff6a00) !important;
+    background: linear-gradient(45deg, #ee0979, #ff6a00) !important;
+  }
+  .form-select {
+    color: #c0c8d1;
+    background-color: #1e1e1e;
+    border: 1px solid rgb(255 255 255 / 34%);
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 0.5rem;
+    font-size: 0.875rem;
+    border-radius: 0.1rem;
+  }
+  .bg-gradient-deepblue {
+    background: #6a11cb;
+    background: -webkit-linear-gradient(45deg, #6a11cb, #2575fc) !important;
+    background: linear-gradient(45deg, #6a11cb, #2575fc) !important;
+  }
+  .btn-outline-warning {
+    color: #ffc107;
+    border-color: #ffc107;
+  }
+  .btn-outline-warning:hover {
+    color: #000;
+    background-color: #ffc107;
+    border-color: #ffc107;
+  }
+  .main {
+    width: min(100%, 90rem);
+    margin-inline: auto;
+  }
+  .bg-gradient-blues {
+    background: linear-gradient(to right, #56ccf2, #2f80ed) !important;
+  }
+  .popup-background {
+    background: rgb(70, 61, 59);
+    background: linear-gradient(
+      360deg,
+      rgba(70, 61, 59, 1) 0%,
+      rgba(231, 44, 12, 1) 100%
+    );
+  }
+  .bg-banner-2 {
+    background-image: url("https://product.geniusocean.com/invest-genius/assets/front/images/backgrounds/bg-banner.jpg");
+  }
+  .bg-img2 {
+    background-image: url("./assets/section_bg02.jpg");
+  }
+  .bg-banner-2:after {
+    left: 50%;
+    border-left: 125px solid transparent;
+  }
+  .bg-banner-2:after,
+  .bg-banner-2:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 50%;
+    z-index: 1;
+    border-bottom: 30px solid #111;
+    -moz-transform: rotate(0.000001deg);
+    -webkit-transform: rotate(0.000001deg);
+    -o-transform: rotate(0.000001deg);
+    -ms-transform: rotate(0.000001deg);
+    transform: rotate(0.000001deg);
+  }
+  .box-shadow-2 {
+    box-shadow: 0px 0px 10px 0px rgba(214, 214, 214, 0.9);
+  }
+  .bg-gradient-ohhappiness {
+    background: #00b09b;
+    background: -webkit-linear-gradient( 45deg , #00b09b, #96c93d)!important;
+    background: linear-gradient( 45deg , #00b09b, #96c93d)!important;
+}
+}
