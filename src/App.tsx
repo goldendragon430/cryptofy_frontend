@@ -25,7 +25,7 @@ const App = () => {
     <div className="h-screen w-full">
       <ToastContainer />
       <NavWrapper>
-        <Route path="/" element={<Landing />}></Route>
+        <Route path="/:id" element={<Landing />}></Route>
         <Route path="dashboard" element={<Dashboard />}>
           <Route index element={<MainDashboard />} />
           <Route path="deposit" element={<Deposit />} />
