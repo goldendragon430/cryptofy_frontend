@@ -1,6 +1,19 @@
 import { Tab } from "@headlessui/react";
 import classNames from "classnames";
-export default function Example() {
+import { useEffect, useState } from "react";
+
+export default function Example(props) {
+
+  const {data} = props
+  const [trs,setTrs] = useState(data)
+  useEffect(()=>{
+    if(data)
+      {
+        setTrs(data)
+        console.log(data)
+      }
+
+  },[data])
   return (
     <div className="box-2 w-[60rem] rounded-lg bg-cblack p-3 lg:w-full">
       <Tab.Group>
@@ -47,43 +60,85 @@ export default function Example() {
         </Tab.List>
         <Tab.Panels className="mt-2">
           <Tab.Panel className="flex w-full flex-col justify-center overflow-hidden border-b-[0.01rem] border-b-gray-500 text-white">
-            <div className="text-md flex justify-between px-10 py-5 font-bold">
-              <h1>System</h1>
-              <h1>Time</h1>
-              <h1>Deposit</h1>
-              <h1>Commission</h1>
-              <h1>Bonus</h1>
-              <h1>Comment</h1>
-            </div>
-            <div className="flex w-full items-center justify-center p-5">
-              <p>You have no transactions yet</p>
-            </div>
+            <table>
+                <thead style = {{height:50}}>
+                  <th>No</th>
+                  <th>Referral User</th>
+                  <th>Time</th>
+                  <th>Amount</th>
+                  <th>Bonus</th>
+                </thead>
+                <tbody style={{textAlign:'center'}}>
+
+                  { trs[0].map((item, i) => (
+                      <tr
+                        style = {{height:40}}
+                        key={i}
+                      >
+                        <td>{i+1}</td>
+                        <td>{item.name}</td>
+                        <td>{item.time}</td>
+                        <td>{item.amount}</td>
+                        <td>{item.bonus}</td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            { trs[0]?.length == 0 &&<p style = {{margin:30,textAlign:'center'}} >No Transactions yet.</p>}
           </Tab.Panel>
           <Tab.Panel className="flex w-full flex-col justify-center overflow-hidden border-b-[0.1rem] border-b-gray-500 text-white">
-            <div className="text-md flex justify-between px-10 py-5 font-bold">
-              <h1>System</h1>
-              <h1>Time</h1>
-              <h1>Deposit</h1>
-              <h1>Commission</h1>
-              <h1>Bonus</h1>
-              <h1>Comment</h1>
-            </div>
-            <div className="flex w-full items-center justify-center p-5">
-              <p>You have no transactions yet</p>
-            </div>
+          <table>
+                <thead style = {{height:50}}>
+                  <th>No</th>
+                  <th>Referral User</th>
+                  <th>Time</th>
+                  <th>Amount</th>
+                  <th>Bonus</th>
+                </thead>
+                <tbody style={{textAlign:'center'}}>
+
+                  { trs[1].map((item, i) => (
+                      <tr
+                        style = {{height:40}}
+                        key={i}
+                      >
+                        <td>{i+1}</td>
+                        <td>{item.name}</td>
+                        <td>{item.time}</td>
+                        <td>{item.amount}</td>
+                        <td>{item.bonus}</td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            { trs[1]?.length == 0 &&<p style = {{margin:30,textAlign:'center'}} >No Transactions yet.</p>}
           </Tab.Panel>
           <Tab.Panel className="flex w-full flex-col justify-center overflow-hidden border-b-[0.1rem] border-b-gray-500 text-white">
-            <div className="text-md flex justify-between px-10 py-5 font-bold">
-              <h1>System</h1>
-              <h1>Time</h1>
-              <h1>Deposit</h1>
-              <h1>Commission</h1>
-              <h1>Bonus</h1>
-              <h1>Comment</h1>
-            </div>
-            <div className="flex w-full items-center justify-center p-5">
-              <p>You have no transactions yet</p>
-            </div>
+          <table>
+                <thead style = {{height:50}}>
+                  <th>No</th>
+                  <th>Referral User</th>
+                  <th>Time</th>
+                  <th>Amount</th>
+                  <th>Bonus</th>
+                </thead>
+                <tbody style={{textAlign:'center'}}>
+
+                  { trs[2].map((item, i) => (
+                      <tr
+                        style = {{height:40}}
+                        key={i}
+                      >
+                        <td>{i+1}</td>
+                        <td>{item.name}</td>
+                        <td>{item.time}</td>
+                        <td>{item.amount}</td>
+                        <td>{item.bonus}</td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            { trs[0]?.length == 0 &&<p style = {{margin:30,textAlign:'center'}} >No Transactions yet.</p>}
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>

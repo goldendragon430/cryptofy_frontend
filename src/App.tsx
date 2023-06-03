@@ -14,7 +14,7 @@ import Terms from "./components/Terms";
 import Contacts from "./components/Contacts";
 import Pricing from "./components/Pricing";
 import { ToastContainer } from "react-toastify";
-
+import { ProtectedRoute } from './utils';
 import "react-toastify/dist/ReactToastify.css";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import UsersTable from "./components/admin/UsersTable";
@@ -25,8 +25,9 @@ const App = () => {
     <div className="h-screen w-full">
       <ToastContainer />
       <NavWrapper>
-        <Route path="/:id" element={<Landing />}></Route>
-        <Route path="dashboard" element={<Dashboard />}>
+        <Route path="/" element={<Landing />}></Route>
+        <Route path="ref/:id" element={<Landing />}></Route>
+        <Route path="dashboard" element={<ProtectedRoute children={<Dashboard />} />}>
           <Route index element={<MainDashboard />} />
           <Route path="deposit" element={<Deposit />} />
           <Route path="affiliate" element={<AffiliteProgram />} />
