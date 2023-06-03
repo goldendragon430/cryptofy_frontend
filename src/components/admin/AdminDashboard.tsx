@@ -15,16 +15,19 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsFillGridFill, BsPeopleFill } from "react-icons/bs";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { AiFillProfile, AiTwotoneHome } from "react-icons/ai";
 import { FaQuestionCircle } from "react-icons/fa";
 import { RiFolderWarningLine } from "react-icons/ri";
 import { GiCircleClaws } from "react-icons/gi";
 import { TiMessages } from "react-icons/ti";
-import {useAuth} from '../../contexts/SessionContext'
+import {toast} from 'react-toastify'
+import { useAuth } from "../../contexts/SessionContext";
+
+
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -98,6 +101,15 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Dashboard() {
   const [open, setOpen] = useState(true);
+  const [user,{login,logout}] = useAuth()
+  const navigate = useNavigate() 
+
+
+  const onLogout = ()=>{
+    logout()
+    navigate('/')
+  }
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -215,7 +227,7 @@ export default function Dashboard() {
             onClick={handleDrawerOpen}
             className="h-[80%] w-[10%]"
           >
-            <button className="h-full w-full rounded-bl-lg rounded-tr-lg bg-colord text-base text-white">
+            <button className="h-full w-full rounded-bl-lg rounded-tr-lg bg-colord text-base text-white" onClick = {onLogout}>
               Log out
             </button>
           </IconButton>

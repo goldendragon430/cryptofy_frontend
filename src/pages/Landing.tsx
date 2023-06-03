@@ -7,14 +7,21 @@ import {
 import React, { useEffect, useState } from "react"
 import NavBar from "../components/global/Navbar";
 import Nav2 from "../components/global/Nav2";
-import Carousel from "../components/global/Carousel";
-import { BONUS_RATE } from '../utils'
-import { useAuth } from "../contexts/SessionContext";
 import { useParams } from "react-router-dom";
+import { useAuth } from "../contexts/SessionContext";
+import { useApi } from "../contexts/ApiContext";
+import { toast } from "react-toastify";
 
 function Landing() {
   const {id} = useParams()
   const [tron, setTron] = useState(0)
+
+  const [{doPost}] = useApi()
+  const [user,] = useAuth()
+  const token = user?.token
+  const [bonus_rate,setBonusRate] = useState(1)
+
+
   const transactions = [
     {
       icon: 'path_to_tron_icon.png',
@@ -98,6 +105,23 @@ function Landing() {
     },
     // Add more transactions here
   ];
+
+  const get_config = async()=>{
+    const result = await doPost('mining/get_configuration',{
+      'token' : token
+    })
+    if(result.error||result['result'] == "failed"){
+      toast.error("Error")
+    }else{
+      const data = result['data']
+       setBonusRate(data['bonus_rate'])
+    }  
+  }
+useEffect(()=>{
+  if(token){
+    get_config()
+  }
+},[token])
   useEffect(()=>{
     if(id){
       localStorage.setItem('referral',id)
@@ -256,11 +280,11 @@ function Landing() {
             <div className="flex place-items-center gap-10">
               <div className="text-center">
                 <p className="text-sm">Power</p>
-                <p className="text-2xl ml-1">{Math.floor(BONUS_RATE * tron)} GH/s </p>
+                <p className="text-2xl ml-1">{Math.floor(bonus_rate * tron)} GH/s </p>
               </div>
               <div className="text-center">
                 <p className="text-sm">Profit</p>
-                <p className="text-2xl ml-1">{Math.floor(BONUS_RATE * tron * 3)} TRX </p>
+                <p className="text-2xl ml-1">{Math.floor(bonus_rate * tron * 3)} TRX </p>
               </div>
               <select className="form-select text-darkblue form-select-sm bg-white mx-2" aria-label=".form-select-sm example" onchange="dogePeriod(this.value)">
                 <option value="1">Per 1 day</option>

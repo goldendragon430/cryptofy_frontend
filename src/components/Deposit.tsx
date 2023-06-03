@@ -3,7 +3,6 @@ import PaymentModal from "./PaymentModal";
 import { useAuth } from "../contexts/SessionContext";
 import { useApi } from "../contexts/ApiContext";
 import { toast } from "react-toastify";
-import {BONUS_RATE} from '../utils'
 
 const Deposit: React.FC = () => {
   const [{doPost}] = useApi()
@@ -12,6 +11,7 @@ const Deposit: React.FC = () => {
   const wallet = user?.wallet
   const token = user?.token
   const [tron,setTron] = useState(0)
+  const [bonus_rate,setBonusRate] = useState(1)
   const [transactions,setTransactions] = useState([])
 
   const checkDeposite = async()=>{
@@ -28,6 +28,19 @@ const Deposit: React.FC = () => {
       }
     }
   }
+  const get_config = async()=>{
+    const result = await doPost('mining/get_configuration',{
+      'token' : token
+    })
+    if(result.error||result['result'] == "failed"){
+      toast.error("Error")
+    }else{
+      const data = result['data']
+       setBonusRate(data['bonus_rate'])
+
+      
+    }  
+  }
   const getTransaction = async()=>{
     const response = await doPost('transaction/get',{
       token : token,
@@ -42,6 +55,7 @@ const Deposit: React.FC = () => {
   }
   const refresh = ()=>{
     getTransaction()
+    get_config()
   }
   useEffect(()=>{
     if (token)
@@ -103,12 +117,12 @@ const Deposit: React.FC = () => {
                     type="number"
                     placeholder="0.00"
                     className="w-full rounded-md bg-gray-600 bg-opacity-25 p-2 focus:outline focus:outline-1 focus:outline-gray-200"
-                    value = {Math.floor(BONUS_RATE * tron)}
+                    value = {Math.floor(bonus_rate * tron)}
                   />
                 </div>
               </div>
             </div>
-            <div className="flex flex-row justify-center" style ={{margin:10}} >  <PaymentModal address = {wallet} /></div>
+            <div className="flex flex-row justify-center" style ={{margin:10}} >  <PaymentModal address = {wallet}  /></div>
           </div>
         </div>
       </div>

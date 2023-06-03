@@ -1,32 +1,49 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useState,useEffect } from "react";
 import { GrFormClose } from "react-icons/gr";
 import {TextField } from "@mui/material";
 import { toast } from 'react-toastify';
 import { useApi } from '../contexts/ApiContext';
 import { useAuth } from '../contexts/SessionContext';
-import {useState} from 'react'
-import { MIN_REINVEST_VALUE } from '../utils';
+ 
 
 export default function ReinvestModal(props) {
+ 
   const {balance,onHide} = props
   const [isOpen, setIsOpen] = useState(false);
-  const [amount,setAmount] = useState(MIN_REINVEST_VALUE)
+  const [amount,setAmount] = useState(0)
   const [{doPost}] = useApi()
   const [user,] = useAuth()
   const token = user?.token
-
+  const [min_reinvest,setMinReinvest] = useState(0)
   function closeModal() {
     setIsOpen(false);
   }
 
   function openModal() {
-    if(balance > MIN_REINVEST_VALUE)
+    if(balance > min_reinvest)
       setIsOpen(true);
     else{
       toast.info('Low Balance.')
     }
     }
+    const get_config = async()=>{
+      const result = await doPost('mining/get_configuration',{
+        'token' : token
+      })
+      if(result.error||result['result'] == "failed"){
+        toast.error("Error")
+      }else{
+        const data = result['data']
+         setMinReinvest(data['min_reinvest'])
+
+      }  
+    }
+    useEffect(()=>{
+      if(token){
+        get_config()
+      }
+    },[token])
   async function onReinvest(){
     if (amount > balance) {
       toast.error("You set amount that is bigger than current balance.")

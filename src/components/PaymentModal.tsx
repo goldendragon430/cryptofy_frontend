@@ -2,15 +2,22 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import { LuCopy } from "react-icons/lu";
 import { GrFormClose } from "react-icons/gr";
-import { MIN_DEPOSITE_VALUE } from '../utils';
-import {BONUS_RATE} from '../utils'
+
 import QRCode from 'qrcode'
 import {toast} from 'react-toastify'
+import { useAuth } from "../contexts/SessionContext";
+import { useApi } from "../contexts/ApiContext";
+import { toast } from "react-toastify";
+
 
 export default function PaymentModal(props) {
   const [isOpen, setIsOpen] = useState(false);
-  const [amount,setAmount] = useState(MIN_DEPOSITE_VALUE)
+  const [amount,setAmount] = useState(0)
   const {address} = props
+  const [{doPost}] = useApi()
+  const [user,] = useAuth()
+  const token = user?.token
+  const [bonus_rate,setBonusRate] = useState(1)
    
   const [qr, setQr] = useState('')
   const GenerateQRCode = (val) => {
@@ -36,11 +43,28 @@ export default function PaymentModal(props) {
   function openModal() {
     setIsOpen(true);
   }
+  const get_config = async()=>{
+    const result = await doPost('mining/get_configuration',{
+      'token' : token
+    })
+    if(result.error||result['result'] == "failed"){
+      toast.error("Error")
+    }else{
+      const data = result['data']
+       setBonusRate(data['bonus_rate'])    
+    }  
+  }
+
   useEffect(()=>{
     if(address)
         GenerateQRCode(address)
   },[address])
-
+  
+  useEffect(()=>{
+    if(token){
+      get_config()
+    }
+  },[token])
   return (
     <>
       <button className="bg-gradient-ibiza w-full rounded-md px-7 py-1 text-lg font-bold lg:w-auto" onClick={openModal}>
@@ -85,7 +109,7 @@ export default function PaymentModal(props) {
                   <div className="px-8 py-3 font-semibold">
 
                     <p>get power (with the current exchange rate):</p>
-                    <p className="mb-4">{Math.floor(BONUS_RATE*amount)} GH/z</p>
+                    <p className="mb-4">{Math.floor(bonus_rate*amount)} GH/z</p>
 
                     <p>Payment coin amount</p>
                     <div className="mb-4 flex w-full items-center justify-start">

@@ -1,28 +1,43 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { GrFormClose } from "react-icons/gr";
 import { useApi } from '../contexts/ApiContext';
 import { useAuth } from '../contexts/SessionContext';
 import {TextField } from "@mui/material";
-import { MIN_DEPOSITE_VALUE } from '../utils';
-import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 export default function WithdrawModal(props) {
   const [isOpen, setIsOpen] = useState(false);
   const {balance,onHide} = props
-  const [amount,setAmount] = useState(MIN_DEPOSITE_VALUE)
+  const [amount,setAmount] = useState(0)
   const [address,setAddress] = useState('')
   const [{doPost}] = useApi()
   const [user,] = useAuth()
   const token = user?.token
+  const [min_withdrawl,setMinWithdrawl] = useState(1)
 
   function closeModal() {
     setIsOpen(false);
   }
-
+  const get_config = async()=>{
+    const result = await doPost('mining/get_configuration',{
+      'token' : token
+    })
+    if(result.error||result['result'] == "failed"){
+      toast.error("Error")
+    }else{
+      const data = result['data']
+      setMinWithdrawl(data['min_withdrawl'])
+      
+    }  
+  }
+  useEffect(()=>{
+    if(token){
+      get_config()
+    }
+  },[token])
   function openModal() {
-    if(balance > MIN_DEPOSITE_VALUE)
+    if(balance > min_withdrawl)
     setIsOpen(true);
   else{
     toast.info('Low Balance.')
