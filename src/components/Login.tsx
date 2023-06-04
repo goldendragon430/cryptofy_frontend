@@ -25,7 +25,7 @@ const loginModal: FC<Modal> = ({ isOpen, handleClose }) => {
       'password' : password
     })
     if(response.error || response.result != 'success'){
-      toast.error('Failed.')
+      toast.error(response.msg)
     }
     else{
       toast.success('Success.')
@@ -35,6 +35,11 @@ const loginModal: FC<Modal> = ({ isOpen, handleClose }) => {
       navigate('/dashboard')
     }
   } 
+  const onLogin = (e)=>{
+    if(e.key == 'Enter'){
+      onClick()
+    }
+  }
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={handleClose}>
@@ -61,7 +66,7 @@ const loginModal: FC<Modal> = ({ isOpen, handleClose }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-md bg-white text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-md bg-white text-left align-middle shadow-xl transition-all" onKeyUp={onLogin}>
                 <div className="flex h-fit w-full items-center justify-between border-b border-gray-200 px-8 py-4">
                   <span className="text-xl font-bold text-cblack">Login</span>
                   <IconButton onClick={handleClose}>
