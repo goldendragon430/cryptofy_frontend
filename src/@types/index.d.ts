@@ -3,7 +3,9 @@ interface CurrencyCard {
     amount: number,
     power: number | 0,
     imgSrc: string,
-    color: string
+    color: string,
+    total: number | 0,
+    update: any
 }
 
 interface AccountCard {

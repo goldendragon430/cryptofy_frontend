@@ -11,6 +11,7 @@ import { useAuth } from "../../contexts/SessionContext";
 
 function useForceUpdate(){
   const [value, setValue] = useState(0); // integer state
+  console.log(value)
   return () => setValue(value => value + 1); // update state to force render
   // A function that increment 👆🏻 the previous state like here 
   // is better than directly setting `setValue(value + 1)`
@@ -116,9 +117,7 @@ const UsersTable = () => {
 
 
 
-  const onItemClick = (params) =>{
-    console.log(params)
-  }
+   
   const fetchData = async() =>{
     
     const response = await doPost('admin/get_user_list', {

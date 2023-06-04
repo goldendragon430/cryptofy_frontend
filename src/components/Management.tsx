@@ -134,14 +134,14 @@ const Management: React.FC = () => {
               <input
                 type="text"
                 value = {mind}
-                onChange = {e=>setMind(e.target.value)}
+                onChange = {e=>setMind(parseFloat(e.target.value))}
                 className="mb-4 w-[95%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
               />
               <p className="mb-1 text-white">Min withdrawal amount</p>
               <input
                 type="text"
                 value = {minw}
-                onChange = {e=>setMinw(e.target.value)}
+                onChange = {e=>setMinw(parseFloat(e.target.value))}
                 className="mb-4 w-[95%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
               />
 
@@ -149,7 +149,7 @@ const Management: React.FC = () => {
               <input
                 type="text"
                 value = {minr}
-                onChange = {e=>setMinr(e.target.value)}
+                onChange = {e=>setMinr(parseFloat(e.target.value))}
                 className="w-[95%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
               />
             </div>
@@ -175,14 +175,14 @@ const Management: React.FC = () => {
               <input
                 type="text"
                 value = {lev1}
-                onChange = {e=>setLev1(e.target.value)}
+                onChange = {e=>setLev1(parseFloat(e.target.value))}
                 className="mb-4 w-[95%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
               />
               <p className="mb-1 text-white">Level 2 %</p>
               <input
                 type="text"
                 value = {lev2}
-                onChange = {e=>setLev2(e.target.value)}
+                onChange = {e=>setLev2(parseFloat(e.target.value))}
                 className="mb-4 w-[95%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
               />
 
@@ -190,7 +190,7 @@ const Management: React.FC = () => {
               <input
                 type="text"
                 value = {lev3}
-                onChange = {e=>setLev3(e.target.value)}
+                onChange = {e=>setLev3(parseFloat(e.target.value))}
                 className="w-[95%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
               />
             </div>
@@ -216,7 +216,7 @@ const Management: React.FC = () => {
               <input
                 type="text"
                 value = {amount1}
-                onChange = {e=>setAmount1(e.target.value)}
+                onChange = {e=>setAmount1(parseFloat(e.target.value))}
                 className=" w-[90%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
               />
             </div>
@@ -225,7 +225,7 @@ const Management: React.FC = () => {
               <input
                 type="text"
                 value = {period1}
-                onChange = {e=>setPeriod1(e.target.value)}
+                onChange = {e=>setPeriod1(parseFloat(e.target.value))}
                 className=" w-[90%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
               />
             </div>
@@ -234,7 +234,7 @@ const Management: React.FC = () => {
               <input
                 type="text"
                 value = {bonus1}
-                onChange = {e=>setBonus1(e.target.value)}
+                onChange = {e=>setBonus1(parseFloat(e.target.value))}
                 className=" w-[90%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
               />
             </div>
@@ -258,7 +258,7 @@ const Management: React.FC = () => {
               <input
                 type="text"
                 value = {amount2}
-                onChange = {e=>setAmount2(e.target.value)}
+                onChange = {e=>setAmount2(parseFloat(e.target.value))}
                 className=" w-[90%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
               />
             </div>
@@ -267,7 +267,7 @@ const Management: React.FC = () => {
               <input
                 type="text"
                 value = {period2}
-                onChange = {e=>setPeriod2(e.target.value)}
+                onChange = {e=>setPeriod2(parseFloat(e.target.value))}
                 className=" w-[90%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
               />
             </div>
@@ -276,7 +276,7 @@ const Management: React.FC = () => {
               <input
                 type="text"
                 value = {bonus2}
-                onChange = {e=>setBonus2(e.target.value)}
+                onChange = {e=>setBonus2(parseFloat(e.target.value))}
                 className=" w-[90%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
               />
             </div>
@@ -300,7 +300,7 @@ const Management: React.FC = () => {
               <input
                 type="text"
                 value = {amount3}
-                onChange = {e=>setAmount3(e.target.value)}
+                onChange = {e=>setAmount3(parseFloat(e.target.value))}
                 className=" w-[90%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
               />
             </div>
@@ -309,7 +309,7 @@ const Management: React.FC = () => {
               <input
                 type="text"
                 value = {period3}
-                onChange = {e=>setPeriod3(e.target.value)}
+                onChange = {e=>setPeriod3(parseFloat(e.target.value))}
                 className=" w-[90%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
               />
             </div>
@@ -318,7 +318,7 @@ const Management: React.FC = () => {
               <input
                 type="text"
                 value = {bonus3}
-                onChange = {e=>setBonus3(e.target.value)}
+                onChange = {e=>setBonus3(parseFloat(e.target.value))}
                 className=" w-[90%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
               />
             </div>

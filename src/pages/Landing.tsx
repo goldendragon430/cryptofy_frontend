@@ -4,7 +4,7 @@ import {
   GrTwitter,
   GrGooglePlus,
 } from "react-icons/gr";
-import React, { useEffect, useState } from "react"
+import  { useEffect, useState } from "react"
 import NavBar from "../components/global/Navbar";
 import Nav2 from "../components/global/Nav2";
 import { useParams } from "react-router-dom";
@@ -272,7 +272,7 @@ useEffect(()=>{
                   placeholder="0.00"
                   className="w-full text-darkblue rounded-md p-2 focus:outline focus:outline-1 focus:outline-gray-100"
                   value={tron}
-                  onChange={e => setTron(e.target.value)}
+                  onChange={e => setTron(parseInt(e.target.value))}
                 />
                 <span className="text-2xl ml-1"> TRX </span>
               </div>
@@ -286,7 +286,7 @@ useEffect(()=>{
                 <p className="text-sm">Profit</p>
                 <p className="text-2xl ml-1">{Math.floor(bonus_rate * tron * 3)} TRX </p>
               </div>
-              <select className="form-select text-darkblue form-select-sm bg-white mx-2" aria-label=".form-select-sm example" onchange="dogePeriod(this.value)">
+              <select className="form-select text-darkblue form-select-sm bg-white mx-2" aria-label=".form-select-sm example">
                 <option value="1">Per 1 day</option>
                 <option value="10">Per 10 days</option>
                 <option value="30">Per 30 days</option>

@@ -133,9 +133,9 @@ function Landing() {
             and get your bitcoins today.
           </h2>
           <div className="grid grid-cols-1 gap-5 py-20 lg:grid-cols-3">
-            <PriceCard days={plan[0]['period']} min={plan[0]['amount']} perc={plan[0]['bonus']*100} plan="1" handler = {onInvest} />
-            <PriceCard days={plan[1]['period']} min={plan[1]['amount']} perc={plan[1]['bonus']*100} plan="2" handler = {onInvest}/>
-            <PriceCard days={plan[2]['period']} min={plan[2]['amount']} perc={plan[2]['bonus']*100} plan="3" handler = {onInvest}/>
+            <PriceCard days={plan[0]['period']} min={plan[0]['amount']} perc={plan[0]['bonus']*100} plan={1} handler = {onInvest} />
+            <PriceCard days={plan[1]['period']} min={plan[1]['amount']} perc={plan[1]['bonus']*100} plan={2} handler = {onInvest}/>
+            <PriceCard days={plan[2]['period']} min={plan[2]['amount']} perc={plan[2]['bonus']*100} plan={3} handler = {onInvest}/>
           </div>
         </div>
       </section>
@@ -214,9 +214,9 @@ function PriceCard({
   min,
   handler
 }: {
-  plan: string;
-  perc: string;
-  days: string;
+  plan: number;
+  perc: number;
+  days: number;
   min: number;
   handler : any
 }) {
@@ -252,11 +252,11 @@ function PriceCard({
         </div>
         <div className="flex flex-col items-end">
           <p className="font-light">get</p>
-          <h1 className="w-[80%]">{Math.floor(parseInt(perc) / 100 * value) }</h1>
+          <h1 className="w-[80%]">{Math.floor(perc / 100 * value) }</h1>
         </div>
       </div>
       <div>
-        <button className="rounded-full bg-primred p-3 px-5 font-thin text-white" onClick = {()=>handler(parseInt(plan),value)} >
+        <button className="rounded-full bg-primred p-3 px-5 font-thin text-white" onClick = {()=>handler(plan,value)} >
           INVEST NOW
         </button>
       </div>

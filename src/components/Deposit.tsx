@@ -106,7 +106,7 @@ const Deposit: React.FC = () => {
                     placeholder="0.00"
                     className="w-full rounded-md bg-gray-600 bg-opacity-25 p-2 focus:outline focus:outline-1 focus:outline-gray-100"
                     value = {tron}
-                    onChange = {e=>setTron(e.target.value)}
+                    onChange = {e=>setTron(parseInt(e.target.value))}
                   />
                 </div>
               </div>

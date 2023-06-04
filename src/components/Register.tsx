@@ -1,7 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { Fragment } from "react";
-import type { FC } from "react";
 import { AiFillEye } from "react-icons/ai";
 import { GrFormClose } from "react-icons/gr";
 import { MdOutlineMailOutline } from "react-icons/md";
@@ -13,18 +12,17 @@ import { useAuth } from "../contexts/SessionContext";
 import { useNavigate } from "react-router-dom";
 import validator from 'validator'
 
-const Modal: FC<Modal> = ({ isOpen, handleClose }) => {
+const Modal  = ({ isOpen, handleClose }) => {
   const navigate = useNavigate()
   const [showPassword, setShowpassword] = useState(false);
   const [showPassword2, setShowpassword2] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [{doPost}] = useApi()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
-  const [user,{login,logout}] = useAuth()
+  const [,{login}] = useAuth()
 
-  const handleRegister = async (e) => {
+  const handleRegister = async () => {
     try {
 
       if(confirm != password) {
@@ -148,7 +146,7 @@ const onRegister = (e)=>{
                             position="start"
                             className="cursor-pointer"
                           >
-                            <AiFillEye className="text-cblack" onClick = {e=>setShowpassword(!showPassword)} />
+                            <AiFillEye className="text-cblack" onClick = {()=>setShowpassword(!showPassword)} />
                           </InputAdornment>
                         ),
                       }}
@@ -186,7 +184,7 @@ const onRegister = (e)=>{
                             position="start"
                             className="cursor-pointer"
                           >
-                            <AiFillEye className="text-cblack" onClick = {e=>setShowpassword2(!showPassword2)} />
+                            <AiFillEye className="text-cblack" onClick = {()=>setShowpassword2(!showPassword2)} />
                           </InputAdornment>
                         ),
                       }}

@@ -104,7 +104,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Dashboard() {
   const [open, setOpen] = useState(true);
-  const [user,{login,logout}] = useAuth()
+  const [,{logout}] = useAuth()
   const navigate = useNavigate()
   const onLogout = ()=>{
     logout()
@@ -252,7 +252,7 @@ export default function Dashboard() {
           className="flex w-full items-center justify-between gap-8"
         >
           <Link
-            to="/"
+          onClick = {()=>{navigate('/')}}
             className="flex h-full w-full items-center justify-center gap-2"
           >
             <img src={Imgsrc} alt="" className="h-8 w-8" />
