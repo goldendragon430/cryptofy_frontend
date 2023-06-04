@@ -4,7 +4,6 @@ import { FiLink, FiUsers } from "react-icons/fi";
 import { LuCopy } from "react-icons/lu";
 import Example from "./DepTabs";
 import { BiWallet } from "react-icons/bi";
-import { useAuth } from "../contexts/SessionContext";
 import {DOMAIN_URL} from '../config'
 import { useAuth } from "../contexts/SessionContext";
 import { useApi } from "../contexts/ApiContext";
@@ -179,7 +178,7 @@ const AffiliteProgram: React.FC = () => {
                   className="w-[95%] rounded-l-md bg-gray-600 bg-opacity-25 p-2 focus:outline focus:outline-4 focus:outline-gray-200"
                 />
                 <button className="flex h-full w-[5%] items-center justify-center rounded-r-md border-[0.1rem] border-gray-200 p-2 hover:bg-gray-300 hover:bg-opacity-25"
-                 onClick = {e=>{navigator.clipboard.writeText(DOMAIN_URL +'ref/'+userid);toast.success('Copied')}}
+                 onClick = {()=>{navigator.clipboard.writeText(DOMAIN_URL +'ref/'+userid);toast.success('Copied')}}
                 >
                   <LuCopy />
                 </button>

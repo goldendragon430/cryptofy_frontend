@@ -126,7 +126,7 @@ export default function ReinvestModal(props) {
                       fullWidth
                       name="amount"
                       value={amount}
-                      onChange = {e=>setAmount(e.target.value)}
+                      onChange = {e=>setAmount(parseInt(e.target.value))}
                       helperText=""
                       error={false}
                       autoComplete="off"

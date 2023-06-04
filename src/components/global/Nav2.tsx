@@ -78,7 +78,7 @@ const Nav2 = () => {
       </div>:
       <button
           className="btn cornered-border m-3 px-8 py-4 text-white hover:bg-left"
-          onClick={e=>navigate('/dashboard')}
+          onClick={()=>navigate('/dashboard')}
         >
          Dashboard 
         </button>}

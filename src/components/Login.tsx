@@ -1,7 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { Fragment, useState } from "react";
-import type { FC } from "react";
 import { AiFillEye } from "react-icons/ai";
 import { GrFormClose } from "react-icons/gr";
 import { MdOutlineMailOutline } from "react-icons/md";
@@ -11,12 +10,12 @@ import { toast } from 'react-toastify'
 import { useAuth } from "../contexts/SessionContext";
 import { useNavigate } from "react-router-dom";
 
-const loginModal: FC<Modal> = ({ isOpen, handleClose }) => {
+const loginModal = ({ isOpen, handleClose }) => {
   const [showPassword, setShowpassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [{doPost}] = useApi();
-  const [user,{login,logout}] = useAuth()
+  const [,{login}] = useAuth()
   const navigate = useNavigate()
   
   const onClick = async()=>{
@@ -122,7 +121,7 @@ const loginModal: FC<Modal> = ({ isOpen, handleClose }) => {
                             position="start"
                             className="cursor-pointer"
                           >
-                            <AiFillEye className="text-cblack" onClick = {e=>setShowpassword(!showPassword)} />
+                            <AiFillEye className="text-cblack" onClick = {()=>setShowpassword(!showPassword)} />
                           </InputAdornment>
                         ),
                       }}

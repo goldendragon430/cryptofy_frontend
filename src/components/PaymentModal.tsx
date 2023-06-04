@@ -4,7 +4,6 @@ import { LuCopy } from "react-icons/lu";
 import { GrFormClose } from "react-icons/gr";
 
 import QRCode from 'qrcode'
-import {toast} from 'react-toastify'
 import { useAuth } from "../contexts/SessionContext";
 import { useApi } from "../contexts/ApiContext";
 import { toast } from "react-toastify";
@@ -120,7 +119,7 @@ export default function PaymentModal(props) {
                         
                         className="w-[90%] rounded-l-md bg-gray-600 bg-opacity-25 p-2 focus:outline focus:outline-4 focus:outline-gray-200"
                         value={amount}
-                        onChange = {e=>setAmount(e.target.value)}
+                        onChange = {e=>setAmount(parseInt(e.target.value))}
                       />
                       <button className="flex h-full w-[10%] items-center justify-center rounded-r-md border-[0.1rem] border-gray-200 p-3 hover:bg-gray-300 hover:bg-opacity-30">
                         <LuCopy />

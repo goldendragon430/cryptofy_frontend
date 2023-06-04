@@ -15,7 +15,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BsFillGridFill, BsPeopleFill } from "react-icons/bs";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -24,7 +24,7 @@ import { FaQuestionCircle } from "react-icons/fa";
 import { RiFolderWarningLine } from "react-icons/ri";
 import { GiCircleClaws } from "react-icons/gi";
 import { TiMessages } from "react-icons/ti";
-import {toast} from 'react-toastify'
+
 import { useAuth } from "../../contexts/SessionContext";
 
 
@@ -101,7 +101,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Dashboard() {
   const [open, setOpen] = useState(true);
-  const [user,{login,logout}] = useAuth()
+  const [,{logout}] = useAuth()
   const navigate = useNavigate() 
 
 
