@@ -59,7 +59,11 @@ const Modal: FC<Modal> = ({ isOpen, handleClose }) => {
     }
   };
 
-
+const onRegister = (e)=>{
+  if(e.key == 'Enter'){
+    handleRegister()
+  }
+}
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={handleClose}>
@@ -86,7 +90,7 @@ const Modal: FC<Modal> = ({ isOpen, handleClose }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-md bg-white text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-md bg-white text-left align-middle shadow-xl transition-all" onKeyUp={onRegister}>
                 <div className="flex h-fit w-full items-center justify-between border-b border-gray-200 px-8 py-4">
                   <span className="text-xl font-bold text-cblack">
                     Register

@@ -6,9 +6,15 @@ import { useAuth } from "../contexts/SessionContext";
 import { useApi } from "../contexts/ApiContext";
 import { toast } from "react-toastify";
 import Imgsrc from '../assets/tron.svg'
+function useForceUpdate(){
+  const [value, setValue] = useState(0); // integer state
+  return () => setValue(value => value + 1); // update state to force render
+  // A function that increment 👆🏻 the previous state like here 
+  // is better than directly setting `setValue(value + 1)`
+}
 
 const MainDashboard: React.FC = () => {
-
+  const forceUpdate = useForceUpdate()
   const [balance, setBalance] = useState(0.00)
   const [power, setPower] = useState(0)
   const [total,setTotal] = useState(180)
@@ -29,6 +35,7 @@ const MainDashboard: React.FC = () => {
       setPower(response.power)      
       setTotal(response.total_power)      
       setBalance(response.balance)
+      forceUpdate()
     }
   }
 

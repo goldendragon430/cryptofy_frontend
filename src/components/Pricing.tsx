@@ -6,9 +6,92 @@ import {
 } from "react-icons/gr";
 import NavBar from "./global/Navbar";
 import Nav2 from "./global/Nav2";
-import { useState } from "react";
-
+import { useState,useEffect} from "react";
+import { useAuth } from "../contexts/SessionContext";
+import { useApi } from "../contexts/ApiContext";
+import {toast} from 'react-toastify'
 function Landing() {
+
+  const [{doPost}] = useApi();
+  const [user,] = useAuth()
+  const [balance,setBalance] = useState(0)
+  const token = user?.token
+  const [plan,setPlan] = useState([
+    {
+      "level": 1,
+      "amount": 100,
+      "period": 1,
+      "bonus": 1.2
+  },
+  {
+      "level": 2,
+      "amount": 100,
+      "period": 30,
+      "bonus": 1.5
+  },
+  {
+      "level": 3,
+      "amount": 100,
+      "period": 60,
+      "bonus": 2
+  }
+  ])
+  const getPlanConfig = async() =>{
+    
+    const result = await doPost('mining/get_plan_config',{
+      'token' : token
+    })
+    if(result.error||result['result'] == "failed"){
+      toast.error("Error")
+    }else{
+      const data = result['data']
+      setPlan(data)    
+    }
+  }
+
+  const getPower = async()=>{
+    const response = await doPost('mining/get_power',{
+      token : token,
+    })
+    if(response.error || response.result == 'failed') {
+
+    }
+    else{
+       const result =  response['balance']
+        setBalance(result)
+      }
+  }
+  const refresh = ()=>{
+    getPlanConfig()
+    getPower()
+  
+  }
+  useEffect(()=>{
+    if(token){
+      refresh()
+    }
+  },[token])
+
+  const onInvest = async(level,amount)=>{
+    if(balance > amount){
+      console.log(plan,level)
+      const result = await doPost('mining/invest_plan',{
+        token : token,
+        amount : amount,
+        bonus : plan[level-1]['bonus']*amount,
+        period : plan[level-1]['period']
+      })
+      if(result['result'] == 'success'){
+        toast.success("Success")
+        refresh()
+      }else{
+        toast.error(result['msg'])
+      }
+    }
+    else{
+      toast.error(`Your balance is low( current - ${Math.floor(balance)}Trx )`)
+    }
+  }
   return (
     <main className="font-muli text-custblack lg:px-0">
       <div className="hidden justify-start gap-5 border-b-[.000000001px] border-[#535a7076] py-5 pl-10 lg:flex">
@@ -50,12 +133,9 @@ function Landing() {
             and get your bitcoins today.
           </h2>
           <div className="grid grid-cols-1 gap-5 py-20 lg:grid-cols-3">
-            <PriceCard days="30" min={50} perc="400" plan="1" />
-            <PriceCard days="60" min={100} perc="300" plan="2" />
-            <PriceCard days="90" min={100} perc="400" plan="3" />
-            <PriceCard days="30" min={100} perc="200" plan="4" />
-            <PriceCard days="60" min={100} perc="300" plan="5" />
-            <PriceCard days="90" min={100} perc="400" plan="6" />
+            <PriceCard days={plan[0]['period']} min={plan[0]['amount']} perc={plan[0]['bonus']*100} plan="1" handler = {onInvest} />
+            <PriceCard days={plan[1]['period']} min={plan[1]['amount']} perc={plan[1]['bonus']*100} plan="2" handler = {onInvest}/>
+            <PriceCard days={plan[2]['period']} min={plan[2]['amount']} perc={plan[2]['bonus']*100} plan="3" handler = {onInvest}/>
           </div>
         </div>
       </section>
@@ -132,13 +212,18 @@ function PriceCard({
   perc,
   days,
   min,
+  handler
 }: {
   plan: string;
   perc: string;
   days: string;
   min: number;
+  handler : any
 }) {
   const [value, setValue] = useState(min);
+  useEffect(()=>{
+    setValue(min)
+  },[min])
   return (
     <div className="box-2 box-shadow-2 flex flex-col items-center justify-center gap-8 rounded-lg p-10 text-2xl font-bold">
       <h1 className="text-4xl text-primred">Plan {plan}</h1>
@@ -154,7 +239,7 @@ function PriceCard({
         value={value}
         min={min}
         max={5000}
-        onChange={(e) => void setValue(parseInt(e.target.value, 10))}
+        onChange={(e) => void setValue(parseInt(e.target.value))}
       />
       <div className="flex w-full items-center justify-center gap-56 text-[#877e78]">
         <div>
@@ -162,16 +247,16 @@ function PriceCard({
           <input
             type="number"
             value={value}
-            className="w-[80%] border-[1px] border-primred bg-gray-500 bg-opacity-50 text-black"
+            className="w-[80%] border-[1px] border-primred bg-white-500 bg-opacity-50 text-black"
           />
         </div>
         <div className="flex flex-col items-end">
           <p className="font-light">get</p>
-          <h1 className="w-[80%]">{value}</h1>
+          <h1 className="w-[80%]">{Math.floor(parseInt(perc) / 100 * value) }</h1>
         </div>
       </div>
       <div>
-        <button className="rounded-full bg-primred p-3 px-5 font-thin text-white">
+        <button className="rounded-full bg-primred p-3 px-5 font-thin text-white" onClick = {()=>handler(parseInt(plan),value)} >
           INVEST NOW
         </button>
       </div>

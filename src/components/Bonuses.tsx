@@ -55,7 +55,7 @@ const Bonuses: React.FC = () => {
         <span className="self-start text-base font-bold uppercase text-cblack">
           BOUNTY
         </span>
-        <div className="w-full border-t border-t-gray-200 pt-6">
+        {/* <div className="w-full border-t border-t-gray-200 pt-6">
           <div className="box-2 flex w-full justify-start rounded-lg bg-cblack">
             <div className="flex h-[70rem] w-[35%] items-center justify-center rounded-l-lg bg-red-700 px-1 py-20 text-4xl text-gray-300 text-opacity-30 lg:h-[27.9rem] lg:w-[10%]">
               <img
@@ -110,7 +110,7 @@ const Bonuses: React.FC = () => {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="flex h-fit w-full flex-col items-center justify-center gap-4">
         <span className="self-start text-base font-bold uppercase text-cblack">
