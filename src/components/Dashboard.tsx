@@ -109,6 +109,7 @@ export default function Dashboard() {
   const onLogout = ()=>{
     logout()
     navigate('/')
+    localStorage.removeItem('showed')
   }
 
   const handleDrawerOpen = () => {

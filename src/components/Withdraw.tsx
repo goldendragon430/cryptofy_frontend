@@ -39,7 +39,10 @@ export default function WithdrawModal(props) {
   },[token])
   function openModal() {
     if(balance > min_withdrawl)
-    setIsOpen(true);
+    {
+      setStage(0)
+      setIsOpen(true);
+    }
   else{
     toast.info('Low Balance.')
   }
