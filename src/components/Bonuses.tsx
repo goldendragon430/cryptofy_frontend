@@ -10,6 +10,7 @@ const Bonuses: React.FC = () => {
   const [user,] = useAuth()
   const [rewards,setReward] = useState([])
   const token = user?.token
+
   const getRewardHistory = async()=>{
     const response = await doPost('reward/get_reward',{
       token : token,
@@ -149,6 +150,7 @@ const Bonuses: React.FC = () => {
           </div>
         </div>
       </div>
+
     </div>
   );
 };

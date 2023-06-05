@@ -204,6 +204,76 @@ const Management: React.FC = () => {
             </div>
           </div>
         </div>
+        <div className="flex flex-col items-center justify-start gap-4">
+          <h1 className="text-center text-2xl font-medium text-cblack">
+            Mining Speed Management
+          </h1>
+          <div className="flex w-full flex-col justify-start rounded-lg bg-cblack shadow-md">
+            <div className="px-3 py-5">
+              {/* <h1 className="mb-4 text-2xl font-medium text-white">Plan 1</h1> */}
+
+              <p className="mb-1 text-white">Daily Earning per GH/s </p>
+              <input
+                type="text"
+                value = {lev1}
+                onChange = {e=>setLev1(parseFloat(e.target.value))}
+                className="mb-4 w-[95%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
+              />
+              <p className="mb-1 text-white">Registration Bonus(Gh/s)</p>
+              <input
+                type="text"
+                value = {lev2}
+                onChange = {e=>setLev2(parseFloat(e.target.value))}
+                className="mb-4 w-[95%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
+              />
+
+             
+            </div>
+
+            <div className="mt-4 flex w-full justify-end border-t border-t-gray-200 p-2 px-10">
+              <button 
+               onClick={update_config}
+              className="bg-gradient-moonlit rounded-md px-3 py-[0.4rem] font-medium text-white">
+                update
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-start gap-4">
+          <h1 className="text-center text-2xl font-medium text-cblack">
+            Deposit Bonus management
+          </h1>
+          <div className="flex w-full flex-col justify-start rounded-lg bg-cblack shadow-md">
+            <div className="px-3 py-5">
+              {/* <h1 className="mb-4 text-2xl font-medium text-white">Plan 1</h1> */}
+
+              <p className="mb-1 text-white">Time(hour)</p>
+              <input
+                type="text"
+                value = {lev1}
+                onChange = {e=>setLev1(parseFloat(e.target.value))}
+                className="mb-4 w-[95%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
+              />
+              <p className="mb-1 text-white">Bonus(%)</p>
+              <input
+                type="text"
+                value = {lev2}
+                onChange = {e=>setLev2(parseFloat(e.target.value))}
+                className="mb-4 w-[95%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
+              />
+
+             
+            </div>
+
+            <div className="mt-4 flex w-full justify-end border-t border-t-gray-200 p-2 px-10">
+              <button 
+               onClick={update_config}
+              className="bg-gradient-moonlit rounded-md px-3 py-[0.4rem] font-medium text-white">
+                update
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="flex flex-col lg:grid w-full lg:grid-cols-3 gap-2">
         <div className="flex w-full flex-col justify-start rounded-lg bg-cblack shadow-md">
