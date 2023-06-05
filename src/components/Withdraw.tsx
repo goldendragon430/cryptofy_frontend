@@ -15,7 +15,8 @@ export default function WithdrawModal(props) {
   const [user,] = useAuth()
   const token = user?.token
   const [min_withdrawl,setMinWithdrawl] = useState(1)
-
+  const [stage,setStage] = useState(0)
+  const [code,setCode] = useState('000000')
   function closeModal() {
     setIsOpen(false);
   }
@@ -43,7 +44,27 @@ export default function WithdrawModal(props) {
     toast.info('Low Balance.')
   }
   }
+
+  const onSendCode = ()=>{
+    doPost('user/send_code',{
+      'token' : token
+    })
+    setStage(1)
+  }
+
   const withdrawal = async()=>{
+   
+    const result = await doPost('user/confirm_code',{
+      'token' : token,
+      'code' : code 
+    })
+    if(result.error||result['result'] == "failed"){
+      toast.error("Error")
+      return
+    }else{
+      toast.success('Withdrawaling...')      
+    }
+
     if (amount > balance) {
       toast.error("You set amount that is bigger than current balance.")
     }
@@ -98,7 +119,7 @@ export default function WithdrawModal(props) {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="mt-10 w-full max-w-lg transform overflow-hidden rounded-md bg-white text-left align-middle text-cblack shadow-xl transition-all">
-                  <div className="bg-white">
+                  {stage == 0 ?<div className="bg-white">
                     <div className="border-grey-500 flex items-center justify-between border-b-[2px] p-3 px-8">
                       <h1 className="text-xl font-bold">Withdrawal</h1>
                       <button
@@ -109,7 +130,7 @@ export default function WithdrawModal(props) {
                       </button>
                     </div>
                     <div className="p-3 px-8 font-semibold leading-5">
-                      <h1 style = {{marginBottom:10}}>Withdrawal amount::</h1>
+                      <h1 style = {{marginBottom:10}}>Withdrawal amount:</h1>
                       <TextField
                       placeholder="Amount"
                       InputProps={{
@@ -156,8 +177,8 @@ export default function WithdrawModal(props) {
                         
                       />
 
-                      <h1>Minimum withdrawal amount:</h1>
-                      <p>72 TRX</p>
+                      <h1 style = {{marginTop:20}}>Minimum withdrawal amount:</h1>
+                      <p>{min_withdrawl} TRX</p>
                     </div>
                     <div className="border-grey-500 flex items-center justify-end gap-2 border-t-[2px] p-3 px-8">
                       <button
@@ -167,12 +188,64 @@ export default function WithdrawModal(props) {
                         Close
                       </button>
                       <button
-                      onClick={withdrawal}
+                      onClick={onSendCode}
                       className="bg-gradient-ohhappiness rounded-md border-[0.01rem] border-gray-400 px-3 py-[0.4rem] font-medium text-white hover:bg-slate-500 hover:bg-opacity-20">
                   Withdraw
                 </button>
                     </div>
+                  </div>:
+                  <div className="bg-white">
+                  <div className="border-grey-500 flex items-center justify-between border-b-[2px] p-3 px-8">
+                    <h1 className="text-xl font-bold">Send Verification Code</h1>
+                    <button
+                      onClick={closeModal}
+                      className="absolute right-4 top-3 text-white"
+                    >
+                      <GrFormClose className="cursor-pointer text-2xl text-cblack" />
+                    </button>
                   </div>
+                  <div className="p-3 px-8 font-semibold leading-5">
+                    <h1 style = {{marginBottom:10}}>We sent {user?.email} 6 digits code.</h1>
+                    <TextField
+                    placeholder="Amount"
+                    InputProps={{
+                      sx: {
+                        "& input": {
+                          color: "black",
+                        },
+                        "& label": { color: "black" },
+                      }
+                    }}
+                    required
+                    fullWidth
+                    name="amount"
+                    value={code}
+                    onChange = {e=>setCode(e.target.value)}
+                    helperText=""
+                    error={false}
+                    autoComplete="off"
+                    size="small"
+                    type="number"
+                    
+                  />
+
+                  </div>
+                  <div className="border-grey-500 flex items-center justify-end gap-2 border-t-[2px] p-3 px-8">
+                    <button
+                      onClick={closeModal}
+                      className="bg-gray-600 rounded-md px-3 py-[0.4rem] font-medium text-white"
+                    >
+                      Close
+                    </button>
+                    <button
+                    onClick={withdrawal}
+                    className="bg-gradient-ohhappiness rounded-md border-[0.01rem] border-gray-400 px-3 py-[0.4rem] font-medium text-white hover:bg-slate-500 hover:bg-opacity-20">
+                  Withdrawl
+                </button>
+                  </div>
+                </div>
+                  }
+                  
                 </Dialog.Panel>
               </Transition.Child>
             </div>
