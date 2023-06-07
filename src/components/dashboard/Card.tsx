@@ -24,7 +24,7 @@ const Card: FC<CurrencyCard> = ({ coinType, amount, power, imgSrc, color,total,u
         <div className="flex w-full flex-col items-start justify-center gap-2">
           <span className="text-base text-white ">{coinType}</span>
           <span className="text-2xl font-bold text-white ">
-            {balance.toFixed(10)}
+            {balance.toFixed(7)}
           </span>
           <span className="text-xs uppercase text-white ">
             power {defaultValue} gh/s

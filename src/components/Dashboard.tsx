@@ -261,7 +261,11 @@ export default function Dashboard() {
                   <span className="text-xl">08 June ~ 10 June</span>
                   <strong className="font-semibold text-black text-3xl">Deposit bonus 300%</strong>
                 </p>
-                <a href="#" className="flex-none rounded-full bg-white px-3.5 py-1 text-sm font-semibold text-black shadow-sm hover:bg-black hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">Deposit now <span aria-hidden="true">→</span></a>
+                <button type="button" className="flex gap-2 text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 mr-2 mb-2">
+                  <img src={Imgsrc} alt="" className="h-6 w-6" />
+                  Deposit Now
+                </button>
+                {/* <a href="#" className="flex-none rounded-full bg-white px-3.5 py-1 text-sm font-semibold text-black shadow-sm hover:bg-black hover:text-white">Deposit now <span aria-hidden="true">→</span></a> */}
               </div>
               <div className="flex flex-1 justify-end">
                 <button type="button" className="-m-3 p-3 focus-visible:outline-offset-[-4px]" onClick={handleDismissBanner}>
@@ -302,6 +306,7 @@ export default function Dashboard() {
             flexDirection: "column",
             gap: 2,
             width: "100%",
+            marginTop: "26px"
           }}
         >
           {open && (

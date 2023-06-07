@@ -6,67 +6,67 @@ import { toast } from "react-toastify";
 import Imgsrc from '../assets/tron.png'
 
 const Deposit: React.FC = () => {
-  const [{doPost}] = useApi()
+  const [{ doPost }] = useApi()
   const [user,] = useAuth()
   const username = user?.username
   const wallet = user?.wallet
   const token = user?.token
-  const [tron,setTron] = useState(0)
-  const [bonus_rate,setBonusRate] = useState(1)
-  const [transactions,setTransactions] = useState([])
+  const [tron, setTron] = useState(0)
+  const [bonus_rate, setBonusRate] = useState(1)
+  const [transactions, setTransactions] = useState([])
 
-  const checkDeposite = async()=>{
-    const response = await doPost('mining/check_deposite',{
-      token : token
+  const checkDeposite = async () => {
+    const response = await doPost('mining/check_deposite', {
+      token: token
     })
-    if(response.error || response.result == 'failed') {
+    if (response.error || response.result == 'failed') {
 
     }
-    else{
-      if(response['is_deposited']){
+    else {
+      if (response['is_deposited']) {
         const amount = response['amount']
-        toast.info( amount + "Trx is newly deposited.")
+        toast.info(amount + "Trx is newly deposited.")
       }
     }
   }
-  const get_config = async()=>{
-    const result = await doPost('mining/get_configuration',{
-      'token' : token
+  const get_config = async () => {
+    const result = await doPost('mining/get_configuration', {
+      'token': token
     })
-    if(result.error||result['result'] == "failed"){
+    if (result.error || result['result'] == "failed") {
       toast.error("Error")
-    }else{
+    } else {
       const data = result['data']
-       setBonusRate(data['bonus_rate'])
+      setBonusRate(data['bonus_rate'])
 
-      
-    }  
+
+    }
   }
-  const getTransaction = async()=>{
-    const response = await doPost('transaction/get',{
-      token : token,
-      type : 'deposite'
+  const getTransaction = async () => {
+    const response = await doPost('transaction/get', {
+      token: token,
+      type: 'deposite'
     })
-    if(response.error || response.result == 'failed') {
+    if (response.error || response.result == 'failed') {
       toast.error("Server Error")
     }
-    else{
+    else {
       setTransactions(response.data)
     }
   }
-  const refresh = ()=>{
+  const refresh = () => {
     getTransaction()
     get_config()
   }
-  useEffect(()=>{
+  useEffect(() => {
     if (token)
       refresh()
-  },[token])
+  }, [token])
 
   useEffect(() => {
     const timeout = setInterval(() => {
-      if(token)
-          checkDeposite()
+      if (token)
+        checkDeposite()
     }, 60000);
 
     return () => clearInterval(timeout);
@@ -78,9 +78,9 @@ const Deposit: React.FC = () => {
         <span className="text-2xl font-semibold text-cblack lg:text-4xl">
           Hi, {username} 👋
         </span>
-        <span className="w-full rounded-md border border-cblack bg-gray-200 p-4 text-start text-base font-semibold text-cblack">
+        {/* <span className="w-full rounded-md border border-cblack bg-gray-200 p-4 text-start text-base font-semibold text-cblack">
           Only today the bonus +5% to the deposit when replenishing from $25
-        </span>
+        </span> */}
       </div>
       <div className="flex h-fit w-full flex-col items-center justify-center gap-4">
         <span className="self-start text-base font-bold uppercase text-cblack">
@@ -98,34 +98,34 @@ const Deposit: React.FC = () => {
                 <p>Tron coin</p>
               </div>
             </div> */}
-            <div className="flex w-full flex-col gap-2 lg:grid lg:grid-cols-2" style = {{paddingTop:10}}>
+            <div className="flex w-full flex-col gap-2 lg:grid lg:grid-cols-2" style={{ paddingTop: 10 }}>
               <div className="flex flex-col justify-center items-center gap-2 py-3">
-                    <img
-                      src={Imgsrc}
-                      className="rounded-md p-1"
-                      style = {{width:150,height:150}}
-                      alt=""
-                    />
-                    <h1 style = {{fontSize:30}}>TRON TRX</h1>
+                <img
+                  src={Imgsrc}
+                  className="rounded-md p-1"
+                  style={{ width: 150, height: 150 }}
+                  alt=""
+                />
+                <h1 style={{ fontSize: 30 }}>TRON TRX</h1>
               </div>
               <div className="flex flex-col justify-start gap-2 py-3">
                 <div>
-                <p className="mb-1 text-sm">Tron amount to deposit</p>
+                  <p className="mb-1 text-sm">Tron amount to deposit</p>
                   <input
                     type="number"
                     placeholder="0.00"
                     className="w-full rounded-md bg-gray-600 bg-opacity-25 p-2 focus:outline focus:outline-1 focus:outline-gray-100"
-                    value = {tron}
-                    onChange = {e=>setTron(parseInt(e.target.value))}
+                    value={tron}
+                    onChange={e => setTron(parseInt(e.target.value))}
                   />
                   <p className="mb-1 text-sm mt-5">Power by deposit</p>
                   <input
                     type="number"
                     placeholder="0.00"
                     className="w-full rounded-md bg-gray-600 bg-opacity-25 p-2 focus:outline focus:outline-1 focus:outline-gray-200"
-                    value = {Math.floor(bonus_rate * tron)}
+                    value={Math.floor(bonus_rate * tron)}
                   />
-                  <div className="flex flex-row justify-center" style ={{margin:10}} >  <PaymentModal address = {wallet}  /></div>
+                  <div className="flex flex-row justify-center" style={{ margin: 10 }} >  <PaymentModal address={wallet} /></div>
                 </div>
               </div>
             </div>
@@ -139,32 +139,32 @@ const Deposit: React.FC = () => {
         <div className="flex w-full items-center justify-center border-t border-t-gray-200">
           <div className="w-full overflow-x-scroll">
             <div className="flex w-[60rem] flex-col justify-center rounded-lg bg-cblack text-white shadow-lg lg:w-full">
-              
-            <table>
-              <thead style = {{height:50}}>
-                <th>No</th>
-                <th>Time</th>
-                <th>Amount</th>
-                <th>Hash</th>
-                <th>Type</th>
-              </thead>
-              <tbody style={{textAlign:'center'}}>
 
-                {transactions.map((item, i) => (
+              <table>
+                <thead style={{ height: 50 }}>
+                  <th>No</th>
+                  <th>Time</th>
+                  <th>Amount</th>
+                  <th>Hash</th>
+                  <th>Type</th>
+                </thead>
+                <tbody style={{ textAlign: 'center' }}>
+
+                  {transactions.map((item, i) => (
                     <tr
-                      style = {{height:40}}
+                      style={{ height: 40 }}
                       key={i}
                     >
-                      <td>{i+1}</td>
+                      <td>{i + 1}</td>
                       <td>{item.time}</td>
                       <td>{item.amount}</td>
-                      <td>{item.hash.substring(0,10)}...</td>
+                      <td>{item.hash.substring(0, 10)}...</td>
                       <td>{item.type}</td>
                     </tr>
                   ))}
-              </tbody>
-            </table>
-           { transactions.length == 0 &&<p style = {{margin:30,textAlign:'center'}} >No Transactions yet.</p>}
+                </tbody>
+              </table>
+              {transactions.length == 0 && <p style={{ margin: 30, textAlign: 'center' }} >No Transactions yet.</p>}
             </div>
           </div>
         </div>
