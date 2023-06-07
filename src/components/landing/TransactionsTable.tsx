@@ -7,11 +7,11 @@ import {
 import { BiLinkExternal } from "react-icons/bi";
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 80 },
+  // { field: "id", headerName: "ID", width: 80 },
   {
     field: "amount",
     headerName: "Amount",
-    width: 300,
+    flex : 1,
     editable: false,
     renderCell: (params: GridRenderCellParams) => {
       return (
@@ -37,8 +37,8 @@ const columns: GridColDef[] = [
   },
   {
     field: "time",
+    flex : 1,
     headerName: "Time",
-    width: 300,
     editable: false,
     renderCell: (params: GridRenderCellParams) => {
       return (
@@ -59,8 +59,8 @@ const columns: GridColDef[] = [
   },
   {
     field: "txid",
+    width : 600,
     headerName: "TXID",
-    width: 500,
     editable: false,
     renderCell: (params: GridRenderCellParams) => {
       return (
@@ -80,8 +80,8 @@ const columns: GridColDef[] = [
   },
   {
     field: "type",
+    width : 250,
     headerName: "Type",
-    width: 250,
     editable: false,
     renderCell: (params: GridRenderCellParams) => {
       return (

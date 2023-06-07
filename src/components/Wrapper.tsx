@@ -85,7 +85,7 @@ const OthersWrapper: React.FC = () => {
                 className="w-[70%] bg-[#80808060]"
               />
               <span className="text-sm font-bold text-white">
-                company number <b className="underline">57687980</b>
+                company number <b className="underline"><a href = "https://find-and-update.company-information.service.gov.uk/company/12707554" >12707554</a></b>
               </span>
             </div>
             <span className="whitespace-pre-wrap text-sm font-bold text-white">
@@ -108,11 +108,13 @@ const OthersWrapper: React.FC = () => {
             <span className="text-base font-bold uppercase text-white">
               quick link
             </span>
-            <div className="gap flex w-full flex-col items-start text-sm font-medium">
-              <span className="footerLink">Account</span>
-              <span className="footerLink">Status</span>
-              <span className="footerLink">FAQ</span>
-              <span className="footerLink">Contact</span>
+            <div className="gap flex w-full flex-col items-start text-white text-sm font-medium">
+              <a href="/affiliate-program">Affiliate Program</a>
+              <a href="/faq">FAQ</a>
+              <a href="/about-us">About US</a>
+              <a href="/terms">Terms</a>
+              <a href="/plans">Plans</a>
+              <a href="/contacts">Contacts</a>
             </div>
           </div>
         </div>
