@@ -11,7 +11,7 @@ const columns: GridColDef[] = [
   {
     field: "amount",
     headerName: "Amount",
-    flex : 1,
+    width : 300,
     editable: false,
     renderCell: (params: GridRenderCellParams) => {
       return (
@@ -37,7 +37,7 @@ const columns: GridColDef[] = [
   },
   {
     field: "time",
-    flex : 1,
+    width : 300,
     headerName: "Time",
     editable: false,
     renderCell: (params: GridRenderCellParams) => {
@@ -59,7 +59,7 @@ const columns: GridColDef[] = [
   },
   {
     field: "txid",
-    width : 600,
+    width : 500,
     headerName: "TXID",
     editable: false,
     renderCell: (params: GridRenderCellParams) => {
