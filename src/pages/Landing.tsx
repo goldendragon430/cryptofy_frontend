@@ -12,7 +12,7 @@ import {ImMobile} from 'react-icons/im'
 import {GrMoney} from 'react-icons/gr'
 import TRXImg from '../assets/tron2.png'
 import TransactionsTable from "../components/landing/TransactionsTable";
-
+import { PriceCard } from "../components/Pricing";
 function Landing() {
   const {id} = useParams()
   const [tron, setTron] = useState(0)
@@ -21,6 +21,26 @@ function Landing() {
   const [user,] = useAuth()
   const token = user?.token
   const [bonus_rate,setBonusRate] = useState(1)
+  const [plan,setPlan] = useState([
+    {
+      "level": 1,
+      "amount": 100,
+      "period": 1,
+      "bonus": 1.2
+  },
+  {
+      "level": 2,
+      "amount": 100,
+      "period": 30,
+      "bonus": 1.5
+  },
+  {
+      "level": 3,
+      "amount": 100,
+      "period": 60,
+      "bonus": 2
+  }
+  ])
 
   const get_config = async()=>{
     const result = await doPost('mining/get_configuration',{
@@ -227,112 +247,10 @@ useEffect(()=>{
             Choose Your Plan Easily!
           </h1>
         </div>
-        <div className="flex  w-full grid-cols-3 flex-col items-center justify-center gap-10 lg:grid">
-          <div className="flex flex-col items-center justify-center gap-5 bg-white p-10">
-            <p className="lg:text-md text-sm font-light text-[#535a70]">
-              Single Package
-            </p>
-            <h1 className="text-2xl font-bold text-darkblue">Basic</h1>
-            <div>
-              <span className="text-3xl font-bold text-secondred">$20.00</span>
-              <span className="ml-3 text-lg font-semibold text-[#535a70]">
-                /mo
-              </span>
-            </div>
-            <div className="flex flex-col items-center justify-center gap-4">
-              <p className="text-lg font-[300] text-[#535a70]">
-                20 TRX Min Deposit
-              </p>
-              <p className="text-lg font-[300] text-[#535a70]">
-                199 TRX Max Deposit
-              </p>
-              <p className="text-lg font-[300] text-[#535a70]">
-                6.25% Daily Return
-              </p>
-              <p className="text-lg font-[300] text-[#535a70]">
-                6% Referral Commission
-              </p>
-              <p className="text-lg font-[300] text-[#535a70]">
-                20 DAY After Plan will Expire
-              </p>
-            </div>
-            <a
-              href="#"
-              className="cornered-border hover:bg-btn border-[.01rem] border-secondred bg-white px-7 py-5 text-primred hover:text-white"
-            >
-              Select Packages
-            </a>
-          </div>
-          <div className="flex flex-col items-center justify-center gap-5 bg-white p-10">
-            <p className="lg:text-md text-sm font-light text-[#535a70]">
-              half Package
-            </p>
-            <h1 className="text-2xl font-bold text-darkblue">Advanced</h1>
-            <div>
-              <span className="text-3xl font-bold text-secondred">$25.00</span>
-              <span className="ml-3 text-lg font-semibold text-[#535a70]">
-                /mo
-              </span>
-            </div>
-            <div className="flex flex-col items-center justify-center gap-4">
-              <p className="text-lg font-[300] text-[#535a70]">
-                20 TRX Min Deposit
-              </p>
-              <p className="text-lg font-[300] text-[#535a70]">
-                199 TRX Max Deposit
-              </p>
-              <p className="text-lg font-[300] text-[#535a70]">
-                6.25% Daily Return
-              </p>
-              <p className="text-lg font-[300] text-[#535a70]">
-                6% Referral Commission
-              </p>
-              <p className="text-lg font-[300] text-[#535a70]">
-                20 DAY After Plan will Expire
-              </p>
-            </div>
-            <a
-              href="#"
-              className="cornered-border hover:bg-btn border-[.01rem] border-secondred bg-white px-7 py-5 text-primred hover:text-white"
-            >
-              Select Packages
-            </a>
-          </div>
-          <div className="flex flex-col items-center justify-center gap-5 bg-white p-10">
-            <p className="lg:text-md text-sm font-light text-[#535a70]">
-              Full Package
-            </p>
-            <h1 className="text-2xl font-bold text-darkblue">Premium</h1>
-            <div>
-              <span className="text-3xl font-bold text-secondred">$29.00</span>
-              <span className="ml-3 text-lg font-semibold text-[#535a70]">
-                /mo
-              </span>
-            </div>
-            <div className="flex flex-col items-center justify-center gap-4">
-              <p className="text-lg font-[300] text-[#535a70]">
-                20 TRX Min Deposit
-              </p>
-              <p className="text-lg font-[300] text-[#535a70]">
-                199 TRX Max Deposit
-              </p>
-              <p className="text-lg font-[300] text-[#535a70]">
-                6.25% Daily Return
-              </p>
-              <p className="text-lg font-[300] text-[#535a70]">
-                6% Referral Commission
-              </p>
-              <p className="text-lg font-[300] text-[#535a70]">
-                20 DAY After Plan will Expire
-              </p>
-            </div>
-            <a
-              href="#"
-              className="cornered-border hover:bg-btn border-[.01rem] border-secondred bg-white px-7 py-5 text-primred hover:text-white"
-            >
-              Select Packages
-            </a>
-          </div>
+        <div className="grid grid-cols-1 gap-5 py-20 lg:grid-cols-3 w-[90%]">
+            <PriceCard days={plan[0]['period']} min={plan[0]['amount']} perc={plan[0]['bonus']*100} plan={1} handler = {()=>{}} />
+            <PriceCard days={plan[1]['period']} min={plan[1]['amount']} perc={plan[1]['bonus']*100} plan={2} handler = {()=>{}}/>
+            <PriceCard days={plan[2]['period']} min={plan[2]['amount']} perc={plan[2]['bonus']*100} plan={3} handler = {()=>{}}/>
         </div>
       </section>
       <section className="mt-32 flex items-center justify-center px-1">
