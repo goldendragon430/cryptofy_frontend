@@ -277,11 +277,12 @@ useEffect(()=>{
           <h1 className="w-80 text-2xl font-bold lg:text-3xl">
             Get In Our Touch To Subscribe.
           </h1>
-          <div className="cornered-border flex items-center justify-between bg-white px-1 py-1 lg:w-[30rem]">
+          <div className="cornered-border flex items-center justify-between bg-white px-1 py-1 w-[100%] lg:w-[30rem]">
             <input
               type="text"
               className="w[70%] lg:text-md bg-transparent px-4 py-4 text-sm text-custblack outline-none lg:px-8 lg:py-3"
               placeholder="Enter Email"
+              style = {{minWidth:100}}
             />
             <button className="cornered-border bg-gradient-to-r from-red-600 to-orange-500 px-7 py-3 text-white">
               Subscribe
