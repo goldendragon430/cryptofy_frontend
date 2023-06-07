@@ -275,7 +275,7 @@ const MainDashboard: React.FC = () => {
         </div>
   
       </div>
-      <div className="grid grid-cols-1 gap-5 py-20 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-5 py-20 lg:grid-cols-3 w-full">
             <PriceCard days={1} min={100} perc={120} plan={1} handler = {onInvest} />
             <PriceCard days={30} min={100} perc={150} plan={2} handler = {onInvest}/>
             <PriceCard days={60} min={100} perc={450} plan={3} handler = {onInvest}/>

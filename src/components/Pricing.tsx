@@ -226,7 +226,7 @@ export function PriceCard({
       <p className="text-[#877e78]">Payout {days} day(s)</p>
       <div className="flex w-full items-center justify-between">
         <p className="text-[#877e78]">Minimum Invest</p>
-        <p className="text-[#877e78]">{min}$</p>
+        <p className="text-[#877e78]">{min}TRX</p>
       </div>
       <input
         type="range"
@@ -236,14 +236,17 @@ export function PriceCard({
         max={5000}
         onChange={(e) => void setValue(parseInt(e.target.value))}
       />
-      <div className="flex w-full items-center justify-center gap-56 text-[#877e78]">
+      <div className="flex w-full items-center justify-between text-[#877e78]">
         <div>
           <p className="font-light">Invest</p>
+          <div className="flex">
           <input
             type="number"
             value={value}
-            className="w-[80%] border-[1px] border-primred bg-white-500 bg-opacity-50 text-black"
+            className="w-20 border-[1px] border-primred bg-white-500 bg-opacity-50 text-black"
           />
+          <p>TRX</p>
+          </div>
         </div>
         <div className="flex flex-col items-end">
           <p className="font-light">get</p>
