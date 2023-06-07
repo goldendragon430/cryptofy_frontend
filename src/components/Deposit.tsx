@@ -3,6 +3,7 @@ import PaymentModal from "./PaymentModal";
 import { useAuth } from "../contexts/SessionContext";
 import { useApi } from "../contexts/ApiContext";
 import { toast } from "react-toastify";
+import Imgsrc from '../assets/tron.png'
 
 const Deposit: React.FC = () => {
   const [{doPost}] = useApi()
@@ -87,7 +88,7 @@ const Deposit: React.FC = () => {
         </span>
         <div className="w-full border-t border-t-gray-200  pt-6">
           <div className="rounded-lg bg-cblack p-4 text-white">
-            <div className="flex flex-col border-b border-b-gray-200 lg:grid lg:grid-cols-4">
+            {/* <div className="flex flex-col border-b border-b-gray-200 lg:grid lg:grid-cols-4">
               <div className="flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md bg-gray-500 bg-opacity-25 p-2">
                 <img
                   src="https://cryptologos.cc/logos/tron-trx-logo.svg?v=014"
@@ -96,11 +97,20 @@ const Deposit: React.FC = () => {
                 />
                 <p>Tron coin</p>
               </div>
-            </div>
+            </div> */}
             <div className="flex w-full flex-col gap-2 lg:grid lg:grid-cols-2" style = {{paddingTop:10}}>
+              <div className="flex flex-col justify-center items-center gap-2 py-3">
+                    <img
+                      src={Imgsrc}
+                      className="rounded-md p-1"
+                      style = {{width:150,height:150}}
+                      alt=""
+                    />
+                    <h1 style = {{fontSize:30}}>TRON TRX</h1>
+              </div>
               <div className="flex flex-col justify-start gap-2 py-3">
                 <div>
-                  <p className="mb-1 text-sm">Tron amount to deposit</p>
+                <p className="mb-1 text-sm">Tron amount to deposit</p>
                   <input
                     type="number"
                     placeholder="0.00"
@@ -108,21 +118,17 @@ const Deposit: React.FC = () => {
                     value = {tron}
                     onChange = {e=>setTron(parseInt(e.target.value))}
                   />
-                </div>
-              </div>
-              <div className="flex flex-col justify-start gap-2 py-3">
-                <div>
-                  <p className="mb-1 text-sm">Power by deposit</p>
+                  <p className="mb-1 text-sm mt-5">Power by deposit</p>
                   <input
                     type="number"
                     placeholder="0.00"
                     className="w-full rounded-md bg-gray-600 bg-opacity-25 p-2 focus:outline focus:outline-1 focus:outline-gray-200"
                     value = {Math.floor(bonus_rate * tron)}
                   />
+                  <div className="flex flex-row justify-center" style ={{margin:10}} >  <PaymentModal address = {wallet}  /></div>
                 </div>
               </div>
             </div>
-            <div className="flex flex-row justify-center" style ={{margin:10}} >  <PaymentModal address = {wallet}  /></div>
           </div>
         </div>
       </div>

@@ -78,6 +78,12 @@
   .bg-gradient-blues {
     background: linear-gradient(to right, #56ccf2, #2f80ed) !important;
   }
+  .bg-gradient-blues2 {
+    background: linear-gradient(to right, #befccd, #5efd79) !important;
+  }
+  .bg-gradient-blues3 {
+    background: linear-gradient(to right, #d5f7ff, #6bfae7) !important;
+  }
   .popup-background {
     background: rgb(70, 61, 59);
     background: linear-gradient(
