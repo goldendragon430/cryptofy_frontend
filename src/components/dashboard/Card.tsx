@@ -24,13 +24,13 @@ const Card: FC<CurrencyCard> = ({ coinType, amount, power, imgSrc, color,total,u
         <div className="flex w-full flex-col items-start justify-center gap-2">
           <span className="text-base text-white ">{coinType}</span>
           <span className="text-2xl font-bold text-white ">
-            {balance.toFixed(12)}
+            {balance.toFixed(10)}
           </span>
           <span className="text-xs uppercase text-white ">
             power {defaultValue} gh/s
           </span>
         </div>
-        <img src={imgSrc} className="h-16 w-16 self-center" alt="" />
+        <img src={imgSrc} className="lg:h-16 lg:w-16 self-center" alt="" />
       </div>
       <div className="mt-4 flex h-fit w-full items-center justify-center gap-2 ">
         <AiOutlinePlaySquare

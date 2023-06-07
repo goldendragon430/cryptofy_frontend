@@ -106,6 +106,8 @@ export default function Dashboard() {
   const [open, setOpen] = useState(true);
   const [, { logout }] = useAuth()
   const navigate = useNavigate()
+  const [bannerVisible, setbannerVisible] = useState(true);
+
   const onLogout = () => {
     logout()
     navigate('/')
@@ -119,6 +121,10 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleDismissBanner = () => {
+    setbannerVisible(false);
+  }
 
   useEffect(() => {
     const handleResize = () => {
@@ -246,6 +252,27 @@ export default function Dashboard() {
           >
             <img src={Imgsrc} className="h-8 w-8 " />
           </IconButton>
+
+          {/* //////////////Banner/////////// */}
+          {bannerVisible &&
+            <div className="absolute isolate flex items-center gap-x-6 bg-gray-50 px-12 py-6 sm:px-3.5 sm:before:flex-1 top-0 rounded-b-lg w-full right-0 transform -transform-x-1/2 bg-img3 bg-cover bg-center">
+              <div className="flex flex-wrap items-center place-content-center gap-x-4 gap-y-2">
+                <p className="gap-4 flex items-center flex-col lg:flex-row">
+                  <span className="text-xl">08 June ~ 10 June</span>
+                  <strong className="font-semibold text-black text-3xl">Depoit bonus 300%</strong>
+                </p>
+                <a href="#" className="flex-none rounded-full bg-white px-3.5 py-1 text-sm font-semibold text-black shadow-sm hover:bg-black hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">Deposit now <span aria-hidden="true">→</span></a>
+              </div>
+              <div className="flex flex-1 justify-end">
+                <button type="button" className="-m-3 p-3 focus-visible:outline-offset-[-4px]" onClick={handleDismissBanner}>
+                  <span className="sr-only">Dismiss</span>
+                  <svg className="h-5 w-5 text-gray-900" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          }
           <button className="whitespace-nowrap px-8 py-4 rounded-bl-lg rounded-tr-lg bg-colord text-base text-white" onClick={onLogout}>
             Log out
           </button>

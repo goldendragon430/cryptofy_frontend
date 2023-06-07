@@ -181,9 +181,9 @@ const MainDashboard: React.FC = () => {
         <span className="text-2xl font-semibold text-cblack lg:text-4xl">
           Hi, {username} 👋
         </span>
-        <span className="w-full rounded-md border border-cblack bg-gray-200 p-4 text-start text-base font-semibold text-cblack">
+        {/* <span className="w-full rounded-md border border-cblack bg-gray-200 p-4 text-start text-base font-semibold text-cblack">
           Only today the bonus +5% to the deposit when replenishing from $25
-        </span>
+        </span> */}
       </div>
       <div className="flex h-fit w-[100%] flex-col  items-center justify-center gap-4">
         <span className="self-start text-base font-bold uppercase text-cblack">
@@ -200,11 +200,11 @@ const MainDashboard: React.FC = () => {
               imgSrc={Imgsrc2}
               color={"linear-gradient(to right, #2c5364, #203a43, #0f2027)"}
             />
-            <div className="w-full rounded-lg px-4 py-8 text-white text-center h-170 max-w-500 grid place-items-center bg-gradient-to-r from-blue-900 via-teal-800 to-blue-800">
+            <div className="w-full rounded-lg px-8 py-4 text-white text-center h-170 max-w-500 grid place-items-center bg-gradient-to-r from-blue-900 via-teal-800 to-blue-800">
               <h1 style={{ fontSize: 20 }}>Minimum Deposit Limit: 100 TRX</h1>
               <h1 style={{ fontSize: 20 }}>1 GH/s = 10 TRX</h1>
               <h1 style={{ fontSize: 20 }}>Daily 0.5TRX Per GH/s</h1>
-              <p style={{ fontSize: 14, marginTop: 20 }}>TRX will credit your balance every second, our minig experts will keep your miner online 24/7</p>
+              <p className="text-base">TRX will credit your balance every second, our mining experts will keep your miner online 24/7</p>
             </div>
           </>
           }

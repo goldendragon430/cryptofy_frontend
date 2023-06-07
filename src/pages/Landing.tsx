@@ -1,26 +1,26 @@
-import  { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import NavBar from "../components/global/Navbar";
 import Nav2 from "../components/global/Nav2";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../contexts/SessionContext";
 import { useApi } from "../contexts/ApiContext";
 import { toast } from "react-toastify";
-import {FaUserCheck} from 'react-icons/fa'
-import {AiOutlineUsergroupAdd} from 'react-icons/ai'
-import {GiPresent, GiMoneyStack} from 'react-icons/gi'
-import {ImMobile} from 'react-icons/im'
-import {GrMoney} from 'react-icons/gr'
+import { FaUserCheck } from 'react-icons/fa'
+import { AiOutlineUsergroupAdd } from 'react-icons/ai'
+import { GiPresent, GiMoneyStack } from 'react-icons/gi'
+import { ImMobile } from 'react-icons/im'
+import { GrMoney } from 'react-icons/gr'
 import TRXImg from '../assets/tron2.png'
 import TransactionsTable from "../components/landing/TransactionsTable";
 import { PriceCard } from "../components/Pricing";
 function Landing() {
-  const {id} = useParams()
+  const { id } = useParams()
   const [tron, setTron] = useState(0)
 
-  const [{doPost}] = useApi()
+  const [{ doPost }] = useApi()
   const [user,] = useAuth()
   const token = user?.token
-  const [bonus_rate,setBonusRate] = useState(1)
+  const [bonus_rate, setBonusRate] = useState(1)
   // const [plan,setPlan] = useState([
   //   {
   //     "level": 1,
@@ -41,49 +41,49 @@ function Landing() {
   //     "bonus": 2
   // }
   // ])
- const plan = [
-  {
-    "level": 1,
-    "amount": 100,
-    "period": 1,
-    "bonus": 1.2
-},
-{
-    "level": 2,
-    "amount": 100,
-    "period": 30,
-    "bonus": 1.5
-},
-{
-    "level": 3,
-    "amount": 100,
-    "period": 60,
-    "bonus": 2
-}
-]
-  const get_config = async()=>{
-    const result = await doPost('mining/get_configuration',{
-      'token' : token
-    })
-    if(result.error||result['result'] == "failed"){
-      toast.error("Error")
-    }else{
-      const data = result['data']
-       setBonusRate(data['bonus_rate'])
-    }  
-  }
-useEffect(()=>{
-  if(token){
-    get_config()
-  }
-},[token])
-  useEffect(()=>{
-    if(id){
-      localStorage.setItem('referral',id)
-    }else{
-      localStorage.setItem('referral','0')
+  const plan = [
+    {
+      "level": 1,
+      "amount": 100,
+      "period": 1,
+      "bonus": 1.2
+    },
+    {
+      "level": 2,
+      "amount": 100,
+      "period": 30,
+      "bonus": 1.5
+    },
+    {
+      "level": 3,
+      "amount": 100,
+      "period": 60,
+      "bonus": 2
     }
-  },[id])
+  ]
+  const get_config = async () => {
+    const result = await doPost('mining/get_configuration', {
+      'token': token
+    })
+    if (result.error || result['result'] == "failed") {
+      toast.error("Error")
+    } else {
+      const data = result['data']
+      setBonusRate(data['bonus_rate'])
+    }
+  }
+  useEffect(() => {
+    if (token) {
+      get_config()
+    }
+  }, [token])
+  useEffect(() => {
+    if (id) {
+      localStorage.setItem('referral', id)
+    } else {
+      localStorage.setItem('referral', '0')
+    }
+  }, [id])
   return (
     <main className="px-3 font-muli text-custblack lg:px-0">
       {/* <div className="hidden justify-start gap-5 border-b-[.000000001px] border-[#535a7076] py-5 pl-10 lg:flex">
@@ -109,13 +109,13 @@ useEffect(()=>{
       <section className="w-full bg-no-repeat pb-32 pt-10 lg:bg-[100%] bg-banner bg-center mt-[72px]">
         <div className="flex w-[95%] flex-col items-baseline gap-1 lg:ml-10 lg:mt-20 lg:w-[40rem]">
           <h1 className="mb-10 w-[80%] text-4xl font-bold leading-[3rem] text-darkblue lg:w-full lg:text-7xl">
-          Cloud Mining Platform for{" "}
+            Cloud Mining Platform for{" "}
             <strong className="text-6xl text-secondred">TRX</strong>
           </h1>
-          <p  className="text-md mb-10 w-[90%] text-left font-medium leading-8 text-black lg:text-lg lg:text-[#535a70]">
-          Innovative and modern trx cloud mining platform with updated equipment and cryptocurrency mining technology, which accelerated the time for users to earn TRX everyday.
+          <p className="text-md mb-10 w-[90%] text-left font-medium leading-8 text-black lg:text-lg lg:text-[#535a70]">
+            Innovative and modern trx cloud mining platform with updated equipment and cryptocurrency mining technology, which accelerated the time for users to earn TRX everyday.
           </p>
-         
+
         </div>
       </section>
       {/* <section className="flex w-full items-center justify-center lg:mt-52">
@@ -150,61 +150,61 @@ useEffect(()=>{
       </section>
       <section className="flex flex-col justify-center gap-3 lg:grid lg:grid-cols-3 lg:grid-rows-1 lg:px-10">
         <div className="flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
-          <FaUserCheck style = {{width:100,height:100}}/>
+          <FaUserCheck style={{ width: 100, height: 100 }} />
           <h3 className="text-2xl font-bold text-darkblue">
             Sign Up Bonus
           </h3>
           <p className="text-md w-[80%] text-center font-light leading-7 text-darkblue2 lg:text-lg">
-          Register an account and get 100GH/s Power for <b style = {{color : 'red',fontSize : 30}}>free</b>
+            Register an account and get 100GH/s Power for <b style={{ color: 'red', fontSize: 30 }}>free</b>
           </p>
         </div>
         <div className="flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
-          <AiOutlineUsergroupAdd style = {{width:100,height:100}}/>
+          <AiOutlineUsergroupAdd style={{ width: 100, height: 100 }} />
           <h3 className="text-2xl font-bold text-darkblue">
-          Three-level Affiliate
+            Three-level Affiliate
           </h3>
           <p className="text-md w-[80%] text-center font-light leading-7 text-darkblue2 lg:text-lg">
-          Get 10% for 1-level  each new Deposit, 5% for 2-level and 2% for 3-level partners.
+            Get 10% for 1-level  each new Deposit, 5% for 2-level and 2% for 3-level partners.
           </p>
         </div>
         <div className="flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
-          <GiPresent style = {{width:100,height:100}}/>
+          <GiPresent style={{ width: 100, height: 100 }} />
           <h3 className="text-2xl font-bold text-darkblue">
-          Daily Bonus
+            Daily Bonus
           </h3>
           <p className="text-md w-[80%] text-center font-light leading-7 text-darkblue2 lg:text-lg">
-          A random bonus for all users every day and the system of rewards for cooperation.
-          </p>
-        </div>  
-        <div className="flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
-          <ImMobile style = {{width:100,height:100}}/>
-          <h3 className="text-2xl font-bold text-darkblue">
-          Easy Payments
-          </h3>
-          <p className="text-md w-[80%] text-center font-light leading-7 text-darkblue2 lg:text-lg">
-          Top up your account with TRX
+            A random bonus for all users every day and the system of rewards for cooperation.
           </p>
         </div>
         <div className="flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
-          <GrMoney style = {{width:100,height:100}}/>
+          <ImMobile style={{ width: 100, height: 100 }} />
           <h3 className="text-2xl font-bold text-darkblue">
-          Double income
+            Easy Payments
           </h3>
           <p className="text-md w-[80%] text-center font-light leading-7 text-darkblue2 lg:text-lg">
-          Get double income not only from daily mining you can also stake trx to get even higher profit.
+            Top up your account with TRX
           </p>
         </div>
         <div className="flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
-          <GiMoneyStack style = {{width:100,height:100}}/>
+          <GrMoney style={{ width: 100, height: 100 }} />
           <h3 className="text-2xl font-bold text-darkblue">
-          Withdrawal without deposit
+            Double income
           </h3>
           <p className="text-md w-[80%] text-center font-light leading-7 text-darkblue2 lg:text-lg">
-          The user who has not made a deposit and has collected the minimum amount for withdrawal is allowed to withdraw after ~ 60 days.
+            Get double income not only from daily mining you can also stake trx to get even higher profit.
           </p>
-        </div>         
+        </div>
+        <div className="flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
+          <GiMoneyStack style={{ width: 100, height: 100 }} />
+          <h3 className="text-2xl font-bold text-darkblue">
+            Withdrawal without deposit
+          </h3>
+          <p className="text-md w-[80%] text-center font-light leading-7 text-darkblue2 lg:text-lg">
+            The user who has not made a deposit and has collected the minimum amount for withdrawal is allowed to withdraw after ~ 60 days.
+          </p>
+        </div>
       </section>
-      <section className="flex items-center justify-center lg:h-[10rem]" style = {{marginTop:20}}>
+      <section className="flex items-center justify-center lg:h-[10rem]" style={{ marginTop: 20 }}>
         <h1 className="text-3xl font-bold text-darkblue lg:text-5xl">
           TRX MINING <span className="text-primred">PROFIT</span> CALCULATOR
         </h1>
@@ -217,7 +217,7 @@ useEffect(()=>{
               className="h-48 w-48 rounded-md bg-white p-1"
               alt=""
             />
-            
+
           </div>
           <div className="text-white font-extrabold col-span-2 cornered-border-l flex w-full flex-col items-center justify-between gap-10 bg-img2 bg-cover bg-center px-10 py-16 lg:w-[70%] lg:py-20">
             <div>
@@ -267,9 +267,9 @@ useEffect(()=>{
           </h1>
         </div>
         <div className="grid grid-cols-1 gap-5 py-20 lg:grid-cols-3 w-[90%]">
-            <PriceCard days={plan[0]['period']} min={plan[0]['amount']} perc={plan[0]['bonus']*100} plan={1} handler = {()=>{}} />
-            <PriceCard days={plan[1]['period']} min={plan[1]['amount']} perc={plan[1]['bonus']*100} plan={2} handler = {()=>{}}/>
-            <PriceCard days={plan[2]['period']} min={plan[2]['amount']} perc={plan[2]['bonus']*100} plan={3} handler = {()=>{}}/>
+          <PriceCard days={plan[0]['period']} min={plan[0]['amount']} perc={plan[0]['bonus'] * 100} plan={1} handler={() => { }} />
+          <PriceCard days={plan[1]['period']} min={plan[1]['amount']} perc={plan[1]['bonus'] * 100} plan={2} handler={() => { }} />
+          <PriceCard days={plan[2]['period']} min={plan[2]['amount']} perc={plan[2]['bonus'] * 100} plan={3} handler={() => { }} />
         </div>
       </section>
       <section className="mt-32 flex items-center justify-center px-1">
@@ -282,7 +282,7 @@ useEffect(()=>{
               type="text"
               className="w[70%] lg:text-md bg-transparent px-4 py-4 text-sm text-custblack outline-none lg:px-8 lg:py-3"
               placeholder="Enter Email"
-              style = {{minWidth:100}}
+              style={{ minWidth: 100 }}
             />
             <button className="cornered-border bg-gradient-to-r from-red-600 to-orange-500 px-7 py-3 text-white">
               Subscribe
@@ -327,7 +327,7 @@ useEffect(()=>{
           </div>
         </div>
       </section>
-      <section className="mb-20 flex flex-col justify-center gap-4 bg-[#f8fcff] lg:pt-10" id = "statistics" >
+      <section className="mb-20 flex flex-col justify-center gap-4 bg-[#f8fcff] lg:pt-10" id="statistics" >
         <div className="flex flex-col items-center justify-center gap-4">
           <h6 className="text-2xl font-bold text-secondred lg:text-xl">
             Trxmining Live Records.
@@ -439,7 +439,7 @@ useEffect(()=>{
                 className="w-[70%] bg-[#80808060]"
               />
               <span className="text-sm font-bold text-white">
-                company number <b className="underline"><a href = "https://find-and-update.company-information.service.gov.uk/company/12707554" >12707554</a></b>
+                company number <b className="underline"><a href="https://find-and-update.company-information.service.gov.uk/company/12707554" >12707554</a></b>
               </span>
             </div>
             <span className="whitespace-pre-wrap text-sm font-bold text-white">
