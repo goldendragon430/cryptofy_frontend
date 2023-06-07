@@ -16,7 +16,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { useState } from "react";
-import { BsFillGridFill, BsPeopleFill } from "react-icons/bs";
+import { BsPeopleFill } from "react-icons/bs";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { AiFillProfile, AiTwotoneHome } from "react-icons/ai";
@@ -166,12 +166,6 @@ export default function Dashboard() {
       active: false,
       link: "statistics",
       icon: <BiStats className="text-xl font-bold text-cblack" />,
-    },
-    {
-      text: "Plans",
-      active: false,
-      link: "/plans",
-      icon: <BsFillGridFill className="text-xl font-bold text-cblack" />,
     },
     {
       text: "Contacts",

@@ -202,6 +202,7 @@ const TransactionsTable = () => {
       <DataGrid
         rows={rows}
         columns={columns}
+       
         initialState={{
           pagination: {
             paginationModel: {
@@ -210,7 +211,7 @@ const TransactionsTable = () => {
           },
         }}
         pageSizeOptions={[5]}
-        checkboxSelection
+        // checkboxSelection
         disableRowSelectionOnClick
         sx={{ width: "100%" }}
       />

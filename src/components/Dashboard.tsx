@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { AiFillDashboard, AiTwotoneHome } from "react-icons/ai";
-import { BsPeopleFill, BsFillGridFill } from "react-icons/bs";
+import { BsPeopleFill } from "react-icons/bs";
 import { TbMilitaryAward } from "react-icons/tb";
 import { GiCircleClaws } from "react-icons/gi";
 import { TiMessages } from "react-icons/ti";
@@ -181,14 +181,9 @@ export default function Dashboard() {
       link: "/#statistics",
       icon: <BiStats className="text-xl font-bold text-cblack" />,
     },
+    
     {
-      text: "Plans",
-      active: false,
-      link: "/plans",
-      icon: <BsFillGridFill className="text-xl font-bold text-cblack" />,
-    },
-    {
-      text: "Contacts",
+      text: "Contact us",
       active: false,
       link: "/contacts",
       icon: <TiMessages className="text-xl font-bold text-cblack" />,
