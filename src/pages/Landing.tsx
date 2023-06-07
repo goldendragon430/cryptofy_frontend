@@ -70,13 +70,11 @@ useEffect(()=>{
       <section className="bg-custom w-full bg-banner bg-no-repeat pb-32 pt-10 lg:bg-contain lg:bg-[100%]">
         <div className="flex w-[95%] flex-col items-baseline gap-1 lg:ml-10 lg:mt-20 lg:w-[40rem]">
           <h1 className="mb-10 w-[80%] text-4xl font-bold leading-[3rem] text-darkblue lg:w-full lg:text-7xl">
-            Reliable online Investment for{" "}
-            <strong className="text-6xl text-secondred">TRX</strong> Coin.
+          Cloud Mining Platform for{" "}
+            <strong className="text-6xl text-secondred">TRX</strong>
           </h1>
           <p className="text-md mb-10 w-[90%] text-left font-medium leading-8 text-[#535a70] lg:text-lg">
-            It's very easy to earning after registration. Once you have set up
-            your account, you can start earning your first coins from our
-            TRXcoin Tron Time service!.
+          Innovative and modern trx cloud mining platform with updated equipment and cryptocurrency mining technology, which accelerated the time for users to earn TRX everyday.
           </p>
           {/* <div className="w-full flex flex-col justify-start items-baseline"> */}
           {/* <input
@@ -90,7 +88,7 @@ useEffect(()=>{
           {/* </div> */}
         </div>
       </section>
-      <section className="flex w-full items-center justify-center lg:mt-52">
+      {/* <section className="flex w-full items-center justify-center lg:mt-52">
         <div className="flex w-[95%] flex-col items-baseline gap-12 lg:flex-row lg:items-center">
           <img
             src="https://unxbot.com/unxtem24/trx_v2/assets/img/gallery/inv_team.jpg"
@@ -114,8 +112,8 @@ useEffect(()=>{
             </a>
           </div>
         </div>
-      </section>
-      <section className="flex items-center justify-center py-20 pt-14 lg:h-[30rem]">
+      </section> */}
+      <section className="flex items-center justify-center py-20  lg:h-[10rem]">
         <h1 className="text-3xl font-bold text-darkblue lg:text-5xl">
           What Makes <span className="text-primred">Trx.uk</span> Special?
         </h1>
@@ -176,7 +174,7 @@ useEffect(()=>{
           </p>
         </div>         
       </section>
-      <section className="flex items-center justify-center py-20 pt-14 lg:h-[30rem]">
+      <section className="flex items-center justify-center lg:h-[10rem]" style = {{marginTop:20}}>
         <h1 className="text-3xl font-bold text-darkblue lg:text-5xl">
           TRX MINING <span className="text-primred">PROFIT</span> CALCULATOR
         </h1>
@@ -234,7 +232,7 @@ useEffect(()=>{
           <p className="text-md mb-5 mt-10 text-left font-medium text-[#535a70] lg:text-center lg:text-lg">
             Our Investment plan for you
           </p>
-          <h1 className="mb-20 text-3xl font-bold text-darkblue lg:text-4xl">
+          <h1 className="mb-10 text-3xl font-bold text-darkblue lg:text-4xl">
             Choose Your Plan Easily!
           </h1>
         </div>
@@ -400,12 +398,12 @@ useEffect(()=>{
           </div>
         </div>
       </section>
-      <section className="mb-20 flex flex-col justify-center gap-4 bg-[#f8fcff] lg:pt-52" id = "statistics" >
+      <section className="mb-20 flex flex-col justify-center gap-4 bg-[#f8fcff] lg:pt-10" id = "statistics" >
         <div className="flex flex-col items-center justify-center gap-4">
           <h6 className="text-2xl font-bold text-secondred lg:text-xl">
             Trxmining Live Records.
           </h6>
-          <h1 className="text-2xl font-bold text-darkblue lg:mb-20 lg:text-5xl" >
+          <h1 className="text-2xl font-bold text-darkblue lg:mb-0 lg:text-5xl" >
             CURRENT STATISTICS.
           </h1>
         </div>
@@ -489,16 +487,16 @@ useEffect(()=>{
           </div>
         </div>
       </section>
-      <section className="mb-20 flex flex-col justify-center align-center items-center gap-4 bg-[#f8fcff] lg:pt-52">
+      <section className="mb-10 flex flex-col justify-center align-center items-center gap-4 bg-[#f8fcff] lg:pt-0">
         <div className="mb-4">
           <p className="text-2xl mb-5 mt-10 text-center font-black text-[#535a70] lg:text-center lg:text-4xl">
             Recent Transactions
           </p>
-          <h1 className="mb-20 text-xl font-bold text-darkblue text-center lg:text-2xl">
+          <h1 className="mb-10 text-xl font-bold text-darkblue text-center lg:text-2xl">
             Start Earning Now
           </h1>
         </div>
-        <div className="w-[90%] rounded-lg p-6 shadow-md">
+        <div className="w-[100%] rounded-lg p-6 shadow-md">
           <TransactionsTable />
         </div>
       </section>

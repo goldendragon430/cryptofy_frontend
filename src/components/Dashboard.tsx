@@ -181,14 +181,9 @@ export default function Dashboard() {
       link: "/#statistics",
       icon: <BiStats className="text-xl font-bold text-cblack" />,
     },
+    
     {
-      text: "Plans",
-      active: false,
-      link: "/plans",
-      icon: <BsFillGridFill className="text-xl font-bold text-cblack" />,
-    },
-    {
-      text: "Contacts",
+      text: "Contact us",
       active: false,
       link: "/contacts",
       icon: <TiMessages className="text-xl font-bold text-cblack" />,

@@ -168,12 +168,6 @@ export default function Dashboard() {
       icon: <BiStats className="text-xl font-bold text-cblack" />,
     },
     {
-      text: "Plans",
-      active: false,
-      link: "/plans",
-      icon: <BsFillGridFill className="text-xl font-bold text-cblack" />,
-    },
-    {
       text: "Contacts",
       active: false,
       link: "/contacts",
