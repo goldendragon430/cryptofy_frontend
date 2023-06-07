@@ -19,14 +19,14 @@ const Nav2 = () => {
 
   },[])
   return (
-    <header className="sticky top-0 z-10 hidden w-full items-center justify-between bg-white px-10 shadow-lg lg:flex">
-      <a href="#">
+    <header className="sticky top-0 z-10  w-full items-center justify-between bg-white px-10 shadow-lg lg:flex">
+      <a href="#" className="hidden lg:flex" >
         <img
           src={logo}
           alt=""
         />
       </a>
-      <nav>
+      <nav className="hidden lg:flex">
         <ul className="flex items-center justify-center gap-7">
           <li>
             <a className="text-primviolet hover:text-secondred" href="/">
