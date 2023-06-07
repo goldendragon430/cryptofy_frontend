@@ -259,7 +259,7 @@ export default function Dashboard() {
               <div className="flex flex-wrap items-center place-content-center gap-x-4 gap-y-2">
                 <p className="gap-4 flex items-center flex-col lg:flex-row">
                   <span className="text-xl">08 June ~ 10 June</span>
-                  <strong className="font-semibold text-black text-3xl">Depoit bonus 300%</strong>
+                  <strong className="font-semibold text-black text-3xl">Deposit bonus 300%</strong>
                 </p>
                 <a href="#" className="flex-none rounded-full bg-white px-3.5 py-1 text-sm font-semibold text-black shadow-sm hover:bg-black hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">Deposit now <span aria-hidden="true">→</span></a>
               </div>
