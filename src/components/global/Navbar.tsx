@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import logo from '../../assets/updatedlogo.png'
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -7,7 +7,7 @@ export default function NavBar() {
     <header className="lg:hidden fixed top-0 left-0 w-full box-shadow bg-white z-10">
       <div className="flex justify-between px-2 items-center">
         <img
-          src="https://unxbot.com/unxtem24/trx_v2/assets/img/logo/logo.png"
+          src={logo}
           className="w-50 h-10 mr-2"
           alt="Logo"
         />

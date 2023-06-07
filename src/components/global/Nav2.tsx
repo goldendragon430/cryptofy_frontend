@@ -3,6 +3,7 @@ import SignUpModal from "../Register";
 import LoginModal from "../Login";
 import {useAuth} from '../../contexts/SessionContext'
 import { useNavigate } from "react-router-dom";
+import logo from '../../assets/updatedlogo.png'
 const Nav2 = () => {
   const [, { isAuthed }] = useAuth();
   const [isLOpen, setIsLOpen] = useState(false);
@@ -21,7 +22,7 @@ const Nav2 = () => {
     <header className="sticky top-0 z-10 hidden w-full items-center justify-between bg-white px-10 shadow-lg lg:flex">
       <a href="#">
         <img
-          src="https://unxbot.com/unxtem24/trx_v2/assets/img/logo/logo.png"
+          src={logo}
           alt=""
         />
       </a>

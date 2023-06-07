@@ -67,25 +67,16 @@ useEffect(()=>{
       </div> */}
       <NavBar />
       <Nav2 />
-      <section className="bg-custom w-full bg-banner bg-no-repeat pb-32 pt-10 lg:bg-contain lg:bg-[100%]">
+      <section className="bg-custom w-full  bg-no-repeat pb-32 pt-10 lg:bg-contain lg:bg-[80%] lg:bg-banner">
         <div className="flex w-[95%] flex-col items-baseline gap-1 lg:ml-10 lg:mt-20 lg:w-[40rem]">
           <h1 className="mb-10 w-[80%] text-4xl font-bold leading-[3rem] text-darkblue lg:w-full lg:text-7xl">
           Cloud Mining Platform for{" "}
             <strong className="text-6xl text-secondred">TRX</strong>
           </h1>
-          <p className="text-md mb-10 w-[90%] text-left font-medium leading-8 text-[#535a70] lg:text-lg">
+          <p  lg:bg-banner  className="text-md mb-10 w-[90%] text-left font-medium leading-8 text-[#535a70] lg:text-lg">
           Innovative and modern trx cloud mining platform with updated equipment and cryptocurrency mining technology, which accelerated the time for users to earn TRX everyday.
           </p>
-          {/* <div className="w-full flex flex-col justify-start items-baseline"> */}
-          {/* <input
-            className="cornered-border lg:text-md w-full border-2 border-primred bg-transparent px-4 py-4 text-sm outline-none lg:w-[40rem] lg:px-8 lg:py-5"
-            type="text"
-            placeholder="Enter BTC or TRX Address"
-          />
-          <button className="btn cornered-border px-8 py-4 text-white hover:bg-left lg:mt-2">
-            Start Mining
-          </button> */}
-          {/* </div> */}
+         
         </div>
       </section>
       {/* <section className="flex w-full items-center justify-center lg:mt-52">
