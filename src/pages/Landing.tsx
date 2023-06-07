@@ -367,7 +367,7 @@ useEffect(()=>{
             How To Earn <span className="text-primred">TRX</span> ?
           </h1>
         </div>
-        <div className="my-20 flex grid-cols-4 items-center justify-start gap-5 lg:grid">
+        <div className="my-20 grid-cols-1 items-center justify-start gap-5 lg:grid lg:grid-cols-4">
           <div className="box-shadow flex flex-col items-center justify-center gap-2 bg-white py-4 text-darkblue text-center h-full lg:px-4">
             <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-xl font-bold rounded-full text-white">
               1
@@ -510,7 +510,7 @@ useEffect(()=>{
                 className="w-[70%] bg-[#80808060]"
               />
               <span className="text-sm font-bold text-white">
-                company number <b className="underline">57687980</b>
+                company number <b className="underline"><a href = "https://find-and-update.company-information.service.gov.uk/company/12707554" >12707554</a></b>
               </span>
             </div>
             <span className="whitespace-pre-wrap text-sm font-bold text-white">
@@ -533,11 +533,13 @@ useEffect(()=>{
             <span className="text-base font-bold uppercase text-white">
               quick link
             </span>
-            <div className="gap flex w-full flex-col items-start text-sm font-medium">
-              <span className="footerLink">Account</span>
-              <span className="footerLink">Status</span>
-              <span className="footerLink">FAQ</span>
-              <span className="footerLink">Contact</span>
+            <div className="gap flex w-full flex-col items-start text-white text-sm font-medium">
+              <a href="/affiliate-program">Affiliate Program</a>
+              <a href="/faq">FAQ</a>
+              <a href="/about-us">About US</a>
+              <a href="/terms">Terms</a>
+              <a href="/plans">Plans</a>
+              <a href="/contacts">Contacts</a>
             </div>
           </div>
         </div>
