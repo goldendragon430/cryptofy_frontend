@@ -21,27 +21,46 @@ function Landing() {
   const [user,] = useAuth()
   const token = user?.token
   const [bonus_rate,setBonusRate] = useState(1)
-  const [plan,setPlan] = useState([
-    {
-      "level": 1,
-      "amount": 100,
-      "period": 1,
-      "bonus": 1.2
-  },
+  // const [plan,setPlan] = useState([
+  //   {
+  //     "level": 1,
+  //     "amount": 100,
+  //     "period": 1,
+  //     "bonus": 1.2
+  // },
+  // {
+  //     "level": 2,
+  //     "amount": 100,
+  //     "period": 30,
+  //     "bonus": 1.5
+  // },
+  // {
+  //     "level": 3,
+  //     "amount": 100,
+  //     "period": 60,
+  //     "bonus": 2
+  // }
+  // ])
+ const plan = [
   {
-      "level": 2,
-      "amount": 100,
-      "period": 30,
-      "bonus": 1.5
-  },
-  {
-      "level": 3,
-      "amount": 100,
-      "period": 60,
-      "bonus": 2
-  }
-  ])
-
+    "level": 1,
+    "amount": 100,
+    "period": 1,
+    "bonus": 1.2
+},
+{
+    "level": 2,
+    "amount": 100,
+    "period": 30,
+    "bonus": 1.5
+},
+{
+    "level": 3,
+    "amount": 100,
+    "period": 60,
+    "bonus": 2
+}
+]
   const get_config = async()=>{
     const result = await doPost('mining/get_configuration',{
       'token' : token
