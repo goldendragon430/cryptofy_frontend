@@ -36,7 +36,7 @@ const Bonuses: React.FC = () => {
         </span>
         <div className="w-full border-t border-t-gray-200 pt-6">
           <div className="box-2 flex w-full justify-start rounded-lg bg-cblack">
-            <div className="flex h-[18rem] w-[35%] items-center justify-center rounded-l-lg bg-[#ffc107] px-1 py-20 text-4xl text-gray-200 text-opacity-50 lg:h-auto lg:w-[10%]">
+            <div className="flex h-[18rem] lg:w-[10%] items-center justify-center rounded-l-lg bg-[#ffc107] px-1 py-20 text-4xl text-gray-200 text-opacity-50 lg:h-auto lg:w-[10%]">
               <BsFillGiftFill />
             </div>
             <div className="flex w-[65%] flex-col justify-center gap-2 py-4 pl-4 text-white lg:w-[80%]">

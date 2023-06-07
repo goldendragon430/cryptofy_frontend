@@ -11,11 +11,11 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { GrFormClose } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
-import {PriceCard} from './Pricing'
-import {BsSpeedometer,BsFillSafe2Fill} from "react-icons/bs";
-import {IoMdWallet}  from 'react-icons/io'
+import { PriceCard } from './Pricing'
+import { BsSpeedometer, BsFillSafe2Fill } from "react-icons/bs";
+import { IoMdWallet } from 'react-icons/io'
 
-function useForceUpdate(){
+function useForceUpdate() {
   const [value, setValue] = useState(0); // integer state
   console.log(value)
   return () => setValue(value => value + 1); // update state to force render
@@ -30,139 +30,137 @@ const MainDashboard: React.FC = () => {
   const forceUpdate = useForceUpdate()
   const [balance, setBalance] = useState(0.00)
   const [power, setPower] = useState(0)
-  const [total,setTotal] = useState(180)
-  const [time,setTime] = useState(0)
-  const [transactions,setTransactions] = useState([])
-  const [{doPost}] = useApi()
+  const [total, setTotal] = useState(180)
+  const [time, setTime] = useState(0)
+  const [transactions, setTransactions] = useState([])
+  const [{ doPost }] = useApi()
   const [user,] = useAuth()
   const username = user?.username
   const token = user?.token
-  const [plan,setPlan] = useState([
+  const [plan, setPlan] = useState([
     {
       "level": 1,
       "amount": 100,
       "period": 1,
       "bonus": 1.2
-  },
-  {
+    },
+    {
       "level": 2,
       "amount": 100,
       "period": 30,
       "bonus": 1.5
-  },
-  {
+    },
+    {
       "level": 3,
       "amount": 100,
       "period": 60,
       "bonus": 2
-  }
+    }
   ])
 
-  const getPlanConfig = async() =>{
-    
-    const result = await doPost('mining/get_plan_config',{
-      'token' : token
+  const getPlanConfig = async () => {
+
+    const result = await doPost('mining/get_plan_config', {
+      'token': token
     })
-    if(result.error||result['result'] == "failed"){
+    if (result.error || result['result'] == "failed") {
       toast.error("Error")
-    }else{
+    } else {
       const data = result['data']
-      setPlan(data)    
+      setPlan(data)
     }
   }
-  const getPower = async()=>{
-    const response = await doPost('mining/get_power',{
-      token : token
+  const getPower = async () => {
+    const response = await doPost('mining/get_power', {
+      token: token
     })
-    if(response.error || response.result == 'failed') {
+    if (response.error || response.result == 'failed') {
       toast.error("Server Error")
     }
-    else{
-      
-      setPower(response.power)      
-      setTotal(response.total_power)      
+    else {
+
+      setPower(response.power)
+      setTotal(response.total_power)
       setBalance(response.balance)
       forceUpdate()
     }
   }
 
-  const updatePower = async(value)=>{
+  const updatePower = async (value) => {
     setPower(value)
-    const response = await doPost('mining/set_power',{
-      token : token,
-      power : value
+    const response = await doPost('mining/set_power', {
+      token: token,
+      power: value
     })
-    if(response.error || response.result == 'failed') {
+    if (response.error || response.result == 'failed') {
       toast.error("Server Error")
     }
-    else{
+    else {
       // setPower(response.power)      
       // setTotal(response.total_power)      
       // setBalance(response.balance)
-    }    
+    }
   }
-  const getTransaction = async()=>{
-    const response = await doPost('transaction/get',{
-      token : token,
-      type : 'withdrawl'
+  const getTransaction = async () => {
+    const response = await doPost('transaction/get', {
+      token: token,
+      type: 'withdrawl'
     })
-    if(response.error || response.result == 'failed') {
+    if (response.error || response.result == 'failed') {
       toast.error("Server Error")
     }
-    else{
+    else {
       setTransactions(response.data)
     }
   }
-  const refresh = ()=>{
+  const refresh = () => {
     getPower()
     getPlanConfig()
     getTransaction()
     startTimer()
   }
-  const startTimer = ()=>{
+  const startTimer = () => {
     const timeout = setInterval(() => {
-     var currentTime = new Date();
-    // Time value to compare
-    var timeValue = new Date(user?.registered_time);
-    // Calculate the time difference in minutes
-    var diff_time = currentTime.getTime() - timeValue.getTime()
-    var timeDiffInMinutes = Math.floor((diff_time)/1000);
+      var currentTime = new Date();
+      // Time value to compare
+      var timeValue = new Date(user?.registered_time);
+      // Calculate the time difference in minutes
+      var diff_time = currentTime.getTime() - timeValue.getTime()
+      var timeDiffInMinutes = Math.floor((diff_time) / 1000);
       setTime(1440 * 60 - timeDiffInMinutes)
     }, 1000);
 
     return () => clearInterval(timeout);
   }
-  const onInvest = async(level,amount)=>{
-    if(balance > amount){
-      console.log(plan,level)
-      const result = await doPost('mining/invest_plan',{
-        token : token,
-        amount : amount,
-        bonus : plan[level-1]['bonus']*amount,
-        period : plan[level-1]['period']
+  const onInvest = async (level, amount) => {
+    if (balance > amount) {
+      console.log(plan, level)
+      const result = await doPost('mining/invest_plan', {
+        token: token,
+        amount: amount,
+        bonus: plan[level - 1]['bonus'] * amount,
+        period: plan[level - 1]['period']
       })
-      if(result['result'] == 'success'){
+      if (result['result'] == 'success') {
         toast.success("Success")
         refresh()
-      }else{
+      } else {
         toast.error(result['msg'])
       }
     }
-    else{
+    else {
       toast.error(`Your balance is low( current - ${Math.floor(balance)}Trx )`)
     }
   }
-  useEffect(()=>{
-    if (token)
-      {
-        refresh()
-        if(user.remain < 1  && !localStorage.getItem('showed'))
-            {
-              localStorage.setItem('showed','1')
-              setIsOpen(true)
-            }
+  useEffect(() => {
+    if (token) {
+      refresh()
+      if (user.remain < 1 && !localStorage.getItem('showed')) {
+        localStorage.setItem('showed', '1')
+        setIsOpen(true)
       }
-  },[token])
+    }
+  }, [token])
 
   useEffect(() => {
     const timeout = setInterval(() => {
@@ -170,11 +168,11 @@ const MainDashboard: React.FC = () => {
     }, 100);
 
     return () => clearInterval(timeout);
-  }, [power,balance]);
-  
-  const closeModal = ()=>{
+  }, [power, balance]);
+
+  const closeModal = () => {
     setIsOpen(false)
-   }
+  }
 
 
   return (
@@ -192,31 +190,31 @@ const MainDashboard: React.FC = () => {
           power distribution
         </span>
         <div className="grid h-fit grid-cols-1 w-full items-center justify-items-center gap-4  border-t-gray-200 py-4 lg:grid-cols-2">
-        { <>  
-          <Card
-               coinType="Tron"
-               amount={balance}
-               power={power}
-               total={total}
-               update = {updatePower}
-               imgSrc={Imgsrc2}
-               color={"linear-gradient(to right, #2c5364, #203a43, #0f2027)"}
-             />
-          <div className = "w-full rounded-lg p-2 px-4 py-4 text-white text-center" style = {{height:170,maxWidth:500,display: 'grid',alignItems: 'center',alignContent: 'center',background:"linear-gradient(to right, #2c5364, #203a43, #0f2027)"}}>
-                   <h1 style = {{fontSize:20}}>Minimum Deposit Limit: 100 TRX</h1>
-                   <h1 style = {{fontSize:20}}>1 GH/s = 10 TRX</h1>
-                   <h1 style = {{fontSize:20}}>Daily 0.5TRX Per GH/s</h1>
-                   <p style = {{fontSize:14,marginTop:20}}>TRX will credit your balance every second, our minig experts will keep your miner online 24/7</p>
-          </div>
-           </>
-        }
+          {<>
+            <Card
+              coinType="Tron"
+              amount={balance}
+              power={power}
+              total={total}
+              update={updatePower}
+              imgSrc={Imgsrc2}
+              color={"linear-gradient(to right, #2c5364, #203a43, #0f2027)"}
+            />
+            <div className="w-full rounded-lg px-4 py-8 text-white text-center h-170 max-w-500 grid place-items-center bg-gradient-to-r from-blue-900 via-teal-800 to-blue-800">
+              <h1 style={{ fontSize: 20 }}>Minimum Deposit Limit: 100 TRX</h1>
+              <h1 style={{ fontSize: 20 }}>1 GH/s = 10 TRX</h1>
+              <h1 style={{ fontSize: 20 }}>Daily 0.5TRX Per GH/s</h1>
+              <p style={{ fontSize: 14, marginTop: 20 }}>TRX will credit your balance every second, our minig experts will keep your miner online 24/7</p>
+            </div>
+          </>
+          }
         </div>
-        
+
       </div>
       <div className="flex w-full grid-cols-3 flex-col items-center justify-center gap-4 border-t border-t-gray-200 py-4 lg:grid lg:grid-cols-3 lg:gap-2">
         <div className="flex w-full items-center justify-between rounded-lg bg-cblack p-3 shadow-md">
           <div>
-            <span className="text-sm font-light text-gray-500">
+            <span className="text-sm font-light text-white">
               TOTAL POWER
             </span>
             <h1 className="text-lg font-bold text-white">{total}GH/s</h1>
@@ -227,10 +225,10 @@ const MainDashboard: React.FC = () => {
         </div>
         <div className="flex w-full items-center justify-between rounded-lg bg-cblack p-3 shadow-md">
           <div>
-            <span className="text-sm font-light text-gray-500">
+            <span className="text-sm font-light text-white">
               TOTAL EARNINGS
             </span>
-            <h1 className="text-lg font-bold text-white">100.232348234823842</h1>
+            <h1 className="text-lg font-bold text-white">100.2323482348</h1>
           </div>
           <div className="flex items-center justify-center rounded-md bg-[#198ded5a] p-3 text-3xl text-[#0dcaf0]">
             <IoMdWallet />
@@ -238,7 +236,7 @@ const MainDashboard: React.FC = () => {
         </div>
         <div className="flex w-full items-center justify-between rounded-lg bg-cblack p-3 shadow-md">
           <div>
-            <span className="text-sm font-light text-gray-500">
+            <span className="text-sm font-light text-white">
               STACKED PLAN
             </span>
             <h1 className="text-lg font-bold text-white">2</h1>
@@ -254,32 +252,31 @@ const MainDashboard: React.FC = () => {
         </span>
       </div>
       <div className="flex w-full grid-cols-2 flex-col items-center justify-center gap-4 border-t border-t-gray-200 py-4 lg:grid lg:grid-cols-1 lg:gap-2">
-        <div className="flex w-full items-center justify-between rounded-lg bg-cblack p-3 shadow-md">
+        <div className="flex w-full items-center justify-between rounded-lg bg-cblack p-3 shadow-md flex-col gap-5 lg:flex-row">
           <div className="flex">
-          <img
-                  src={Imgsrc2}
-                  alt="logo"
-                  className="h-14 w-14 rounded-md p-1"
-                />
-          <div style={{marginLeft:20}} >
-            <h1 className="text-lg font-bold text-white">
-              {balance}
-            </h1>
-            <span className="text-sm font-light text-gray-500">{power} GH/s</span>
+            <img
+              src={Imgsrc2}
+              alt="logo"
+              className="h-14 w-14 rounded-md p-1"
+            />
+            <div style={{ marginLeft: 20 }} >
+              <h1 className="text-lg font-bold text-white">
+                {balance.toFixed(10)}
+              </h1>
+              <span className="text-sm font-light text-gray-500">{power} GH/s</span>
+            </div>
           </div>
+          <div className="flex items-center justify-center gap-3">
+            <ReinvestModal balance={balance} onHide={refresh} />
+            <WithdrawModal balance={balance} onHide={refresh} />
           </div>
-          <div className="flex items-center justify-center gap-1">
-                <ReinvestModal balance = {balance} onHide = {refresh} />
-                <WithdrawModal balance = {balance} onHide = {refresh}/>
-          </div>           
         </div>
-  
       </div>
       <div className="grid grid-cols-1 gap-5 py-20 lg:grid-cols-3 w-full">
-            <PriceCard days={1} min={100} perc={120} plan={1} handler = {onInvest} />
-            <PriceCard days={30} min={100} perc={150} plan={2} handler = {onInvest}/>
-            <PriceCard days={60} min={100} perc={450} plan={3} handler = {onInvest}/>
-          </div>
+        <PriceCard days={1} min={100} perc={120} plan={1} handler={onInvest} />
+        <PriceCard days={30} min={100} perc={150} plan={2} handler={onInvest} />
+        <PriceCard days={60} min={100} perc={450} plan={3} handler={onInvest} />
+      </div>
       <div className="flex h-fit w-full flex-col items-center justify-center gap-4">
         <span className="self-start text-base font-bold uppercase text-cblack">
           ALL TRANSACTIONS
@@ -287,32 +284,32 @@ const MainDashboard: React.FC = () => {
         <div className="flex w-full items-center justify-center border-t border-t-gray-200">
           <div className="w-full overflow-x-scroll">
             <div className="flex w-[60rem] flex-col justify-center rounded-lg bg-cblack text-white shadow-lg lg:w-full">
-              
-            <table>
-              <thead style = {{height:50}}>
-                <th>No</th>
-                <th>Time</th>
-                <th>Amount</th>
-                <th>Hash</th>
-                <th>Type</th>
-              </thead>
-              <tbody style={{textAlign:'center'}}>
 
-                {transactions.map((item, i) => (
+              <table>
+                <thead style={{ height: 50 }}>
+                  <th>No</th>
+                  <th>Time</th>
+                  <th>Amount</th>
+                  <th>Hash</th>
+                  <th>Type</th>
+                </thead>
+                <tbody style={{ textAlign: 'center' }}>
+
+                  {transactions.map((item, i) => (
                     <tr
-                      style = {{height:40}}
+                      style={{ height: 40 }}
                       key={i}
                     >
-                      <td>{i+1}</td>
+                      <td>{i + 1}</td>
                       <td>{item.time}</td>
                       <td>{item.amount}</td>
-                      <td>{item.hash.substring(0,10)}...</td>
+                      <td>{item.hash.substring(0, 10)}...</td>
                       <td>{item.type}</td>
                     </tr>
                   ))}
-              </tbody>
-            </table>
-           { transactions.length == 0 &&<p style = {{margin:30,textAlign:'center'}} >No Transactions yet.</p>}
+                </tbody>
+              </table>
+              {transactions.length == 0 && <p style={{ margin: 30, textAlign: 'center' }} >No Transactions yet.</p>}
             </div>
           </div>
         </div>
@@ -360,20 +357,20 @@ const MainDashboard: React.FC = () => {
                     <div className="flex items-center justify-center gap-3 ">
                       <div className="flex flex-col items-center justify-center bg-gray-950 bg-opacity-75 p-4 text-white">
                         <p>Hour</p>
-                        <h1 className="text-6xl">{Math.floor(time/3600)}</h1>
+                        <h1 className="text-6xl">{Math.floor(time / 3600)}</h1>
                       </div>
                       <p className="text-4xl font-bold text-white">:</p>
                       <div className="flex flex-col items-center justify-center bg-gray-950 bg-opacity-75 p-4 text-white">
                         <p>Minute</p>
-                        <h1 className="text-6xl">{Math.floor(time%3600/60)}</h1>
+                        <h1 className="text-6xl">{Math.floor(time % 3600 / 60)}</h1>
                       </div>
                       <p className="text-4xl font-bold text-white">:</p>
                       <div className="flex flex-col items-center justify-center bg-gray-950 bg-opacity-75 p-4 text-white">
                         <p>Second</p>
-                        <h1 className="text-6xl">{time%60}</h1>
+                        <h1 className="text-6xl">{time % 60}</h1>
                       </div>
                     </div>
-                    <button className="rounded-sm bg-yellow-400 p-4 text-xl font-semibold text-gray-900" onClick = {()=>{
+                    <button className="rounded-sm bg-yellow-400 p-4 text-xl font-semibold text-gray-900" onClick={() => {
                       navigate('/dashboard/deposit')
                     }}>
                       Deposit Now

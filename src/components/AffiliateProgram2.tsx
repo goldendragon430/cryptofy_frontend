@@ -21,7 +21,7 @@ const AffilateProgram2: React.FC = () => {
             <div className="flex items-center gap-1 text-lg font-semibold">
               <AiOutlineCheck /> 8% for each deposit
             </div>
-            
+
           </div>
         </div>
         <div className="flex flex-col justify-start rounded-lg bg-cblack shadow-lg">

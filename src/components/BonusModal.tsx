@@ -52,7 +52,7 @@ const BonusModal = () => {
   return (
     <>
       <button
-        className="btn-outline-warning self-start rounded-md border-[1px] p-2"
+        className="btn-outline-warning self-start rounded-md border-[1px] p-2 mt-3"
         onClick={getReward}
       >
         {time == 0 ? 'get bonus' : (Math.floor(time/3600) + ' : ' + (Math.floor(time%3600/60)) + ' : ' + (Math.floor(time%60)))}

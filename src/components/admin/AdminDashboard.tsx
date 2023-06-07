@@ -15,7 +15,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BsPeopleFill } from "react-icons/bs";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -99,13 +99,14 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
+
 export default function Dashboard() {
   const [open, setOpen] = useState(true);
-  const [,{logout}] = useAuth()
-  const navigate = useNavigate() 
+  const [, { logout }] = useAuth()
+  const navigate = useNavigate()
 
 
-  const onLogout = ()=>{
+  const onLogout = () => {
     logout()
     navigate('/')
   }
@@ -117,6 +118,21 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      const isLSorSMOrMD = window.matchMedia('(max-width: 1023px)').matches;
+      // const isSMOrMD = window.matchMedia('(min-width: 640px) and (max-width: 1023px)').matches;
+      setOpen(!isLSorSMOrMD);
+    };
+
+    handleResize(); // Initialize visibility based on initial screen size
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const [sidebarItems, setSidebarItems] = useState([
     {
@@ -214,17 +230,11 @@ export default function Dashboard() {
               borderRight: "2px solid black",
             }}
           >
-            <img src="tron.svg" className="h-8 w-8 " />
+            <img src={Imgsrc} className="h-8 w-8" />
           </IconButton>
-          <IconButton
-            color="inherit"
-            onClick={handleDrawerOpen}
-            className="h-[80%] w-[10%]"
-          >
-            <button className="h-full w-full rounded-bl-lg rounded-tr-lg bg-colord text-base text-white" onClick = {onLogout}>
-              Log out
-            </button>
-          </IconButton>
+          <button className="whitespace-nowrap px-8 py-4 rounded-bl-lg rounded-tr-lg bg-colord text-base text-white" onClick={onLogout}>
+            Log out
+          </button>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -268,9 +278,8 @@ export default function Dashboard() {
                 key={index}
                 disablePadding
                 sx={{ display: "block" }}
-                className={`${
-                  !active ? "bg-gray-200" : "bg-colord"
-                } transition-all duration-300 hover:bg-colord hover:text-white`}
+                className={`${!active ? "bg-gray-200" : "bg-colord"
+                  } transition-all duration-300 hover:bg-colord hover:text-white`}
                 onClick={() => handleLableActiveness(link)}
               >
                 <NavLink to={link}>
@@ -293,9 +302,8 @@ export default function Dashboard() {
                     <ListItemText
                       primary={text}
                       sx={{ opacity: open ? 1 : 0 }}
-                      className={`hover:text-white ${
-                        active ? "text-white" : "text-cblack"
-                      }`}
+                      className={`hover:text-white ${active ? "text-white" : "text-cblack"
+                        }`}
                     />
                   </ListItemButton>
                 </NavLink>
@@ -314,9 +322,8 @@ export default function Dashboard() {
                 key={index}
                 disablePadding
                 sx={{ display: "block" }}
-                className={`${
-                  !active ? "bg-gray-200" : "bg-colord"
-                } transition-all duration-300 hover:bg-colord hover:text-white`}
+                className={`${!active ? "bg-gray-200" : "bg-colord"
+                  } transition-all duration-300 hover:bg-colord hover:text-white`}
                 onClick={() => handleLableActiveness(link)}
               >
                 <NavLink to={link}>
@@ -339,9 +346,8 @@ export default function Dashboard() {
                     <ListItemText
                       primary={text}
                       sx={{ opacity: open ? 1 : 0 }}
-                      className={`hover:text-white ${
-                        active ? "text-white" : "text-cblack"
-                      }`}
+                      className={`hover:text-white ${active ? "text-white" : "text-cblack"
+                        }`}
                     />
                   </ListItemButton>
                 </NavLink>

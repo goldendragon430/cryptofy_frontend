@@ -106,7 +106,7 @@ useEffect(()=>{
       </div> */}
       <NavBar />
       <Nav2 />
-      <section className="w-full bg-no-repeat pb-32 pt-10 lg:bg-[100%] bg-banner bg-center">
+      <section className="w-full bg-no-repeat pb-32 pt-10 lg:bg-[100%] bg-banner bg-center mt-[72px]">
         <div className="flex w-[95%] flex-col items-baseline gap-1 lg:ml-10 lg:mt-20 lg:w-[40rem]">
           <h1 className="mb-10 w-[80%] text-4xl font-bold leading-[3rem] text-darkblue lg:w-full lg:text-7xl">
           Cloud Mining Platform for{" "}

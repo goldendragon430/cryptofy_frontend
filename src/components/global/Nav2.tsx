@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import SignUpModal from "../Register";
 import LoginModal from "../Login";
-import {useAuth} from '../../contexts/SessionContext'
+import { useAuth } from '../../contexts/SessionContext'
 import { useNavigate } from "react-router-dom";
 import logo from '../../assets/updatedlogo.png'
 const Nav2 = () => {
@@ -15,18 +15,18 @@ const Nav2 = () => {
   const handleSClose = () => setIsSOpen(false);
   const handleSOpen = () => setIsSOpen(true);
   const navigate = useNavigate()
-  useEffect(()=>{
+  useEffect(() => {
 
-  },[])
+  }, [])
   return (
-    <header className="sticky top-0 z-10  w-full items-center justify-between bg-white px-10 shadow-lg lg:flex">
-      <a href="#" className="hidden lg:flex" >
+    <header className="sticky top-0 z-10 hidden w-full items-center justify-between bg-white px-10 shadow-lg lg:flex">
+      <a href="#"   >
         <img
           src={logo}
           alt=""
         />
       </a>
-      <nav className="hidden lg:flex">
+      <nav >
         <ul className="flex items-center justify-center gap-7">
           <li>
             <a className="text-primviolet hover:text-secondred" href="/">
@@ -34,7 +34,7 @@ const Nav2 = () => {
             </a>
           </li>
           <li>
-            <a className="text-primviolet hover:text-secondred" onClick = {()=>{document.getElementById('statistics').scrollIntoView({ behavior: "smooth" })}}>
+            <a className="text-primviolet hover:text-secondred" onClick={() => { document.getElementById('statistics').scrollIntoView({ behavior: "smooth" }) }}>
               Statistics
             </a>
           </li>
@@ -67,26 +67,26 @@ const Nav2 = () => {
       </nav>
       <SignUpModal isOpen={isSOpen} handleClose={handleSClose} />
       <LoginModal isOpen={isLOpen} handleClose={handleLClose} />
-      {isAuthed() == false ? 
-      <div className="flex h-fit gap-4">
+      {isAuthed() == false ?
+        <div className="flex h-fit gap-4">
+          <button
+            className="btn cornered-border m-3 px-8 py-4 text-white hover:bg-left"
+            onClick={handleLOpen}
+          >
+            Login
+          </button>
+          <button
+            className="btn cornered-border m-3 px-8 py-4 text-white hover:bg-left"
+            onClick={handleSOpen}
+          >
+            Register
+          </button>
+        </div> :
         <button
           className="btn cornered-border m-3 px-8 py-4 text-white hover:bg-left"
-          onClick={handleLOpen}
+          onClick={() => navigate('/dashboard')}
         >
-          Login
-        </button>
-        <button
-          className="btn cornered-border m-3 px-8 py-4 text-white hover:bg-left"
-          onClick={handleSOpen}
-        >
-         Register 
-        </button>
-      </div>:
-      <button
-          className="btn cornered-border m-3 px-8 py-4 text-white hover:bg-left"
-          onClick={()=>navigate('/dashboard')}
-        >
-         Dashboard 
+          Dashboard
         </button>}
     </header>
   );
