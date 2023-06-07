@@ -1,9 +1,4 @@
-import {
-  GrFacebookOption,
-  GrLinkedinOption,
-  GrTwitter,
-  GrGooglePlus,
-} from "react-icons/gr";
+
 import NavBar from "./global/Navbar";
 import Nav2 from "./global/Nav2";
 import { useState,useEffect} from "react";
@@ -94,7 +89,7 @@ function Landing() {
   }
   return (
     <main className="font-muli text-custblack lg:px-0">
-      <div className="hidden justify-start gap-5 border-b-[.000000001px] border-[#535a7076] py-5 pl-10 lg:flex">
+      {/* <div className="hidden justify-start gap-5 border-b-[.000000001px] border-[#535a7076] py-5 pl-10 lg:flex">
         <p className="text-[#535a70]">Call Us: (+84) 939 512 999</p>
         <p className="text-[#535a70]"> info@trxmining.com</p>
         <div className="flex items-center justify-center gap-4">
@@ -111,7 +106,7 @@ function Landing() {
             <GrGooglePlus className="text-[#535a70]" />
           </a>
         </div>
-      </div>
+      </div> */}
       <NavBar />
       <Nav2 />
       <section className="w-full bg-tron bg-cover bg-[100%] bg-no-repeat">
@@ -207,7 +202,7 @@ function Landing() {
 
 export default Landing;
 
-function PriceCard({
+export function PriceCard({
   plan,
   perc,
   days,

@@ -120,12 +120,9 @@ const AffiliteProgram: React.FC = () => {
             <div className="box-2 flex w-full items-center justify-between rounded-lg bg-cblack p-3">
               <div>
                 <span className="text-sm font-light text-white">
-                  Power bonus received
+                  Total Commisions
                 </span>
-                <h1 className="text-lg font-bold text-white">{commissions[3]} GH/s</h1>
-                <span className="text-sm font-light text-white">
-                  Read more in the FAQ
-                </span>
+                <h1 className="text-lg font-bold text-white"> 8000 TRX</h1>
               </div>
               <div className="flex items-center justify-center rounded-md bg-[#ffc10769] p-3 text-3xl text-[#ffc107]">
                 <BiWallet />
@@ -146,7 +143,7 @@ const AffiliteProgram: React.FC = () => {
             <div className="flex w-[80%] flex-col justify-center gap-2 pl-4 text-white">
               <h1 className="text-lg font-bold">Affiliate bonuses</h1>
               <p className="text-sm">
-                Get 1 GH/s for each registration of a new referral and 10% 
+                10% 
                 for each new deposit of referrals of the first levels, 5%
                 for each new deposit of referrals of the second level and 1%
                 for each new deposit of referrals of the third level

@@ -26,35 +26,40 @@ const Nav2 = () => {
         />
       </a>
       <nav>
-        <ul className="flex items-center justify-center gap-4">
+        <ul className="flex items-center justify-center gap-7">
           <li>
-            <a className="text-primviolet hover:text-secondred" href="#">
+            <a className="text-primviolet hover:text-secondred" href="/">
               Home
             </a>
           </li>
           <li>
-            <a className="text-primviolet hover:text-secondred" href="#">
-              Status
+            <a className="text-primviolet hover:text-secondred" onClick = {()=>{document.getElementById('statistics').scrollIntoView({ behavior: "smooth" })}}>
+              Statistics
             </a>
           </li>
           <li>
-            <a className="text-primviolet hover:text-secondred" href="#">
-              Account
+            <a className="text-primviolet hover:text-secondred" href="/affiliate-program">
+              Affiliate Program
             </a>
           </li>
           <li>
-            <a className="text-primviolet hover:text-secondred" href="#">
+            <a className="text-primviolet hover:text-secondred" href="/faq">
               FAQ
             </a>
           </li>
           <li>
-            <a className="text-primviolet hover:text-secondred" href="#">
-              Account
+            <a className="text-primviolet hover:text-secondred" href="/terms">
+              Terms
             </a>
           </li>
           <li>
-            <a className="text-primviolet hover:text-secondred" href="#">
-              Contact
+            <a className="text-primviolet hover:text-secondred" href="/about-us">
+              About us
+            </a>
+          </li>
+          <li>
+            <a className="text-primviolet hover:text-secondred" href="/contacts">
+              Contact us
             </a>
           </li>
         </ul>

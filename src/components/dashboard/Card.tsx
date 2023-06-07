@@ -17,8 +17,8 @@ const Card: FC<CurrencyCard> = ({ coinType, amount, power, imgSrc, color,total,u
   }
   return (
     <div
-      className={`relative h-fit w-full rounded-lg p-2 px-4 py-4`}
-      style={{ background: color }}
+      className={`w-full rounded-lg p-2 px-4 py-4`}
+      style={{ background: color,height:170 ,maxWidth:500}}
     >
       <div className="grid w-full grid-cols-powerCard ">
         <div className="flex w-full flex-col items-start justify-center gap-2">
@@ -64,7 +64,7 @@ const Card: FC<CurrencyCard> = ({ coinType, amount, power, imgSrc, color,total,u
             })
           }
         />
-        <div className="absolute bottom-0 h-12 w-full bg-[#ffffff27]"></div>
+        {/* <div className="absolute bottom-0 h-12 w-full bg-[#ffffff27]"></div> */}
       </div>
     </div>
   );

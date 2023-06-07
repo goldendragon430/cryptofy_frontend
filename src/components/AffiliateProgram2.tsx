@@ -15,36 +15,34 @@ const AffilateProgram2: React.FC = () => {
         <div className="flex flex-col justify-start rounded-lg bg-cblack shadow-lg">
           <div className="bg-gradient-blues  flex flex-col items-center justify-center gap-2 rounded-t-lg p-10 px-20">
             <h1 className="text-xl font-semibold">FIRST LEVEL</h1>
-            <h1 className="text-5xl font-bold">10%</h1>
+            <h1 className="text-5xl font-bold">8%</h1>
           </div>
           <div className="flex flex-col gap-2 p-6 px-20 text-white">
             <div className="flex items-center gap-1 text-lg font-semibold">
-              <AiOutlineCheck /> +3 GH/s for each deposit
+              <AiOutlineCheck /> 8% for each deposit
             </div>
+            
+          </div>
+        </div>
+        <div className="flex flex-col justify-start rounded-lg bg-cblack shadow-lg">
+          <div className="bg-gradient-blues2  flex flex-col items-center justify-center gap-2 rounded-t-lg p-10 px-20">
+            <h1 className="text-xl font-semibold">SECOND LEVEL</h1>
+            <h1 className="text-5xl font-bold">5%</h1>
+          </div>
+          <div className="flex flex-col gap-2 p-6 px-20 text-white">
             <div className="flex items-center gap-1 text-lg font-semibold">
-              <AiOutlineCheck /> +3 GH/s for each deposit
+              <AiOutlineCheck /> 5% for each deposit
             </div>
           </div>
         </div>
         <div className="flex flex-col justify-start rounded-lg bg-cblack shadow-lg">
-          <div className="bg-gradient-blues  flex flex-col items-center justify-center gap-2 rounded-t-lg p-10 px-20">
-            <h1 className="text-xl font-semibold">FIRST LEVEL</h1>
-            <h1 className="text-5xl font-bold">10%</h1>
+          <div className="bg-gradient-blues3  flex flex-col items-center justify-center gap-2 rounded-t-lg p-10 px-20">
+            <h1 className="text-xl font-semibold">THIRD LEVEL</h1>
+            <h1 className="text-5xl font-bold">3%</h1>
           </div>
           <div className="flex flex-col gap-2 p-6 px-20 text-white">
             <div className="flex items-center gap-1 text-lg font-semibold">
-              <AiOutlineCheck /> +3 GH/s for each deposit
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col justify-start rounded-lg bg-cblack shadow-lg">
-          <div className="bg-gradient-blues  flex flex-col items-center justify-center gap-2 rounded-t-lg p-10 px-20">
-            <h1 className="text-xl font-semibold">FIRST LEVEL</h1>
-            <h1 className="text-5xl font-bold">10%</h1>
-          </div>
-          <div className="flex flex-col gap-2 p-6 px-20 text-white">
-            <div className="flex items-center gap-1 text-lg font-semibold">
-              <AiOutlineCheck /> +3 GH/s for each deposit
+              <AiOutlineCheck /> 3% for each deposit
             </div>
           </div>
         </div>

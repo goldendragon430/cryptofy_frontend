@@ -1,9 +1,3 @@
-import {
-  GrFacebookOption,
-  GrLinkedinOption,
-  GrTwitter,
-  GrGooglePlus,
-} from "react-icons/gr";
 import  { useEffect, useState } from "react"
 import NavBar from "../components/global/Navbar";
 import Nav2 from "../components/global/Nav2";
@@ -11,6 +5,13 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../contexts/SessionContext";
 import { useApi } from "../contexts/ApiContext";
 import { toast } from "react-toastify";
+import {FaUserCheck} from 'react-icons/fa'
+import {AiOutlineUsergroupAdd} from 'react-icons/ai'
+import {GiPresent, GiMoneyStack} from 'react-icons/gi'
+import {ImMobile} from 'react-icons/im'
+import {GrMoney} from 'react-icons/gr'
+import TRXImg from '../assets/tron2.png'
+import TransactionsTable from "../components/landing/TransactionsTable";
 
 function Landing() {
   const {id} = useParams()
@@ -20,91 +21,6 @@ function Landing() {
   const [user,] = useAuth()
   const token = user?.token
   const [bonus_rate,setBonusRate] = useState(1)
-
-
-  const transactions = [
-    {
-      icon: 'path_to_tron_icon.png',
-      currency: 'Troncoin TRX',
-      amount: '658.50',
-      dateTime: '06/02/2023 17:17',
-      transactionId: 'f0d5d...sdfd20f',
-      type: 'Deposit'
-    },
-    {
-      icon: 'path_to_ethereum_icon.png',
-      currency: 'Ethereum ETH',
-      amount: '120.75',
-      dateTime: '06/01/2023 10:45',
-      transactionId: 'g9a7e...a34sdr',
-      type: 'Withdrawal'
-    },
-    {
-      icon: 'path_to_tron_icon.png',
-      currency: 'Troncoin TRX',
-      amount: '658.50',
-      dateTime: '06/02/2023 17:17',
-      transactionId: 'f0d5d...sdfd20f',
-      type: 'Deposit'
-    },
-    {
-      icon: 'path_to_ethereum_icon.png',
-      currency: 'Ethereum ETH',
-      amount: '120.75',
-      dateTime: '06/01/2023 10:45',
-      transactionId: 'g9a7e...a34sdr',
-      type: 'Withdrawal'
-    },
-    {
-      icon: 'path_to_tron_icon.png',
-      currency: 'Troncoin TRX',
-      amount: '658.50',
-      dateTime: '06/02/2023 17:17',
-      transactionId: 'f0d5d...sdfd20f',
-      type: 'Deposit'
-    },
-    {
-      icon: 'path_to_ethereum_icon.png',
-      currency: 'Ethereum ETH',
-      amount: '120.75',
-      dateTime: '06/01/2023 10:45',
-      transactionId: 'g9a7e...a34sdr',
-      type: 'Withdrawal'
-    },
-    {
-      icon: 'path_to_tron_icon.png',
-      currency: 'Troncoin TRX',
-      amount: '658.50',
-      dateTime: '06/02/2023 17:17',
-      transactionId: 'f0d5d...sdfd20f',
-      type: 'Deposit'
-    },
-    {
-      icon: 'path_to_ethereum_icon.png',
-      currency: 'Ethereum ETH',
-      amount: '120.75',
-      dateTime: '06/01/2023 10:45',
-      transactionId: 'g9a7e...a34sdr',
-      type: 'Withdrawal'
-    },
-    {
-      icon: 'path_to_tron_icon.png',
-      currency: 'Troncoin TRX',
-      amount: '658.50',
-      dateTime: '06/02/2023 17:17',
-      transactionId: 'f0d5d...sdfd20f',
-      type: 'Deposit'
-    },
-    {
-      icon: 'path_to_ethereum_icon.png',
-      currency: 'Ethereum ETH',
-      amount: '120.75',
-      dateTime: '06/01/2023 10:45',
-      transactionId: 'g9a7e...a34sdr',
-      type: 'Withdrawal'
-    },
-    // Add more transactions here
-  ];
 
   const get_config = async()=>{
     const result = await doPost('mining/get_configuration',{
@@ -131,7 +47,7 @@ useEffect(()=>{
   },[id])
   return (
     <main className="px-3 font-muli text-custblack lg:px-0">
-      <div className="hidden justify-start gap-5 border-b-[.000000001px] border-[#535a7076] py-5 pl-10 lg:flex">
+      {/* <div className="hidden justify-start gap-5 border-b-[.000000001px] border-[#535a7076] py-5 pl-10 lg:flex">
         <p className="text-[#535a70]">Call Us: (+84) 939 512 999</p>
         <p className="text-[#535a70]"> info@trxmining.com</p>
         <div className="flex items-center justify-center gap-4">
@@ -148,7 +64,7 @@ useEffect(()=>{
             <GrGooglePlus className="text-[#535a70]" />
           </a>
         </div>
-      </div>
+      </div> */}
       <NavBar />
       <Nav2 />
       <section className="bg-custom w-full bg-banner bg-no-repeat pb-32 pt-10 lg:bg-contain lg:bg-[100%]">
@@ -201,50 +117,64 @@ useEffect(()=>{
       </section>
       <section className="flex items-center justify-center py-20 pt-14 lg:h-[30rem]">
         <h1 className="text-3xl font-bold text-darkblue lg:text-5xl">
-          What Makes <span className="text-primred">Trxmining</span> Special?
+          What Makes <span className="text-primred">Trx.uk</span> Special?
         </h1>
       </section>
       <section className="flex flex-col justify-center gap-3 lg:grid lg:grid-cols-3 lg:grid-rows-1 lg:px-10">
-        <div className="box-shadow flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
-          <img
-            className="h-20 w-20"
-            src="https://unxbot.com/unxtem24/trx_v2/assets/img/growth.png"
-            alt=""
-          />
+        <div className="flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
+          <FaUserCheck style = {{width:100,height:100}}/>
           <h3 className="text-2xl font-bold text-darkblue">
-            Guaranteed Profit
+            Sign Up Bonus
           </h3>
           <p className="text-md w-[80%] text-center font-light leading-7 text-darkblue2 lg:text-lg">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti
-            vero ea praesentium! Velit quaerat, est praesentium soluta
+          Register an account and get 100GH/s Power for <b style = {{color : 'red',fontSize : 30}}>free</b>
           </p>
         </div>
-        <div className="box-shadow flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
-          <img
-            className="h-20 w-20"
-            src="http://www.webtechnologybd.com/html/Ripple/assets/img/icon/services-icon-2.svg"
-            alt=""
-          />
-          <h3 className="text-2xl font-bold text-darkblue">Instant Exchange</h3>
-          <p className="text-md w-[80%] text-center font-light leading-7 text-darkblue2 lg:text-lg">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti
-            vero ea praesentium! Velit quaerat, est praesentium soluta
-          </p>
-        </div>
-        <div className="box-shadow flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
-          <img
-            className="h-20 w-20"
-            src="http://www.webtechnologybd.com/html/Ripple/assets/img/icon/services-icon-3.svg"
-            alt=""
-          />
+        <div className="flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
+          <AiOutlineUsergroupAdd style = {{width:100,height:100}}/>
           <h3 className="text-2xl font-bold text-darkblue">
-            1 Level Affiliates
+          Three-level Affiliate
           </h3>
           <p className="text-md w-[80%] text-center font-light leading-7 text-darkblue2 lg:text-lg">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti
-            vero ea praesentium! Velit quaerat, est praesentium soluta
+          Get 10% for 1-level  each new Deposit, 5% for 2-level and 2% for 3-level partners.
           </p>
         </div>
+        <div className="flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
+          <GiPresent style = {{width:100,height:100}}/>
+          <h3 className="text-2xl font-bold text-darkblue">
+          Daily Bonus
+          </h3>
+          <p className="text-md w-[80%] text-center font-light leading-7 text-darkblue2 lg:text-lg">
+          A random bonus for all users every day and the system of rewards for cooperation.
+          </p>
+        </div>  
+        <div className="flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
+          <ImMobile style = {{width:100,height:100}}/>
+          <h3 className="text-2xl font-bold text-darkblue">
+          Easy Payments
+          </h3>
+          <p className="text-md w-[80%] text-center font-light leading-7 text-darkblue2 lg:text-lg">
+          Top up your account with TRX
+          </p>
+        </div>
+        <div className="flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
+          <GrMoney style = {{width:100,height:100}}/>
+          <h3 className="text-2xl font-bold text-darkblue">
+          Double income
+          </h3>
+          <p className="text-md w-[80%] text-center font-light leading-7 text-darkblue2 lg:text-lg">
+          Get double income not only from daily mining you can also stake trx to get even higher profit.
+          </p>
+        </div>
+        <div className="flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
+          <GiMoneyStack style = {{width:100,height:100}}/>
+          <h3 className="text-2xl font-bold text-darkblue">
+          Withdrawal without deposit
+          </h3>
+          <p className="text-md w-[80%] text-center font-light leading-7 text-darkblue2 lg:text-lg">
+          The user who has not made a deposit and has collected the minimum amount for withdrawal is allowed to withdraw after ~ 60 days.
+          </p>
+        </div>         
       </section>
       <section className="flex items-center justify-center py-20 pt-14 lg:h-[30rem]">
         <h1 className="text-3xl font-bold text-darkblue lg:text-5xl">
@@ -253,15 +183,13 @@ useEffect(()=>{
       </section>
       <section className="flex flex-col items-center justify-center bg-[$fafafa] p-1">
         <div className="flex w-full flex-col gap-2 lg:grid lg:grid-cols-3" style={{ paddingTop: 10 }}>
-          <div className="box-shadow flex flex-col items-center justify-center gap-2 p-3 lg:[w-90%] hidden lg:justify-self-end lg:block">
+          <div className="box-shadow flex flex-col items-center justify-center gap-2 p-3 lg:[w-90%] hidden lg:justify-self-end lg:flex">
             <img
-              src="https://cryptologos.cc/logos/tron-trx-logo.svg?v=014"
+              src={TRXImg}
               className="h-48 w-48 rounded-md bg-white p-1"
               alt=""
             />
-            <h3 className="text-2xl font-bold text-darkblue">
-              TRON TRX
-            </h3>
+            
           </div>
           <div className="text-white font-extrabold col-span-2 cornered-border-l flex w-full flex-col items-center justify-between gap-10 bg-img2 bg-cover bg-center px-10 py-16 lg:w-[70%] lg:py-20">
             <div>
@@ -472,12 +400,12 @@ useEffect(()=>{
           </div>
         </div>
       </section>
-      <section className="mb-20 flex flex-col justify-center gap-4 bg-[#f8fcff] lg:pt-52">
+      <section className="mb-20 flex flex-col justify-center gap-4 bg-[#f8fcff] lg:pt-52" id = "statistics" >
         <div className="flex flex-col items-center justify-center gap-4">
           <h6 className="text-2xl font-bold text-secondred lg:text-xl">
             Trxmining Live Records.
           </h6>
-          <h1 className="text-2xl font-bold text-darkblue lg:mb-20 lg:text-5xl">
+          <h1 className="text-2xl font-bold text-darkblue lg:mb-20 lg:text-5xl" >
             CURRENT STATISTICS.
           </h1>
         </div>
@@ -561,7 +489,7 @@ useEffect(()=>{
           </div>
         </div>
       </section>
-      <section className="mb-20 flex flex-col justify-center gap-4 bg-[#f8fcff] lg:pt-52">
+      <section className="mb-20 flex flex-col justify-center align-center items-center gap-4 bg-[#f8fcff] lg:pt-52">
         <div className="mb-4">
           <p className="text-2xl mb-5 mt-10 text-center font-black text-[#535a70] lg:text-center lg:text-4xl">
             Recent Transactions
@@ -570,80 +498,55 @@ useEffect(()=>{
             Start Earning Now
           </h1>
         </div>
-        <div className="p-6 rounded-lg shadow-md font-black">
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white">
-              <tbody>
-                {transactions.map((transaction, index) => (
-                  <tr key={index}>
-                    <td className="px-4 py-2 border-b border-gray-200">
-                      <img src="https://www.svgrepo.com/show/428646/tron-crypto.svg" className="w-12 h-12" />
-                    </td>
-                    <td className="px-4 py-2 border-b border-gray-200">{transaction.currency}</td>
-                    <td className="px-4 py-2 border-b border-gray-200">{transaction.amount}</td>
-                    <td className="px-4 py-2 border-b border-gray-200 font-semibold">{transaction.dateTime}</td>
-                    <td className="px-4 py-2 border-b border-gray-200">{transaction.transactionId}</td>
-                    <td className="px-4 py-2 border-b border-gray-200">{transaction.type}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+        <div className="w-[90%] rounded-lg p-6 shadow-md">
+          <TransactionsTable />
         </div>
       </section>
-      <footer className="bg-footer-bg bg-cover px-4 py-20 pb-14 lg:pt-32">
-        <div className="flex grid-cols-4 grid-rows-1 flex-col gap-10 lg:mb-32 lg:grid lg:px-20">
-          <div className="flex flex-col gap-5">
-            <img
-              src="https://unxbot.com/unxtem24/trx_v2/assets/img/logo/logo.png"
-              alt=""
-            />
-            <h1 className="font-medium text-[#7d767d]">
-              Receive updates and latest news direct from Simply enter.
-            </h1>
-            <h1 className="text-3xl text-white">
-              +156<span className="text-secondred">4585 3569</span>
-            </h1>
-            <p className="font-medium text-[#736e73]">youremail@gmail.com</p>
-          </div>
-          <div className="flex flex-col gap-5">
-            <h1 className="text-xl font-medium text-white">OUR SUPPORT</h1>
-            <p className="font-medium text-[#736e73]">
-              Telegram: @Trxmininghelp
-            </p>
-            <p className="font-medium text-[#736e73]">
-              Gmail: Trxmining.Com@Gmail.Com
-            </p>
-          </div>
-          <div className="flex flex-col gap-5">
-            <h1 className="text-xl font-medium text-white">QUICK LINK</h1>
-            <p className="font-medium text-[#736e73]">Account</p>
-            <p className="font-medium text-[#736e73]">Status</p>
-            <p className="font-medium text-[#736e73]">Faq</p>
-            <p className="font-medium text-[#736e73]">Contact</p>
-          </div>
-          <div className="flex flex-col gap-7">
-            <h1 className="text-xl font-medium text-white">NEWSLATTER</h1>
-            <p className="font-medium text-[#736e73]">
-              Subscribe now to get daily updates
-            </p>
-            <div className="flex h-10 w-[20rem] items-center justify-center bg-[#101720] text-sm">
-              <input
-                type="text"
-                placeholder="Email Address"
-                className="w-[75%] bg-transparent pl-3 text-[#736e73] outline-none"
+      <footer className="lg:pt-15 w-full bg-footer-bg bg-cover py-10 pb-14">
+        <div className="flex w-full flex-col justify-center gap-10 pb-4 lg:grid lg:grid-cols-[20%_12%_12%_12%_15%]">
+          <div className="flex w-full flex-col items-center justify-center gap-2">
+            <div className="flex w-fit flex-col items-center justify-center gap-2">
+              <img
+                src="footermain.png"
+                alt=""
+                className="w-[70%] bg-[#80808060]"
               />
-              <button className="h-full w-[25%] bg-[#0a0f17] text-primred">
-                Send
-              </button>
+              <span className="text-sm font-bold text-white">
+                company number <b className="underline">57687980</b>
+              </span>
+            </div>
+            <span className="whitespace-pre-wrap text-sm font-bold text-white">
+              228 holton Road, harry, wales, CF03 4HS
+            </span>
+          </div>
+          <div className="flex w-full flex-col items-center justify-center gap-3">
+            <img src="tron.png" alt="" className="w-[60%]" />
+            <img src="tronlink.png" alt="" className="w-[60%]" />
+          </div>
+          <div className="flex w-full flex-col items-center justify-center">
+            <img src="binance.png" alt="" className="w-[60%]" />
+            <img src="trustwallet.png" alt="" className="w-[60%]" />
+          </div>
+          <div className="flex w-full flex-col items-center justify-center gap-3">
+            <img src="huobi.png" alt="" className="w-[60%]" />
+            <img src="okex.png" alt="" className="w-[60%]" />
+          </div>
+          <div className="flex w-full flex-col items-start justify-center gap-3 pl-11">
+            <span className="text-base font-bold uppercase text-white">
+              quick link
+            </span>
+            <div className="gap flex w-full flex-col items-start text-sm font-medium">
+              <span className="footerLink">Account</span>
+              <span className="footerLink">Status</span>
+              <span className="footerLink">FAQ</span>
+              <span className="footerLink">Contact</span>
             </div>
           </div>
         </div>
         <hr className="text-[#0e141f]" />
-        <div className="flex h-full items-center pt-10 lg:pl-16">
+        <div className="flex h-full items-center pt-2 font-bold lg:pl-16">
           <p className="text-[#736e73]">
-            Copyright ©2023 All rights reserved by{" "}
-            <p className="text-secondred">Trxmining</p>
+            Copyright ©2023 All rights reserved by TRXM.UK
           </p>
           <div>
             <a href="#"></a>

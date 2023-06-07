@@ -5,11 +5,15 @@ import WithdrawModal from "./Withdraw";
 import { useAuth } from "../contexts/SessionContext";
 import { useApi } from "../contexts/ApiContext";
 import { toast } from "react-toastify";
-import Imgsrc from '../assets/tron.svg'
+import Imgsrc2 from '../assets/tron.png'
+
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { GrFormClose } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
+import {PriceCard} from './Pricing'
+import {BsSpeedometer,BsFillSafe2Fill} from "react-icons/bs";
+import {IoMdWallet}  from 'react-icons/io'
 
 function useForceUpdate(){
   const [value, setValue] = useState(0); // integer state
@@ -33,7 +37,39 @@ const MainDashboard: React.FC = () => {
   const [user,] = useAuth()
   const username = user?.username
   const token = user?.token
+  const [plan,setPlan] = useState([
+    {
+      "level": 1,
+      "amount": 100,
+      "period": 1,
+      "bonus": 1.2
+  },
+  {
+      "level": 2,
+      "amount": 100,
+      "period": 30,
+      "bonus": 1.5
+  },
+  {
+      "level": 3,
+      "amount": 100,
+      "period": 60,
+      "bonus": 2
+  }
+  ])
 
+  const getPlanConfig = async() =>{
+    
+    const result = await doPost('mining/get_plan_config',{
+      'token' : token
+    })
+    if(result.error||result['result'] == "failed"){
+      toast.error("Error")
+    }else{
+      const data = result['data']
+      setPlan(data)    
+    }
+  }
   const getPower = async()=>{
     const response = await doPost('mining/get_power',{
       token : token
@@ -79,6 +115,7 @@ const MainDashboard: React.FC = () => {
   }
   const refresh = ()=>{
     getPower()
+    getPlanConfig()
     getTransaction()
     startTimer()
   }
@@ -95,7 +132,26 @@ const MainDashboard: React.FC = () => {
 
     return () => clearInterval(timeout);
   }
-
+  const onInvest = async(level,amount)=>{
+    if(balance > amount){
+      console.log(plan,level)
+      const result = await doPost('mining/invest_plan',{
+        token : token,
+        amount : amount,
+        bonus : plan[level-1]['bonus']*amount,
+        period : plan[level-1]['period']
+      })
+      if(result['result'] == 'success'){
+        toast.success("Success")
+        refresh()
+      }else{
+        toast.error(result['msg'])
+      }
+    }
+    else{
+      toast.error(`Your balance is low( current - ${Math.floor(balance)}Trx )`)
+    }
+  }
   useEffect(()=>{
     if (token)
       {
@@ -131,43 +187,86 @@ const MainDashboard: React.FC = () => {
           Only today the bonus +5% to the deposit when replenishing from $25
         </span>
       </div>
-      <div className="flex h-fit w-[40%] flex-col items-center justify-center gap-4">
+      <div className="flex h-fit w-[100%] flex-col  items-center justify-center gap-4">
         <span className="self-start text-base font-bold uppercase text-cblack">
           power distribution
         </span>
-        <div className="flex h-fit w-full flex-col items-center justify-between gap-4 border-t border-t-gray-200 py-4 lg:flex-row">
-        {   
+        <div className="grid h-fit grid-cols-1 w-full items-center justify-items-center gap-4  border-t-gray-200 py-4 lg:grid-cols-2">
+        { <>  
           <Card
                coinType="Tron"
                amount={balance}
                power={power}
                total={total}
                update = {updatePower}
-               imgSrc={Imgsrc}
+               imgSrc={Imgsrc2}
                color={"linear-gradient(to right, #2c5364, #203a43, #0f2027)"}
              />
-        
+          <div className = "w-full rounded-lg p-2 px-4 py-4 text-white text-center" style = {{height:170,maxWidth:500,display: 'grid',alignItems: 'center',alignContent: 'center',background:"linear-gradient(to right, #2c5364, #203a43, #0f2027)"}}>
+                   <h1 style = {{fontSize:20}}>Minimum Deposit Limit: 100 TRX</h1>
+                   <h1 style = {{fontSize:20}}>1 GH/s = 10 TRX</h1>
+                   <h1 style = {{fontSize:20}}>Daily 0.5TRX Per GH/s</h1>
+                   <p style = {{fontSize:14,marginTop:20}}>TRX will credit your balance every second, our minig experts will keep your miner online 24/7</p>
+          </div>
+           </>
         }
+        </div>
+        
+      </div>
+      <div className="flex w-full grid-cols-3 flex-col items-center justify-center gap-4 border-t border-t-gray-200 py-4 lg:grid lg:grid-cols-3 lg:gap-2">
+        <div className="flex w-full items-center justify-between rounded-lg bg-cblack p-3 shadow-md">
+          <div>
+            <span className="text-sm font-light text-gray-500">
+              TOTAL POWER
+            </span>
+            <h1 className="text-lg font-bold text-white">{total}GH/s</h1>
+          </div>
+          <div className="flex items-center justify-center rounded-md bg-[#1c812e5f] p-3 text-3xl text-[#15ca20]">
+            <BsSpeedometer />
+          </div>
+        </div>
+        <div className="flex w-full items-center justify-between rounded-lg bg-cblack p-3 shadow-md">
+          <div>
+            <span className="text-sm font-light text-gray-500">
+              TOTAL EARNINGS
+            </span>
+            <h1 className="text-lg font-bold text-white">100.232348234823842</h1>
+          </div>
+          <div className="flex items-center justify-center rounded-md bg-[#198ded5a] p-3 text-3xl text-[#0dcaf0]">
+            <IoMdWallet />
+          </div>
+        </div>
+        <div className="flex w-full items-center justify-between rounded-lg bg-cblack p-3 shadow-md">
+          <div>
+            <span className="text-sm font-light text-gray-500">
+              STACKED PLAN
+            </span>
+            <h1 className="text-lg font-bold text-white">2</h1>
+          </div>
+          <div className="flex items-center justify-center rounded-md bg-[#f4112858] p-3 text-3xl text-[#fd3550]">
+            <BsFillSafe2Fill />
+          </div>
         </div>
       </div>
       <div className="flex h-fit w-full flex-col items-center justify-center gap-4">
         <span className="self-start text-base font-bold uppercase text-cblack">
-          Account summary
+          Coin Balance
         </span>
       </div>
       <div className="flex w-full grid-cols-2 flex-col items-center justify-center gap-4 border-t border-t-gray-200 py-4 lg:grid lg:grid-cols-1 lg:gap-2">
         <div className="flex w-full items-center justify-between rounded-lg bg-cblack p-3 shadow-md">
-          <div>
-            <span className="text-sm font-light text-gray-500">
-              total power
-            </span>
-            <h1 className="text-lg font-bold text-white">{total} GH/s</h1>
+          <div className="flex">
+          <img
+                  src={Imgsrc2}
+                  alt="logo"
+                  className="h-14 w-14 rounded-md p-1"
+                />
+          <div style={{marginLeft:20}} >
+            <h1 className="text-lg font-bold text-white">
+              {balance}
+            </h1>
+            <span className="text-sm font-light text-gray-500">{power} GH/s</span>
           </div>
-          <div style = {{marginLeft:120}}>
-            <span className="text-sm font-light text-gray-500">
-              Unused power
-            </span>
-            <h1 className="text-lg font-bold text-white">{total - power} GH/s</h1>
           </div>
           <div className="flex items-center justify-center gap-1">
                 <ReinvestModal balance = {balance} onHide = {refresh} />
@@ -176,7 +275,11 @@ const MainDashboard: React.FC = () => {
         </div>
   
       </div>
-     
+      <div className="grid grid-cols-1 gap-5 py-20 lg:grid-cols-3">
+            <PriceCard days={1} min={100} perc={120} plan={1} handler = {onInvest} />
+            <PriceCard days={30} min={100} perc={150} plan={2} handler = {onInvest}/>
+            <PriceCard days={60} min={100} perc={450} plan={3} handler = {onInvest}/>
+          </div>
       <div className="flex h-fit w-full flex-col items-center justify-center gap-4">
         <span className="self-start text-base font-bold uppercase text-cblack">
           ALL TRANSACTIONS

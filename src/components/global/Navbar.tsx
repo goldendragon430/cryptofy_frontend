@@ -41,22 +41,26 @@ export default function NavBar() {
         <nav className="w-full text-black py-5">
           <ul className="flex flex-col gap-3 pl-4">
             <li>
-              <a href="#">Home</a>
+              <a href="/">Home</a>
             </li>
             <li>
-              <a href="#">Status</a>
+              <a onClick = {()=>{document.getElementById('statistics').scrollIntoView({ behavior: "smooth" })}}>Statistics</a>
             </li>
             <li>
-              <a href="#">Account</a>
+              <a href="/affiliate-program">Affiliate Program</a>
             </li>
             <li>
-              <a href="#">FAQ</a>
+              <a href="/faq">FAQ</a>
             </li>
             <li>
-              <a href="#">Account</a>
+              <a href="/terms">Terms</a>
+            </li>
+            
+            <li>
+              <a href="/about-us">About us</a>
             </li>
             <li>
-              <a href="#">Contact</a>
+              <a href="/contacts">Contact us</a>
             </li>
           </ul>
         </nav>

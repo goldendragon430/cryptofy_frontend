@@ -1,16 +1,14 @@
 import React from "react";
-import { BiHome } from "react-icons/bi";
-import { FiUsers } from "react-icons/fi";
-import { IoAnalyticsSharp } from "react-icons/io5";
 import { Outlet } from "react-router-dom";
-import NavBar2 from "./global/Navbar2";
-
+import NavBar from "./global/Navbar";
+import Nav2 from "./global/Nav2";
 const OthersWrapper: React.FC = () => {
   return (
     <>
-      <main className="main font-roboto">
-        <NavBar2 />
-        <header className="hidden items-center justify-start gap-4 border-b border-b-gray-200  px-5 py-8 text-cblack lg:flex">
+      <NavBar />
+      <Nav2 />
+        <main className="main font-roboto">
+        {/* <header className="hidden items-center justify-start gap-4 border-b border-b-gray-200  px-5 py-8 text-cblack lg:flex">
           <h1 className="text-xl font-bold">TX MINING</h1>
           <a href="/" className="flex items-center gap-1 text-lg font-bold">
             <BiHome /> Home
@@ -30,7 +28,7 @@ const OthersWrapper: React.FC = () => {
           >
             Dashboard
           </a>
-        </header>
+        </header> */}
         <Outlet />
         {/* <footer className="flex w-full flex-col gap-10 border-t border-t-gray-200 px-10 py-20 lg:flex-row lg:items-center lg:justify-between lg:gap-0">
         <div className="flex flex-col justify-start gap-2 lg:w-[20%]">
@@ -77,59 +75,51 @@ const OthersWrapper: React.FC = () => {
         </div>
       </footer> */}
       </main>
-      <footer className="bg-footer-bg bg-cover px-4 py-20 pb-14 lg:pt-32">
-        <div className="flex grid-cols-4 grid-rows-1 flex-col gap-10 lg:mb-32 lg:grid lg:px-20">
-          <div className="flex flex-col gap-5">
-            <img
-              src="https://unxbot.com/unxtem24/trx_v2/assets/img/logo/logo.png"
-              alt=""
-            />
-            <h1 className="font-medium text-[#7d767d]">
-              Receive updates and latest news direct from Simply enter.
-            </h1>
-            <h1 className="text-3xl text-white">
-              +156<span className="text-secondred">4585 3569</span>
-            </h1>
-            <p className="font-medium text-[#736e73]">youremail@gmail.com</p>
-          </div>
-          <div className="flex flex-col gap-5">
-            <h1 className="text-xl font-medium text-white">OUR SUPPORT</h1>
-            <p className="font-medium text-[#736e73]">
-              Telegram: @Trxmininghelp
-            </p>
-            <p className="font-medium text-[#736e73]">
-              Gmail: Trxmining.Com@Gmail.Com
-            </p>
-          </div>
-          <div className="flex flex-col gap-5">
-            <h1 className="text-xl font-medium text-white">QUICK LINK</h1>
-            <p className="font-medium text-[#736e73]">Account</p>
-            <p className="font-medium text-[#736e73]">Status</p>
-            <p className="font-medium text-[#736e73]">Faq</p>
-            <p className="font-medium text-[#736e73]">Contact</p>
-          </div>
-          <div className="flex flex-col gap-7">
-            <h1 className="text-xl font-medium text-white">NEWSLATTER</h1>
-            <p className="font-medium text-[#736e73]">
-              Subscribe now to get daily updates
-            </p>
-            <div className="flex h-10 w-[20rem] items-center justify-center bg-[#101720] text-sm">
-              <input
-                type="text"
-                placeholder="Email Address"
-                className="w-[75%] bg-transparent pl-3 text-[#736e73] outline-none"
+      <footer className="lg:pt-15 w-full bg-footer-bg bg-cover py-10 pb-14">
+        <div className="flex w-full flex-col justify-center gap-10 pb-4 lg:grid lg:grid-cols-[20%_12%_12%_12%_15%]">
+          <div className="flex w-full flex-col items-center justify-center gap-2">
+            <div className="flex w-fit flex-col items-center justify-center gap-2">
+              <img
+                src="footermain.png"
+                alt=""
+                className="w-[70%] bg-[#80808060]"
               />
-              <button className="h-full w-[25%] bg-[#0a0f17] text-primred">
-                Send
-              </button>
+              <span className="text-sm font-bold text-white">
+                company number <b className="underline">57687980</b>
+              </span>
+            </div>
+            <span className="whitespace-pre-wrap text-sm font-bold text-white">
+              228 holton Road, harry, wales, CF03 4HS
+            </span>
+          </div>
+          <div className="flex w-full flex-col items-center justify-center gap-3">
+            <img src="tron.png" alt="" className="w-[60%]" />
+            <img src="tronlink.png" alt="" className="w-[60%]" />
+          </div>
+          <div className="flex w-full flex-col items-center justify-center">
+            <img src="binance.png" alt="" className="w-[60%]" />
+            <img src="trustwallet.png" alt="" className="w-[60%]" />
+          </div>
+          <div className="flex w-full flex-col items-center justify-center gap-3">
+            <img src="huobi.png" alt="" className="w-[60%]" />
+            <img src="okex.png" alt="" className="w-[60%]" />
+          </div>
+          <div className="flex w-full flex-col items-start justify-center gap-3 pl-11">
+            <span className="text-base font-bold uppercase text-white">
+              quick link
+            </span>
+            <div className="gap flex w-full flex-col items-start text-sm font-medium">
+              <span className="footerLink">Account</span>
+              <span className="footerLink">Status</span>
+              <span className="footerLink">FAQ</span>
+              <span className="footerLink">Contact</span>
             </div>
           </div>
         </div>
         <hr className="text-[#0e141f]" />
-        <div className="flex h-full items-center pt-10 lg:pl-16">
+        <div className="flex h-full items-center pt-2 font-bold lg:pl-16">
           <p className="text-[#736e73]">
-            Copyright ©2023 All rights reserved by{" "}
-            <p className="text-secondred">Trxmining</p>
+            Copyright ©2023 All rights reserved by TRXM.UK
           </p>
           <div>
             <a href="#"></a>
