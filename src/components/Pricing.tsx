@@ -74,7 +74,8 @@ function Landing() {
         token : token,
         amount : amount,
         bonus : plan[level-1]['bonus']*amount,
-        period : plan[level-1]['period']
+        period : plan[level-1]['period'],
+        level : level
       })
       if(result['result'] == 'success'){
         toast.success("Success")
