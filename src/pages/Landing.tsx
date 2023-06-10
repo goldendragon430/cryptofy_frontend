@@ -13,6 +13,7 @@ import { GrMoney } from 'react-icons/gr'
 import TRXImg from '../assets/tron2.png'
 import TransactionsTable from "../components/landing/TransactionsTable";
 import { PriceCard } from "../components/Pricing";
+import {BACKEND_URL} from '../config'
 function Landing() {
   const { id } = useParams()
   const [tron, setTron] = useState(0)
@@ -273,7 +274,7 @@ function Landing() {
         </div>
       </section>
       <section className="mt-32 flex items-center justify-center px-1">
-        <div className="cornered-border-l flex w-full flex-col items-center justify-between gap-10 bg-img1  bg-cover bg-center px-10 py-16 text-white lg:w-[90%] lg:flex-row lg:py-20">
+        <div className="cornered-border-l flex w-full flex-col items-center justify-between gap-10  bg-cover bg-center px-10 py-16 text-white lg:w-[90%] lg:flex-row lg:py-20" style = {{backgroundImage:`url(${BACKEND_URL}get_file?name=banner_1.png)`}}>
           <h1 className="w-80 text-2xl font-bold lg:text-3xl">
             Get In Our Touch To Subscribe.
           </h1>
