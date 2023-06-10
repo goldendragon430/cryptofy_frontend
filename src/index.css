@@ -11,6 +11,29 @@
   .cornered-border-l {
     border-radius: 0 2rem 0 2rem;
   }
+  .fade-alert{
+   
+    animation-name: fadeInOut;
+    animation-duration: 20s;
+    animation-fill-mode: forwards;
+  
+    
+  }
+  
+  @keyframes fadeInOut {
+    0% {
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
   .cornered-border-r-b {
     border-radius: 0 0 2rem 0;
   }

@@ -25,6 +25,7 @@ import { FaQuestionCircle } from "react-icons/fa";
 import { RiFolderWarningLine } from "react-icons/ri";
 import { LuBanknote } from "react-icons/lu";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { useApi } from "../contexts/ApiContext";
 import { useAuth } from '../contexts/SessionContext'
 import { Link } from "@mui/material";
 
@@ -104,15 +105,18 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Dashboard() {
   const [open, setOpen] = useState(true);
-  const [, { logout }] = useAuth()
+  const [user, { logout }] = useAuth()
   const navigate = useNavigate()
-  const [bannerVisible, setbannerVisible] = useState(true);
-
+  const [bannerVisible, setbannerVisible] = useState(false);
+  const token = user?.token;
+  const [bonusinfo,setBonusInfo] = useState({})
+  const [{doPost}] = useApi()
   const onLogout = () => {
     logout()
     navigate('/')
     localStorage.removeItem('showed')
   }
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -221,6 +225,25 @@ export default function Dashboard() {
       });
     });
   };
+  const get_bonus_information = async()=>{
+    const result = await doPost('mining/get_event_info', {
+      token: token
+    })
+    if(result.error || result.result == 'failed') {
+      
+    }
+    else{
+      if (result.data){
+        setBonusInfo(result.data)
+        setbannerVisible(true)
+      }
+    }
+  }
+  useEffect(() => {
+    if (token) {
+      get_bonus_information()   
+    }
+  }, [token])
 
   return (
     <Box
@@ -255,13 +278,13 @@ export default function Dashboard() {
 
           {/* //////////////Banner/////////// */}
           {bannerVisible &&
-            <div className="absolute isolate flex items-center gap-x-6 bg-gray-50 px-12 py-6 sm:px-3.5 sm:before:flex-1 top-0 rounded-b-lg w-full right-0 transform -transform-x-1/2 bg-img3 bg-cover bg-center">
+            <div className=" fade-alert absolute isolate flex items-center gap-x-6 bg-gray-50 px-12 py-6 sm:px-3.5 sm:before:flex-1 top-0 rounded-b-lg w-full right-0 transform -transform-x-1/2 bg-img3 bg-cover bg-center">
               <div className="flex flex-wrap items-center place-content-center gap-x-4 gap-y-2">
                 <p className="gap-4 flex items-center flex-col lg:flex-row">
-                  <span className="text-xl">08 June ~ 10 June</span>
-                  <strong className="font-semibold text-black text-3xl">Deposit bonus 300%</strong>
+                  <span className="text-xl">{bonusinfo['start_day'].substring(0,10)} ~ {bonusinfo['end_day'].substring(0,10)}</span>
+                  <strong className="font-semibold text-black text-3xl">Deposit bonus {bonusinfo['bonus_rate']}%</strong>
                 </p>
-                <button type="button" className="flex gap-2 text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 mr-2 mb-2">
+                <button type="button" className="flex gap-2 text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 mr-2 mb-2" onClick = {()=>{navigate('/dashboard/deposit')}}>
                   <img src={Imgsrc} alt="" className="h-6 w-6" />
                   Deposit Now
                 </button>

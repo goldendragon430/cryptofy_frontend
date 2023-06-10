@@ -33,6 +33,14 @@ const MainDashboard: React.FC = () => {
   const [total, setTotal] = useState(180)
   const [time, setTime] = useState(0)
   const [transactions, setTransactions] = useState([])
+  const [mineInfo,setMineInfo] = useState({
+    'bonus_rate' : 2.67,
+    'min_deposit' : 50,
+    'daily_earning' : 0.5
+  })
+  const [earned,setEarned] = useState(0)
+  const [stakedCount,setStakedCount] = useState(0)
+
   const [{ doPost }] = useApi()
   const [user,] = useAuth()
   const username = user?.username
@@ -113,10 +121,36 @@ const MainDashboard: React.FC = () => {
       setTransactions(response.data)
     }
   }
+  const getMiningInfo = async() =>{
+    const response = await doPost('mining/get_mining', {
+      token: token
+    })
+    if (response.error || response.result == 'failed') {
+      toast.error("Server Error")
+    }
+    else {
+      setMineInfo(response.data)
+    }
+  }
+  const getStakingInfo = async() =>{
+    const response = await doPost('user/details', {
+      token: token
+    })
+    if (response.error || response.result == 'failed') {
+      toast.error("Server Error")
+    }
+    else {
+      setEarned(response['mining_earning'])
+      setStakedCount(response['staked'])
+    }
+  }
+
   const refresh = () => {
     getPower()
     getPlanConfig()
     getTransaction()
+    getMiningInfo()
+    getStakingInfo()
     startTimer()
   }
   const startTimer = () => {
@@ -165,11 +199,11 @@ const MainDashboard: React.FC = () => {
 
   useEffect(() => {
     const timeout = setInterval(() => {
-      setBalance(balance + power * 1e-8)
+      setBalance(balance + power * mineInfo['daily_earning']/3600/24/10)
     }, 100);
 
     return () => clearInterval(timeout);
-  }, [power, balance]);
+  }, [power, balance,mineInfo]);
 
   const closeModal = () => {
     setIsOpen(false)
@@ -202,9 +236,9 @@ const MainDashboard: React.FC = () => {
               color={"linear-gradient(to right, #2c5364, #203a43, #0f2027)"}
             />
             <div className="w-full rounded-lg px-8 py-4 text-white text-center h-170 max-w-500 grid place-items-center bg-gradient-to-r from-blue-900 via-teal-800 to-blue-800">
-              <h1 style={{ fontSize: 20 }}>Minimum Deposit Limit: 100 TRX</h1>
-              <h1 style={{ fontSize: 20 }}>1 GH/s = 10 TRX</h1>
-              <h1 style={{ fontSize: 20 }}>Daily 0.5TRX Per GH/s</h1>
+              <h1 style={{ fontSize: 20 }}>Minimum Deposit Limit: {mineInfo['min_deposit']} TRX</h1>
+              <h1 style={{ fontSize: 20 }}>1 GH/s = {String(1/mineInfo['bonus_rate']).substring(0,4)} TRX</h1>
+              <h1 style={{ fontSize: 20 }}>Daily {mineInfo['daily_earning']} TRX Per GH/s</h1>
               <p className="text-base">TRX will credit your balance every second, our mining experts will keep your miner online 24/7</p>
             </div>
           </>
@@ -229,7 +263,7 @@ const MainDashboard: React.FC = () => {
             <span className="text-sm font-light text-white">
               TOTAL EARNINGS
             </span>
-            <h1 className="text-lg font-bold text-white">100.2323482348</h1>
+            <h1 className="text-lg font-bold text-white">{earned}</h1>
           </div>
           <div className="flex items-center justify-center rounded-md bg-[#198ded5a] p-3 text-3xl text-[#0dcaf0]">
             <IoMdWallet />
@@ -240,7 +274,7 @@ const MainDashboard: React.FC = () => {
             <span className="text-sm font-light text-white">
               STACKED PLAN
             </span>
-            <h1 className="text-lg font-bold text-white">2</h1>
+            <h1 className="text-lg font-bold text-white">{stakedCount}</h1>
           </div>
           <div className="flex items-center justify-center rounded-md bg-[#f4112858] p-3 text-3xl text-[#fd3550]">
             <BsFillSafe2Fill />
@@ -274,9 +308,9 @@ const MainDashboard: React.FC = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 gap-5 py-20 lg:grid-cols-3 w-full">
-        <PriceCard days={1} min={100} perc={120} plan={1} handler={onInvest} />
-        <PriceCard days={30} min={100} perc={150} plan={2} handler={onInvest} />
-        <PriceCard days={60} min={100} perc={450} plan={3} handler={onInvest} />
+            <PriceCard days={plan[0]['period']} min={plan[0]['amount']} perc={plan[0]['bonus']*100} plan={1} handler = {onInvest} />
+            <PriceCard days={plan[1]['period']} min={plan[1]['amount']} perc={plan[1]['bonus']*100} plan={2} handler = {onInvest}/>
+            <PriceCard days={plan[2]['period']} min={plan[2]['amount']} perc={plan[2]['bonus']*100} plan={3} handler = {onInvest}/>
       </div>
       <div className="flex h-fit w-full flex-col items-center justify-center gap-4">
         <span className="self-start text-base font-bold uppercase text-cblack">

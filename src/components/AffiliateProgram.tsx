@@ -122,7 +122,7 @@ const AffiliteProgram: React.FC = () => {
                 <span className="text-sm font-light text-white">
                   Total Commisions
                 </span>
-                <h1 className="text-lg font-bold text-white"> 8000 TRX</h1>
+                <h1 className="text-lg font-bold text-white"> {commissions[3]} TRX</h1>
               </div>
               <div className="flex items-center justify-center rounded-md bg-[#ffc10769] p-3 text-3xl text-[#ffc107]">
                 <BiWallet />

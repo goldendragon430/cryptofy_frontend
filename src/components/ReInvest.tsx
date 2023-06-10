@@ -47,21 +47,26 @@ export default function ReinvestModal(props) {
   async function onReinvest() {
     if (amount > balance) {
       toast.error("You set amount that is bigger than current balance.")
+      return
+    }
+    if(min_reinvest > amount){
+      toast.error("You set amount that is bigger than minimum balance.")
+      return
+    }
+    
+    const response = await doPost('mining/reinvest', {
+      token: token,
+      amount: amount
+    })
+    if (response.error || response.result == 'failed') {
+      toast.error("Server Error")
     }
     else {
-      const response = await doPost('mining/reinvest', {
-        token: token,
-        amount: amount
-      })
-      if (response.error || response.result == 'failed') {
-        toast.error("Server Error")
-      }
-      else {
-        toast.success("Success")
-        onHide && onHide()
-        setIsOpen(false)
-      }
+      toast.success("Success")
+      onHide && onHide()
+      setIsOpen(false)
     }
+    
   }
   return (
     <>

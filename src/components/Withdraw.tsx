@@ -69,21 +69,27 @@ export default function WithdrawModal(props) {
 
     if (amount > balance) {
       toast.error("You set amount that is bigger than current balance.")
+      return
+    }
+    if (min_withdrawl > amount) {
+      toast.error("You set amount that is bigger than minimum withdrawal amount.")
+      return
+    }
+
+     
+    const response = await doPost('mining/withdrawal', {
+      token: token,
+      amount: amount,
+      address: address
+    })
+    if (response.error || response.result == 'failed') {
+      toast.error("Server Error")
     }
     else {
-      const response = await doPost('mining/withdrawal', {
-        token: token,
-        amount: amount,
-        address: address
-      })
-      if (response.error || response.result == 'failed') {
-        toast.error("Server Error")
-      }
-      else {
-        toast.success("Success")
-        onHide && onHide()
-      }
+      toast.success("Success")
+      onHide && onHide()
     }
+     
   }
   return (
     <>
