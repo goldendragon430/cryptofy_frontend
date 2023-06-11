@@ -7,7 +7,6 @@ import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import IconButton from "@mui/material/IconButton";
 import { BiArrowToLeft, BiStats } from "react-icons/bi";
-import Imgsrc from '../../assets/tron.svg'
 import {
   Divider,
   ListItem,
@@ -16,17 +15,17 @@ import {
   ListItemText,
 } from "@mui/material";
 import { useState } from "react";
-import { BsPeopleFill } from "react-icons/bs";
+import { BsFillGridFill, BsPeopleFill } from "react-icons/bs";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { AiFillProfile, AiTwotoneHome } from "react-icons/ai";
-import { FaQuestionCircle } from "react-icons/fa";
+import { AiFillProfile, AiOutlineOrderedList, AiTwotoneHome } from "react-icons/ai";
+import { FaQuestionCircle, FaMoneyCheck, FaLanguage } from "react-icons/fa";
 import { RiFolderWarningLine } from "react-icons/ri";
 import { GiCircleClaws } from "react-icons/gi";
 import { TiMessages } from "react-icons/ti";
-
+import { MdDashboard } from "react-icons/md"
+import { TbAffiliateFilled } from "react-icons/tb";
 import { useAuth } from "../../contexts/SessionContext";
-
 
 const drawerWidth = 240;
 
@@ -101,34 +100,79 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Dashboard() {
   const [open, setOpen] = useState(true);
+  const navigate = useNavigate()
   const [,{logout}] = useAuth()
-  const navigate = useNavigate() 
-
-
-  const onLogout = ()=>{
-    logout()
-    navigate('/')
-  }
 
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
+  const onLogout = ()=>{
+    logout()
+    navigate('/')
+  }
   const handleDrawerClose = () => {
     setOpen(false);
   };
 
   const [sidebarItems, setSidebarItems] = useState([
     {
-      text: "Users",
+      text: "Dashboard",
       active: true,
       link: "",
+      icon: <MdDashboard className="text-xl font-bold text-cblack" />,
+    },
+    {
+      text: "Users",
+      active: false,
+      link: "users",
       icon: <BsPeopleFill className="text-xl font-bold text-cblack" />,
     },
     {
-      text: "Management",
+      text: "Deposit",
       active: false,
-      link: "management",
+      link: "deposit",
+      icon: <FaMoneyCheck className="text-xl font-bold text-cblack" />,
+    },
+    {
+      text: "Withdrawals",
+      active: false,
+      link: "withdrawals",
+      icon: <FaMoneyCheck className="text-xl font-bold text-cblack" />,
+    },
+    {
+      text: "Event Banner",
+      active: false,
+      link: "event-banner",
+      icon: <AiFillProfile className="text-xl font-bold text-cblack" />,
+    },
+    {
+      text: "Payment Gateway",
+      active: false,
+      link: "payment-gateway",
+      icon: <FaMoneyCheck className="text-xl font-bold text-cblack" />,
+    },
+    {
+      text: "Language",
+      active: false,
+      link: "language",
+      icon: <FaLanguage className="text-xl font-bold text-cblack" />,
+    },
+    {
+      text: "Plan Management",
+      active: false,
+      link: "plan-management",
+      icon: <AiOutlineOrderedList className="text-xl font-bold text-cblack" />,
+    },
+    {
+      text: "Affiliate Management",
+      active: false,
+      link: "affiliate-management",
+      icon: <TbAffiliateFilled className="text-xl font-bold text-cblack" />,
+    },
+    {
+      text: "Edit Contact",
+      active: false,
+      link: "edit-contact",
       icon: <AiFillProfile className="text-xl font-bold text-cblack" />,
     },
     {
@@ -166,6 +210,12 @@ export default function Dashboard() {
       active: false,
       link: "statistics",
       icon: <BiStats className="text-xl font-bold text-cblack" />,
+    },
+    {
+      text: "Plans",
+      active: false,
+      link: "/plans",
+      icon: <BsFillGridFill className="text-xl font-bold text-cblack" />,
     },
     {
       text: "Contacts",
@@ -236,7 +286,7 @@ export default function Dashboard() {
             to="/"
             className="flex h-full w-full items-center justify-center gap-2"
           >
-            <img src={Imgsrc} alt="" className="h-8 w-8" />
+            <img src="tron.svg" alt="" className="h-8 w-8" />
             <span className="text-xl font-bold text-cblack">TRX Mining</span>
           </Link>
           <IconButton onClick={handleDrawerClose}>
@@ -261,7 +311,7 @@ export default function Dashboard() {
               Account
             </span>
           )}
-          {sidebarItems.slice(0, 4).map((item, index) => {
+          {sidebarItems.slice(0, 10).map((item, index) => {
             const { text, active, link, icon } = item;
             return (
               <ListItem
@@ -307,7 +357,7 @@ export default function Dashboard() {
               other
             </span>
           )}
-          {sidebarItems.slice(4).map((item, index) => {
+          {sidebarItems.slice(10).map((item, index) => {
             const { text, active, link, icon } = item;
             return (
               <ListItem
