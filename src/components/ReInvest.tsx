@@ -1,67 +1,72 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState,useEffect } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { GrFormClose } from "react-icons/gr";
-import {TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { toast } from 'react-toastify';
 import { useApi } from '../contexts/ApiContext';
 import { useAuth } from '../contexts/SessionContext';
- 
+
 
 export default function ReinvestModal(props) {
- 
-  const {balance,onHide} = props
+
+  const { balance, onHide } = props
   const [isOpen, setIsOpen] = useState(false);
-  const [amount,setAmount] = useState(0)
-  const [{doPost}] = useApi()
+  const [amount, setAmount] = useState(0)
+  const [{ doPost }] = useApi()
   const [user,] = useAuth()
   const token = user?.token
-  const [min_reinvest,setMinReinvest] = useState(0)
+  const [min_reinvest, setMinReinvest] = useState(0)
   function closeModal() {
     setIsOpen(false);
   }
 
   function openModal() {
-    if(balance > min_reinvest)
+    if (balance > min_reinvest)
       setIsOpen(true);
-    else{
+    else {
       toast.info('Low Balance.')
     }
-    }
-    const get_config = async()=>{
-      const result = await doPost('mining/get_configuration',{
-        'token' : token
-      })
-      if(result.error||result['result'] == "failed"){
-        toast.error("Error")
-      }else{
-        const data = result['data']
-         setMinReinvest(data['min_reinvest'])
+  }
+  const get_config = async () => {
+    const result = await doPost('mining/get_configuration', {
+      'token': token
+    })
+    if (result.error || result['result'] == "failed") {
+      toast.error("Error")
+    } else {
+      const data = result['data']
+      setMinReinvest(data['min_reinvest'])
 
-      }  
     }
-    useEffect(()=>{
-      if(token){
-        get_config()
-      }
-    },[token])
-  async function onReinvest(){
+  }
+  useEffect(() => {
+    if (token) {
+      get_config()
+    }
+  }, [token])
+  async function onReinvest() {
     if (amount > balance) {
       toast.error("You set amount that is bigger than current balance.")
+      return
     }
-    else{
-      const response = await doPost('mining/reinvest',{
-        token : token,
-        amount : amount
-      })
-      if(response.error || response.result == 'failed') {
-        toast.error("Server Error")
-      }
-      else{
-        toast.success("Success")
-        onHide && onHide() 
-        setIsOpen(false)
-      }
+    if(min_reinvest > amount){
+      toast.error("You set amount that is bigger than minimum balance.")
+      return
     }
+    
+    const response = await doPost('mining/reinvest', {
+      token: token,
+      amount: amount
+    })
+    if (response.error || response.result == 'failed') {
+      toast.error("Server Error")
+    }
+    else {
+      toast.success("Success")
+      onHide && onHide()
+      setIsOpen(false)
+    }
+    
   }
   return (
     <>
@@ -75,7 +80,7 @@ export default function ReinvestModal(props) {
       </div>
 
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-50" onClose={closeModal}>
+        <Dialog as="div" className="relative" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -89,7 +94,7 @@ export default function ReinvestModal(props) {
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <div className="flex min-h-full items-center justify-end lg:justify-center p-2 text-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -99,7 +104,7 @@ export default function ReinvestModal(props) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="mt-10 w-full max-w-lg transform overflow-hidden rounded-md bg-white text-left align-middle text-cblack shadow-xl transition-all">
+                <Dialog.Panel className="mt-10 w-[85%] lg:w-full max-w-lg transform overflow-hidden rounded-md bg-white text-left align-middle text-cblack shadow-xl transition-all">
                   <div className="bg-white">
                     <div className="border-grey-500 flex items-center justify-between border-b-[2px] p-3 px-8">
                       <h1 className="text-xl font-bold">Reinvest</h1>
@@ -113,29 +118,29 @@ export default function ReinvestModal(props) {
                     <div className="p-3 px-8 font-semibold leading-5">
                       <h1>Reinvest amount:</h1>
                       <TextField
-                      placeholder="Enter Email"
-                      InputProps={{
-                        sx: {
-                          "& input": {
-                            color: "black",
-                          },
-                          "& label": { color: "black" },
-                        }
-                      }}
-                      required
-                      fullWidth
-                      name="amount"
-                      value={amount}
-                      onChange = {e=>setAmount(parseInt(e.target.value))}
-                      helperText=""
-                      error={false}
-                      autoComplete="off"
-                      size="small"
-                      type="number"
-                      
-                    />
+                        placeholder="Enter Email"
+                        InputProps={{
+                          sx: {
+                            "& input": {
+                              color: "black",
+                            },
+                            "& label": { color: "black" },
+                          }
+                        }}
+                        required
+                        fullWidth
+                        name="amount"
+                        value={amount}
+                        onChange={e => setAmount(parseInt(e.target.value))}
+                        helperText=""
+                        error={false}
+                        autoComplete="off"
+                        size="small"
+                        type="number"
 
-                      <h1 style = {{marginTop:20}}>From coin balance:</h1>
+                      />
+
+                      <h1 style={{ marginTop: 20 }}>From coin balance:</h1>
                       <p className="mb-5">TRX</p>
 
                       <h1>Minimum reinvest amount:</h1>

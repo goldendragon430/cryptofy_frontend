@@ -14,7 +14,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AiFillDashboard, AiTwotoneHome } from "react-icons/ai";
 import { BsPeopleFill } from "react-icons/bs";
 import { TbMilitaryAward } from "react-icons/tb";
@@ -25,8 +25,9 @@ import { FaQuestionCircle } from "react-icons/fa";
 import { RiFolderWarningLine } from "react-icons/ri";
 import { LuBanknote } from "react-icons/lu";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import {useAuth} from '../contexts/SessionContext'
-import {Link} from "@mui/material";
+import { useApi } from "../contexts/ApiContext";
+import { useAuth } from '../contexts/SessionContext'
+import { Link } from "@mui/material";
 
 
 
@@ -104,13 +105,18 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Dashboard() {
   const [open, setOpen] = useState(true);
-  const [,{logout}] = useAuth()
+  const [user, { logout }] = useAuth()
   const navigate = useNavigate()
-  const onLogout = ()=>{
+  const [bannerVisible, setbannerVisible] = useState(false);
+  const token = user?.token;
+  const [bonusinfo,setBonusInfo] = useState({})
+  const [{doPost}] = useApi()
+  const onLogout = () => {
     logout()
     navigate('/')
     localStorage.removeItem('showed')
   }
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -119,6 +125,25 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleDismissBanner = () => {
+    setbannerVisible(false);
+  }
+
+  useEffect(() => {
+    const handleResize = () => {
+      const isLSorSMOrMD = window.matchMedia('(max-width: 1023px)').matches;
+      // const isSMOrMD = window.matchMedia('(min-width: 640px) and (max-width: 1023px)').matches;
+      setOpen(!isLSorSMOrMD);
+    };
+
+    handleResize(); // Initialize visibility based on initial screen size
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const [sidebarItems, setSidebarItems] = useState([
     {
@@ -181,7 +206,7 @@ export default function Dashboard() {
       link: "/#statistics",
       icon: <BiStats className="text-xl font-bold text-cblack" />,
     },
-    
+
     {
       text: "Contact us",
       active: false,
@@ -200,6 +225,25 @@ export default function Dashboard() {
       });
     });
   };
+  const get_bonus_information = async()=>{
+    const result = await doPost('mining/get_event_info', {
+      token: token
+    })
+    if(result.error || result.result == 'failed') {
+      
+    }
+    else{
+      if (result.data){
+        setBonusInfo(result.data)
+        setbannerVisible(true)
+      }
+    }
+  }
+  useEffect(() => {
+    if (token) {
+      get_bonus_information()   
+    }
+  }, [token])
 
   return (
     <Box
@@ -229,17 +273,36 @@ export default function Dashboard() {
               borderRight: "2px solid black",
             }}
           >
-            <img src="tron.svg" className="h-8 w-8 " />
+            <img src={Imgsrc} className="h-8 w-8 " />
           </IconButton>
-          <IconButton
-            color="inherit"
-            onClick={handleDrawerOpen}
-            className="h-[80%] w-[10%]"
-          >
-            <button className="h-full w-full rounded-bl-lg rounded-tr-lg bg-colord text-base text-white" onClick={onLogout}>
-              Log out
-            </button>
-          </IconButton>
+
+          {/* //////////////Banner/////////// */}
+          {bannerVisible &&
+            <div className=" fade-alert absolute isolate flex items-center gap-x-6 bg-gray-50 px-12 py-6 sm:px-3.5 sm:before:flex-1 top-0 rounded-b-lg w-full right-0 transform -transform-x-1/2 bg-img3 bg-cover bg-center">
+              <div className="flex flex-wrap items-center place-content-center gap-x-4 gap-y-2">
+                <p className="gap-4 flex items-center flex-col lg:flex-row">
+                  <span className="text-xl">{bonusinfo['start_day'].substring(0,10)} ~ {bonusinfo['end_day'].substring(0,10)}</span>
+                  <strong className="font-semibold text-black text-3xl">Deposit bonus {bonusinfo['bonus_rate']}%</strong>
+                </p>
+                <button type="button" className="flex gap-2 text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 mr-2 mb-2" onClick = {()=>{navigate('/dashboard/deposit')}}>
+                  <img src={Imgsrc} alt="" className="h-6 w-6" />
+                  Deposit Now
+                </button>
+                {/* <a href="#" className="flex-none rounded-full bg-white px-3.5 py-1 text-sm font-semibold text-black shadow-sm hover:bg-black hover:text-white">Deposit now <span aria-hidden="true">→</span></a> */}
+              </div>
+              <div className="flex flex-1 justify-end">
+                <button type="button" className="-m-3 p-3 focus-visible:outline-offset-[-4px]" onClick={handleDismissBanner}>
+                  <span className="sr-only">Dismiss</span>
+                  <svg className="h-5 w-5 text-gray-900" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          }
+          <button className="whitespace-nowrap px-8 py-4 rounded-bl-lg rounded-tr-lg bg-colord text-base text-white" onClick={onLogout}>
+            Log out
+          </button>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -248,7 +311,7 @@ export default function Dashboard() {
           className="flex w-full items-center justify-between gap-8"
         >
           <Link
-          onClick = {()=>{navigate('/')}}
+            onClick={() => { navigate('/') }}
             className="flex h-full w-full items-center justify-center gap-2"
           >
             <img src={Imgsrc} alt="" className="h-8 w-8" />
@@ -266,6 +329,7 @@ export default function Dashboard() {
             flexDirection: "column",
             gap: 2,
             width: "100%",
+            marginTop: "26px"
           }}
         >
           {open && (
@@ -283,9 +347,8 @@ export default function Dashboard() {
                 key={index}
                 disablePadding
                 sx={{ display: "block" }}
-                className={`${
-                  !active ? "bg-gray-200" : "bg-colord"
-                } transition-all duration-300 hover:bg-colord hover:text-white`}
+                className={`${!active ? "bg-gray-200" : "bg-colord"
+                  } transition-all duration-300 hover:bg-colord hover:text-white`}
                 onClick={() => handleLableActiveness(link)}
               >
                 <NavLink to={link}>
@@ -308,9 +371,8 @@ export default function Dashboard() {
                     <ListItemText
                       primary={text}
                       sx={{ opacity: open ? 1 : 0 }}
-                      className={`hover:text-white ${
-                        active ? "text-white" : "text-cblack"
-                      }`}
+                      className={`hover:text-white ${active ? "text-white" : "text-cblack"
+                        }`}
                     />
                   </ListItemButton>
                 </NavLink>
@@ -329,9 +391,8 @@ export default function Dashboard() {
                 key={index}
                 disablePadding
                 sx={{ display: "block" }}
-                className={`${
-                  !active ? "bg-gray-200" : "bg-colord"
-                } transition-all duration-300 hover:bg-colord hover:text-white`}
+                className={`${!active ? "bg-gray-200" : "bg-colord"
+                  } transition-all duration-300 hover:bg-colord hover:text-white`}
                 onClick={() => handleLableActiveness(link)}
               >
                 <NavLink to={link}>
@@ -354,9 +415,8 @@ export default function Dashboard() {
                     <ListItemText
                       primary={text}
                       sx={{ opacity: open ? 1 : 0 }}
-                      className={`hover:text-white ${
-                        active ? "text-white" : "text-cblack"
-                      }`}
+                      className={`hover:text-white ${active ? "text-white" : "text-cblack"
+                        }`}
                     />
                   </ListItemButton>
                 </NavLink>

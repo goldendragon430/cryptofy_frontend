@@ -11,6 +11,29 @@
   .cornered-border-l {
     border-radius: 0 2rem 0 2rem;
   }
+  .fade-alert{
+   
+    animation-name: fadeInOut;
+    animation-duration: 20s;
+    animation-fill-mode: forwards;
+  
+    
+  }
+  
+  @keyframes fadeInOut {
+    0% {
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
   .cornered-border-r-b {
     border-radius: 0 0 2rem 0;
   }
@@ -97,6 +120,9 @@
   }
   .bg-img2 {
     background-image: url("./assets/section_bg02.jpg");
+  }
+  .bg-img3 {
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsyxPmnO2iUjmhiCBbD-j6ShqT8RCZa0DXUZSWYyig&s");
   }
   .bg-banner-2:after {
     left: 50%;

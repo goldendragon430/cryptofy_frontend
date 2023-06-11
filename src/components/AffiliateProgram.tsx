@@ -122,7 +122,7 @@ const AffiliteProgram: React.FC = () => {
                 <span className="text-sm font-light text-white">
                   Total Commisions
                 </span>
-                <h1 className="text-lg font-bold text-white"> 8000 TRX</h1>
+                <h1 className="text-lg font-bold text-white"> {commissions[3]} TRX</h1>
               </div>
               <div className="flex items-center justify-center rounded-md bg-[#ffc10769] p-3 text-3xl text-[#ffc107]">
                 <BiWallet />
@@ -137,7 +137,7 @@ const AffiliteProgram: React.FC = () => {
         </span>
         <div className="w-full border-t border-t-gray-200 pt-6">
           <div className="box-2 flex w-full justify-start rounded-lg bg-cblack">
-            <div className="flex h-full w-[10%] items-center justify-center rounded-l-lg bg-red-500 px-1 py-20 text-4xl text-gray-300 text-opacity-30">
+            <div className="flex h-full lg:w-[10%] items-center justify-center rounded-l-lg bg-red-500 px-1 py-20 text-4xl text-gray-300 text-opacity-30">
               <BsFillGiftFill />
             </div>
             <div className="flex w-[80%] flex-col justify-center gap-2 pl-4 text-white">
@@ -158,7 +158,7 @@ const AffiliteProgram: React.FC = () => {
         </span>
         <div className="w-full border-t border-t-gray-200 pt-6">
           <div className="box-2 flex w-full justify-start rounded-lg bg-cblack">
-            <div className="flex h-full w-[10%] items-center justify-center rounded-l-lg px-1 py-20 text-4xl text-gray-300 text-opacity-30">
+            <div className="flex h-full lg:w-[10%] items-center justify-center rounded-l-lg px-1 py-20 text-4xl text-gray-300 text-opacity-30">
               <FiLink />
             </div>
             <div className="flex w-[80%] flex-col justify-center gap-2 pl-4 text-white">
