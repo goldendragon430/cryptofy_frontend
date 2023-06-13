@@ -13,34 +13,27 @@ import { GrMoney } from 'react-icons/gr'
 import TRXImg from '../assets/tron2.png'
 import TransactionsTable from "../components/landing/TransactionsTable";
 import { PriceCard } from "../components/Pricing";
+import { BACKEND_URL } from "../config";
+import { useTranslation } from "react-i18next";
+
 function Landing() {
   const { id } = useParams()
   const [tron, setTron] = useState(0)
-
+  const { t } = useTranslation()
   const [{ doPost }] = useApi()
   const [user,] = useAuth()
+  const [statisticsInfo, setStatisticsInfo] = useState({
+    users: 0,
+    w_amount: 0,
+    d_amount: 0,
+    day_users: 0,
+  })
   const token = user?.token
   const [bonus_rate, setBonusRate] = useState(1)
-  // const [plan,setPlan] = useState([
-  //   {
-  //     "level": 1,
-  //     "amount": 100,
-  //     "period": 1,
-  //     "bonus": 1.2
-  // },
-  // {
-  //     "level": 2,
-  //     "amount": 100,
-  //     "period": 30,
-  //     "bonus": 1.5
-  // },
-  // {
-  //     "level": 3,
-  //     "amount": 100,
-  //     "period": 60,
-  //     "bonus": 2
-  // }
-  // ])
+  const [dailyEarn, setDailyEarn] = useState(0)
+  const [day, setDays] = useState(1)
+  const image_url_1 = BACKEND_URL + 'get_file?name=banner_3.png'
+  const image_url_2 = BACKEND_URL + 'get_file?name=banner_4.png'
   const plan = [
     {
       "level": 1,
@@ -70,13 +63,24 @@ function Landing() {
     } else {
       const data = result['data']
       setBonusRate(data['bonus_rate'])
+      setDailyEarn(data['daily_earning'])
+    }
+  }
+  const get_statics = async () => {
+    const result = await doPost('admin/statistics', {
+
+    })
+    if (result.error || result['result'] == "failed") {
+      toast.error("Error")
+    } else {
+      const data = result['data']
+      setStatisticsInfo(data)
     }
   }
   useEffect(() => {
-    if (token) {
-      get_config()
-    }
-  }, [token])
+    get_config()
+    get_statics()
+  }, [])
   useEffect(() => {
     if (id) {
       localStorage.setItem('referral', id)
@@ -84,129 +88,89 @@ function Landing() {
       localStorage.setItem('referral', '0')
     }
   }, [id])
+
   return (
     <main className="px-3 font-muli text-custblack lg:px-0">
-      {/* <div className="hidden justify-start gap-5 border-b-[.000000001px] border-[#535a7076] py-5 pl-10 lg:flex">
-        <p className="text-[#535a70]">Call Us: (+84) 939 512 999</p>
-        <p className="text-[#535a70]"> info@trxmining.com</p>
-        <div className="flex items-center justify-center gap-4">
-          <a href="#">
-            <GrFacebookOption className="text-[#535a70]" />
-          </a>
-          <a href="#">
-            <GrTwitter className="text-[#535a70]" />
-          </a>
-          <a href="#">
-            <GrLinkedinOption className="text-[#535a70]" />
-          </a>
-          <a href="#">
-            <GrGooglePlus className="text-[#535a70]" />
-          </a>
-        </div>
-      </div> */}
+
       <NavBar />
       <Nav2 />
       <section className="w-full bg-no-repeat pb-32 pt-10 lg:bg-[100%] bg-banner bg-center mt-[72px]">
         <div className="flex w-[95%] flex-col items-baseline gap-1 lg:ml-10 lg:mt-20 lg:w-[40rem]">
           <h1 className="mb-10 w-[80%] text-4xl font-bold leading-[3rem] text-darkblue lg:w-full lg:text-7xl">
-            Cloud Mining Platform for{" "}
+            {t("Cloud Mining Platform for")}{" "}
             <strong className="text-6xl text-secondred">TRX</strong>
           </h1>
           <p className="text-md mb-10 w-[90%] text-left font-medium leading-8 text-black lg:text-lg lg:text-[#535a70]">
-            Innovative and modern trx cloud mining platform with updated equipment and cryptocurrency mining technology, which accelerated the time for users to earn TRX everyday.
+            {t("Landing_Summary")}
           </p>
 
         </div>
       </section>
-      {/* <section className="flex w-full items-center justify-center lg:mt-52">
-        <div className="flex w-[95%] flex-col items-baseline gap-12 lg:flex-row lg:items-center">
-          <img
-            src="https://unxbot.com/unxtem24/trx_v2/assets/img/gallery/inv_team.jpg"
-            alt=""
-            className="cornered-border-r-b w-full lg:w-[30rem]"
-          />
-          <div className="flex flex-col items-baseline justify-center gap-12 lg:ml-10">
-            <h1 className="text-[1.6rem] font-bold text-darkblue lg:text-4xl">
-              Who We Are?
-            </h1>
-            <p className="text-md font-meduim w-full text-[#535a70] lg:text-lg">
-              Trxmining is a best Investment platfrom for trx coin investing. We
-              have very experiance team for investing platfrom. And make profit
-              easily!
-            </p>
-            <a
-              href="#"
-              className="btn cornered-border m-3 px-7 py-5 text-white hover:bg-left"
-            >
-              Read More
-            </a>
-          </div>
-        </div>
-      </section> */}
+
       <section className="flex items-center justify-center py-20  lg:h-[10rem]">
         <h1 className="text-3xl font-bold text-darkblue lg:text-5xl">
-          What Makes <span className="text-primred">Trx.uk</span> Special?
+          {t("What Makes")} <span className="text-primred">Trx.uk</span> {t("Special")}?
         </h1>
       </section>
       <section className="flex flex-col justify-center gap-3 lg:grid lg:grid-cols-3 lg:grid-rows-1 lg:px-10">
         <div className="flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
           <FaUserCheck style={{ width: 100, height: 100 }} />
           <h3 className="text-2xl font-bold text-darkblue">
-            Sign Up Bonus
+            {t("Sign Up Bonus")}
           </h3>
           <p className="text-md w-[80%] text-center font-light leading-7 text-darkblue2 lg:text-lg">
-            Register an account and get 100GH/s Power for <b style={{ color: 'red', fontSize: 30 }}>free</b>
+            {t("Register an account and get 100GH/s Power for")} <b style={{ color: 'red', fontSize: 30 }}>{t("free")}</b>
           </p>
         </div>
         <div className="flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
           <AiOutlineUsergroupAdd style={{ width: 100, height: 100 }} />
           <h3 className="text-2xl font-bold text-darkblue">
-            Three-level Affiliate
+            {t("Three-level Affiliate")}
           </h3>
           <p className="text-md w-[80%] text-center font-light leading-7 text-darkblue2 lg:text-lg">
-            Get 10% for 1-level  each new Deposit, 5% for 2-level and 2% for 3-level partners.
+            {t("Get 10% for 1-level  each new Deposit, 5% for 2-level and 2% for 3-level partners")}
           </p>
         </div>
         <div className="flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
           <GiPresent style={{ width: 100, height: 100 }} />
           <h3 className="text-2xl font-bold text-darkblue">
-            Daily Bonus
+            {t("Daily Bonus")}
           </h3>
           <p className="text-md w-[80%] text-center font-light leading-7 text-darkblue2 lg:text-lg">
-            A random bonus for all users every day and the system of rewards for cooperation.
+            {t("A random bonus for all users every day and the system of rewards for cooperation")}
           </p>
         </div>
         <div className="flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
           <ImMobile style={{ width: 100, height: 100 }} />
           <h3 className="text-2xl font-bold text-darkblue">
-            Easy Payments
+            {t("Easy Payments")}
           </h3>
           <p className="text-md w-[80%] text-center font-light leading-7 text-darkblue2 lg:text-lg">
-            Top up your account with TRX
+            {t("Top up your account with")} <b style={{ color: 'red', fontSize: 30 }}>TRX</b>
           </p>
         </div>
         <div className="flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
           <GrMoney style={{ width: 100, height: 100 }} />
           <h3 className="text-2xl font-bold text-darkblue">
-            Double income
+            {t("Double income")}
           </h3>
           <p className="text-md w-[80%] text-center font-light leading-7 text-darkblue2 lg:text-lg">
-            Get double income not only from daily mining you can also stake trx to get even higher profit.
+            {t("Get double income not only from daily mining you can also stake trx to get even higher profit")}
           </p>
         </div>
         <div className="flex flex-col items-center justify-center gap-2 p-3 lg:px-5">
           <GiMoneyStack style={{ width: 100, height: 100 }} />
           <h3 className="text-2xl font-bold text-darkblue">
-            Withdrawal without deposit
+            {t("Withdrawal without deposit")}
           </h3>
           <p className="text-md w-[80%] text-center font-light leading-7 text-darkblue2 lg:text-lg">
-            The user who has not made a deposit and has collected the minimum amount for withdrawal is allowed to withdraw after ~ 60 days.
+            {t("The user who has not made a deposit and has collected the minimum amount for withdrawal is allowed to withdraw after ~ 60 days")}
           </p>
         </div>
       </section>
       <section className="flex items-center justify-center lg:h-[10rem]" style={{ marginTop: 20 }}>
         <h1 className="text-3xl font-bold text-darkblue lg:text-5xl">
-          TRX MINING <span className="text-primred">PROFIT</span> CALCULATOR
+          TRX {t("MINING")} <span className="text-primred">{t("PROFIT")}</span> {t("CALCULATOR")}
         </h1>
       </section>
       <section className="flex flex-col items-center justify-center bg-[$fafafa] p-1">
@@ -219,9 +183,9 @@ function Landing() {
             />
 
           </div>
-          <div className="text-white font-extrabold col-span-2 cornered-border-l flex w-full flex-col items-center justify-between gap-10 bg-img2 bg-cover bg-center px-10 py-16 lg:w-[70%] lg:py-20">
+          <div className="text-white font-extrabold col-span-2 cornered-border-l flex w-full flex-col items-center justify-between gap-10  bg-cover bg-center px-10 py-16 lg:w-[70%] lg:py-20" style={{ backgroundImage: `url(${image_url_1})` }}>
             <div>
-              <p className="mb-1 text-sm">TRX Amount to invest</p>
+              <p className="mb-1 text-sm">TRX {t("Amount to invest")}</p>
               <div className="flex place-items-center">
                 <input
                   type="number"
@@ -235,19 +199,19 @@ function Landing() {
             </div>
             <div className="flex place-items-center gap-10">
               <div className="text-center">
-                <p className="text-sm">Power</p>
+                <p className="text-sm">{t("Power")}</p>
                 <p className="text-2xl ml-1">{Math.floor(bonus_rate * tron)} GH/s </p>
               </div>
               <div className="text-center">
-                <p className="text-sm">Profit</p>
+                <p className="text-sm">{t("Profit")}</p>
                 <p className="text-2xl ml-1">{Math.floor(bonus_rate * tron * 3)} TRX </p>
               </div>
               <select className="form-select text-darkblue form-select-sm bg-white mx-2" aria-label=".form-select-sm example">
-                <option value="1">Per 1 day</option>
-                <option value="10">Per 10 days</option>
-                <option value="30">Per 30 days</option>
-                <option value="60">Per 60 days</option>
-                <option value="180">Per 180 days</option>
+                <option value="1">{t("Per")} 1 {t("day")}</option>
+                <option value="10">{t("Per")} 10 {t("days")}</option>
+                <option value="30">{t("Per")} 30 {t("days")}</option>
+                <option value="60">{t("Per")} 60 {t("days")}</option>
+                <option value="180">{t("Per")} 180 {t("days")}</option>
               </select>
             </div>
           </div>
@@ -260,10 +224,10 @@ function Landing() {
       <section className="flex flex-col items-center justify-center bg-[#fafafa]  py-10">
         <div className="mb-4 lg:mb-20 lg:mt-32">
           <p className="text-md mb-5 mt-10 text-left font-medium text-[#535a70] lg:text-center lg:text-lg">
-            Our Investment plan for you
+            {t("Our Investment plan for you")}
           </p>
           <h1 className="mb-10 text-3xl font-bold text-darkblue lg:text-4xl">
-            Choose Your Plan Easily!
+            {t("Choose Your Plan Easily!")}
           </h1>
         </div>
         <div className="grid grid-cols-1 gap-5 py-20 lg:grid-cols-3 w-[90%]">
@@ -273,19 +237,19 @@ function Landing() {
         </div>
       </section>
       <section className="mt-32 flex items-center justify-center px-1">
-        <div className="cornered-border-l flex w-full flex-col items-center justify-between gap-10 bg-img1  bg-cover bg-center px-10 py-16 text-white lg:w-[90%] lg:flex-row lg:py-20">
+        <div className="cornered-border-l flex w-full flex-col items-center justify-between gap-10 bg-img1  bg-cover bg-center px-10 py-16 text-white lg:w-[90%] lg:flex-row lg:py-20" style={{ backgroundImage: `url(${image_url_2})` }}>
           <h1 className="w-80 text-2xl font-bold lg:text-3xl">
-            Get In Our Touch To Subscribe.
+            {t("Get In Our Touch To Subscribe")}
           </h1>
           <div className="cornered-border flex items-center justify-between bg-white px-1 py-1 w-[100%] lg:w-[30rem]">
             <input
               type="text"
               className="w[70%] lg:text-md bg-transparent px-4 py-4 text-sm text-custblack outline-none lg:px-8 lg:py-3"
-              placeholder="Enter Email"
+              placeholder={t("Enter Email")}
               style={{ minWidth: 100 }}
             />
             <button className="cornered-border bg-gradient-to-r from-red-600 to-orange-500 px-7 py-3 text-white">
-              Subscribe
+              {t("Subscribe")}
             </button>
           </div>
         </div>
@@ -293,7 +257,7 @@ function Landing() {
       <section className="mb-20 flex flex-col justify-center gap-4 bg-[#f8fcff] lg:pt-52">
         <div className="flex flex-col items-center justify-center gap-4">
           <h1 className="text-3xl font-bold text-darkblue lg:text-5xl">
-            How To Earn <span className="text-primred">TRX</span> ?
+            {t("How To Earn")} <span className="text-primred">TRX</span> ?
           </h1>
         </div>
         <div className="my-20 grid-cols-1 items-center justify-start gap-5 lg:grid lg:grid-cols-4">
@@ -301,46 +265,46 @@ function Landing() {
             <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-xl font-bold rounded-full text-white">
               1
             </div>
-            <h1 className="text-xl font-semibold">Registration</h1>
-            <h2 className="text-lg font-medium">Create An Account, Verify Your Email And Receive A Welcome Bonus Of  xxxGH/s</h2>
+            <h1 className="text-xl font-semibold">{t("Registration")}</h1>
+            <h2 className="text-lg font-medium">{t("Create An Account, Verify Your Email And Receive A Welcome Bonus Of  xxxGH/s")}</h2>
           </div>
           <div className="box-shadow flex flex-col items-center justify-center gap-2 bg-white py-4 text-darkblue text-center h-full lg:px-4">
             <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-xl font-bold rounded-full text-white">
               2
             </div>
-            <h1 className="text-xl font-semibold">Purchase Power</h1>
-            <h2 className="text-lg font-medium">Use The Calculator To Calculate The Profit  And Make A Deposit. </h2>
+            <h1 className="text-xl font-semibold">{t("Purchase Power")}</h1>
+            <h2 className="text-lg font-medium">{t("Use The Calculator To Calculate The Profit  And Make A Deposit")}</h2>
           </div>
           <div className="box-shadow flex flex-col items-center justify-center gap-2 bg-white py-4 text-darkblue text-center h-full lg:px-4">
             <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-xl font-bold rounded-full text-white">
               3
             </div>
-            <h1 className="text-xl font-semibold">Start Mining</h1>
-            <h2 className="text-lg font-medium">After Deposit, You Will Recieve The Power (GH/s) , Use All The Power In TRX</h2>
+            <h1 className="text-xl font-semibold">{t("Start Mining")}</h1>
+            <h2 className="text-lg font-medium">{t("After Deposit, You Will Receive The Power (GH/s) , Use All The Power In TRX")}</h2>
           </div>
           <div className="box-shadow flex flex-col items-center justify-center gap-2 bg-white py-4 text-darkblue text-center h-full lg:px-4">
             <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-xl font-bold rounded-full text-white">
               4
             </div>
-            <h1 className="text-xl font-semibold">Withdrawal Of TRX</h1>
-            <h2 className="text-lg font-medium">Send earned TRX to any wallet, reinvest to increase power, or stake for more TRX.</h2>
+            <h1 className="text-xl font-semibold">{t("Withdrawal Of TRX")}</h1>
+            <h2 className="text-lg font-medium">{t("Send earned TRX to any wallet, reinvest to increase power, or stake for more TRX")}</h2>
           </div>
         </div>
       </section>
       <section className="mb-20 flex flex-col justify-center gap-4 bg-[#f8fcff] lg:pt-10" id="statistics" >
         <div className="flex flex-col items-center justify-center gap-4">
           <h6 className="text-2xl font-bold text-secondred lg:text-xl">
-            Trxmining Live Records.
+            {t("Trx Mining Live Records")}
           </h6>
           <h1 className="text-2xl font-bold text-darkblue lg:mb-0 lg:text-5xl" >
-            CURRENT STATISTICS.
+            {t("CURRENT STATISTICS")}
           </h1>
         </div>
         <div className="p-6 rounded-lg">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="box-shadow shadow-md bg-white rounded-lg p-4 flex items-center justify-between">
               <div className="font-black">
-                <p className="text-2xl text-gray-500">Registered Users</p>
+                <p className="text-2xl text-gray-500">{t("Registered Users")}</p>
                 <h3 className="text-4xl font-bold">1234</h3>
               </div>
               <svg
@@ -358,7 +322,7 @@ function Landing() {
 
             <div className="box-shadow bg-white rounded-lg p-4 flex items-center justify-between">
               <div className="font-black">
-                <p className="text-2xl text-gray-500">Total Investments</p>
+                <p className="text-2xl text-gray-500">{t("Total Investments")}</p>
                 <h3 className="text-4xl font-bold">100,000 TRX</h3>
               </div>
               <svg
@@ -377,7 +341,7 @@ function Landing() {
 
             <div className="box-shadow bg-white rounded-lg p-4 flex items-center justify-between">
               <div className="font-black">
-                <p className="text-2xl text-gray-500">All Withdrawals</p>
+                <p className="text-2xl text-gray-500">{t("All Withdrawals")}</p>
                 <h3 className="text-4xl font-bold">50,000 TRX</h3>
               </div>
               <svg
@@ -397,7 +361,7 @@ function Landing() {
 
             <div className="box-shadow bg-white rounded-lg p-4 flex items-center justify-between">
               <div className="font-black">
-                <p className="text-2xl text-gray-500">Days Online</p>
+                <p className="text-2xl text-gray-500">{t("Days Online")}</p>
                 <h3 className="text-4xl font-bold">365</h3>
               </div>
               <svg
@@ -419,10 +383,10 @@ function Landing() {
       <section className="mb-10 flex flex-col justify-center align-center items-center gap-4 bg-[#f8fcff] lg:pt-0">
         <div className="mb-4">
           <p className="text-2xl mb-5 mt-10 text-center font-black text-[#535a70] lg:text-center lg:text-4xl">
-            Recent Transactions
+            {t("Recent Transactions")}
           </p>
           <h1 className="mb-10 text-xl font-bold text-darkblue text-center lg:text-2xl">
-            Start Earning Now
+            {t("Start Earning Now")}
           </h1>
         </div>
         <div className="w-[100%] rounded-lg p-6 shadow-md">
@@ -436,21 +400,21 @@ function Landing() {
               <img
                 src="footermain.png"
                 alt=""
-                className="w-[70%] bg-[#80808060]"
+                className="w-[70%]"
               />
               <span className="text-sm font-bold text-white">
-                company number <b className="underline"><a href="https://find-and-update.company-information.service.gov.uk/company/12707554" >12707554</a></b>
+                {t("company number")} <b className="underline"><a className="hover:text-red-600" href="https://find-and-update.company-information.service.gov.uk/company/12707554" >12707554</a></b>
               </span>
             </div>
             <span className="whitespace-pre-wrap text-sm font-bold text-white">
-              228 holton Road, harry, wales, CF03 4HS
+              {t("228 holton Road, barry, wales, CF03 4HS")}
             </span>
           </div>
           <div className="flex w-full flex-col items-center justify-center gap-3">
             <img src="tron.png" alt="" className="w-[60%]" />
             <img src="tronlink.png" alt="" className="w-[60%]" />
           </div>
-          <div className="flex w-full flex-col items-center justify-center">
+          <div className="flex w-full flex-col items-center justify-center gap-3">
             <img src="binance.png" alt="" className="w-[60%]" />
             <img src="trustwallet.png" alt="" className="w-[60%]" />
           </div>
@@ -458,31 +422,25 @@ function Landing() {
             <img src="huobi.png" alt="" className="w-[60%]" />
             <img src="okex.png" alt="" className="w-[60%]" />
           </div>
-          <div className="flex w-full flex-col items-start justify-center gap-3 pl-11">
-            <span className="text-base font-bold uppercase text-white">
-              quick link
+          <div className="flex w-full flex-col items-center lg:items-start justify-center gap-3">
+            <span className="text-2xl lg:text-base font-bold uppercase text-white">
+              {t("quick link")}
             </span>
-            <div className="gap flex w-full flex-col items-start text-white text-sm font-medium">
-              <a href="/affiliate-program">Affiliate Program</a>
-              <a href="/faq">FAQ</a>
-              <a href="/about-us">About US</a>
-              <a href="/terms">Terms</a>
-              <a href="/plans">Plans</a>
-              <a href="/contacts">Contacts</a>
+            <div className="gap flex w-full flex-col items-center text-white text-xl font-medium lg:items-start lg:text-sm">
+              <a className="hover:text-red-600" href="/affiliate-program">{t("Affiliate Program")}</a>
+              <a className="hover:text-red-600" href="/faq">{t("FAQ")}</a>
+              <a className="hover:text-red-600" href="/about-us">{t("About us")}</a>
+              <a className="hover:text-red-600" href="/terms">{t("Terms")}</a>
+              <a className="hover:text-red-600" href="/plans">{t("Plans")}</a>
+              <a className="hover:text-red-600" href="/contacts">{t("Contacts")}</a>
             </div>
           </div>
         </div>
         <hr className="text-[#0e141f]" />
         <div className="flex h-full items-center pt-2 font-bold lg:pl-16">
           <p className="text-[#736e73]">
-            Copyright ©2023 All rights reserved by TRXM.UK
+            {t("Copyright ©2023 All rights reserved by TRX.UK")}
           </p>
-          <div>
-            <a href="#"></a>
-            <a href="#"></a>
-            <a href="#"></a>
-            <a href="#"></a>
-          </div>
         </div>
       </footer>
     </main>

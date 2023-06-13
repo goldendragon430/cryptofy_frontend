@@ -1,0 +1,113 @@
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment, useState } from "react";
+import {
+  AiOutlinePlus,
+} from "react-icons/ai";
+import { GrFormClose } from "react-icons/gr";
+
+const LanguageModal = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  return (
+    <>
+      <button
+        onClick={openModal}
+        className="flex items-center justify-center gap-1 rounded-md border-[2px] border-cblack p-3 text-base"
+      >
+        <AiOutlinePlus /> Add New
+      </button>
+
+      <Transition appear show={isOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-50" onClose={closeModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="flex w-full max-w-lg transform flex-col overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all">
+                  <div className="flex items-center justify-between border-b border-gray-200 p-6">
+                    <h1 className="text-xl font-medium">Add New Language</h1>
+                    <button
+                      onClick={closeModal}
+                      className="absolute right-4 top-3 text-white"
+                    >
+                      <GrFormClose className="cursor-pointer text-2xl text-cblack" />
+                    </button>
+                  </div>
+                  <div className="flex flex-col justify-start gap-1 border-b border-gray-200 p-4">
+                    <div className="flex w-full flex-col justify-center gap-2">
+                      <label className="self-start">Language Name</label>
+                      <input
+                        type="text"
+                        className="rounded-md border-[1px] border-gray-600 px-3 py-2 outline-none"
+                      />
+                    </div>
+                    <div className="flex w-full flex-col justify-center gap-2">
+                      <label className="self-start">Language Code</label>
+                      <input
+                        type="text"
+                        className="rounded-md border-[1px] border-gray-600 px-3 py-2 outline-none"
+                      />
+                    </div>
+                    {/* <div className="flex w-full flex-col justify-center gap-2">
+                      <label className="self-start">Default Language</label>
+                      <label
+                        htmlFor="Toggle3"
+                        className="inline-flex cursor-pointer items-center rounded-md p-2 dark:text-gray-800"
+                      >
+                        <input
+                          id="Toggle3"
+                          type="checkbox"
+                          className="peer hidden"
+                        />
+                        <span className="rounded-l-md px-4 py-2 dark:bg-violet-400 peer-checked:dark:bg-gray-300">
+                          Monthly
+                        </span>
+                        <span className="rounded-r-md px-4 py-2 dark:bg-gray-300 peer-checked:dark:bg-violet-400">
+                          Annually
+                        </span>
+                      </label>
+                    </div> */}
+                  </div>
+                  <div className="w-full p-6">
+                    <button className="flex w-full items-center justify-center rounded-md bg-cblack py-2 font-semibold text-white shadow-md">
+                      Submit
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+    </>
+  );
+};
+
+export default LanguageModal;

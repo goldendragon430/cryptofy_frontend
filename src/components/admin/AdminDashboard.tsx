@@ -6,8 +6,7 @@ import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import IconButton from "@mui/material/IconButton";
-import { BiArrowToLeft, BiStats } from "react-icons/bi";
-import Imgsrc from '../../assets/tron.svg'
+import { BiArrowToLeft } from "react-icons/bi";
 import {
   Divider,
   ListItem,
@@ -19,16 +18,16 @@ import { useState, useEffect } from "react";
 import { BsPeopleFill } from "react-icons/bs";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { AiFillProfile, AiTwotoneHome } from "react-icons/ai";
-import { FaQuestionCircle } from "react-icons/fa";
+import { AiFillProfile, AiOutlineOrderedList, AiTwotoneHome } from "react-icons/ai";
+import { FaQuestionCircle, FaMoneyCheck } from "react-icons/fa";
 import { RiFolderWarningLine } from "react-icons/ri";
 import { GiCircleClaws } from "react-icons/gi";
 import { TiMessages } from "react-icons/ti";
-
+import { MdDashboard } from "react-icons/md"
+import { TbAffiliateFilled } from "react-icons/tb";
 import { useAuth } from "../../contexts/SessionContext";
-
-
-const drawerWidth = 240;
+import Imgsrc from '../../assets/tron.png'
+const drawerWidth = 300;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -99,22 +98,18 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-
 export default function Dashboard() {
   const [open, setOpen] = useState(true);
-  const [, { logout }] = useAuth()
   const navigate = useNavigate()
-
-
-  const onLogout = () => {
-    logout()
-    navigate('/')
-  }
+  const [, { logout }] = useAuth()
 
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
+  const onLogout = () => {
+    logout()
+    navigate('/')
+  }
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -134,58 +129,96 @@ export default function Dashboard() {
     };
   }, []);
 
+  const path = window.location.pathname;
   const [sidebarItems, setSidebarItems] = useState([
     {
-      text: "Users",
-      active: true,
+      text: "Dashboard",
+      active: path == '/admin',
       link: "",
+      icon: <MdDashboard className="text-xl font-bold text-cblack" />,
+    },
+    {
+      text: "Users",
+      active: path == '/admin/users',
+      link: "users",
       icon: <BsPeopleFill className="text-xl font-bold text-cblack" />,
     },
     {
-      text: "Management",
+      text: "Deposit",
+      active: path == '/admin/deposit',
+      link: "deposit",
+      icon: <FaMoneyCheck className="text-xl font-bold text-cblack" />,
+    },
+    {
+      text: "Withdrawals",
+      active: path == '/admin/withdrawals',
+      link: "withdrawals",
+      icon: <FaMoneyCheck className="text-xl font-bold text-cblack" />,
+    },
+    {
+      text: "Event Banner",
+      active: path == '/admin/event-banner',
+      link: "event-banner",
+      icon: <AiFillProfile className="text-xl font-bold text-cblack" />,
+    },
+    {
+      text: "Payment Gateway",
       active: false,
-      link: "management",
+      link: "payment-gateway",
+      icon: <FaMoneyCheck className="text-xl font-bold text-cblack" />,
+    },
+
+    {
+      text: "Plan Management",
+      active: path == '/admin/plan-management',
+      link: "plan-management",
+      icon: <AiOutlineOrderedList className="text-xl font-bold text-cblack" />,
+    },
+    {
+      text: "Affiliate Management",
+      active: path == '/admin/affiliate-management',
+      link: "affiliate-management",
+      icon: <TbAffiliateFilled className="text-xl font-bold text-cblack" />,
+    },
+    {
+      text: "Edit Contact",
+      active: path == '/admin/edit-contact',
+      link: "edit-contact",
       icon: <AiFillProfile className="text-xl font-bold text-cblack" />,
     },
     {
       text: "Home",
-      active: false,
+      active: path == '/',
       link: "/",
       icon: <AiTwotoneHome className="text-xl font-bold text-cblack" />,
     },
     {
       text: "FAQ",
-      active: false,
+      active: path == '/faq',
       link: "/faq",
       icon: <FaQuestionCircle className="text-xl font-bold text-cblack" />,
     },
     {
       text: "Affiliate program",
-      active: false,
+      active: path == '/affiliate-program',
       link: "/affiliate-program",
       icon: <BsPeopleFill className="text-xl font-bold text-cblack" />,
     },
     {
       text: "About Us",
-      active: false,
+      active: path == '/about-us',
       link: "/about-us",
       icon: <RiFolderWarningLine className="text-xl font-bold text-cblack" />,
     },
     {
       text: "Terms",
-      active: false,
+      active: path == '/terms',
       link: "/terms",
       icon: <GiCircleClaws className="text-xl font-bold text-cblack" />,
     },
     {
-      text: "Statistics",
-      active: false,
-      link: "statistics",
-      icon: <BiStats className="text-xl font-bold text-cblack" />,
-    },
-    {
       text: "Contacts",
-      active: false,
+      active: path == '/contacts',
       link: "/contacts",
       icon: <TiMessages className="text-xl font-bold text-cblack" />,
     },
@@ -230,7 +263,7 @@ export default function Dashboard() {
               borderRight: "2px solid black",
             }}
           >
-            <img src={Imgsrc} className="h-8 w-8" />
+            <img src={Imgsrc} className="h-8 w-8 " />
           </IconButton>
           <button className="whitespace-nowrap px-8 py-4 rounded-bl-lg rounded-tr-lg bg-colord text-base text-white" onClick={onLogout}>
             Log out
@@ -247,7 +280,7 @@ export default function Dashboard() {
             className="flex h-full w-full items-center justify-center gap-2"
           >
             <img src={Imgsrc} alt="" className="h-8 w-8" />
-            <span className="text-xl font-bold text-cblack">TRX Mining</span>
+            <span className="text-xl font-bold text-cblack">Trx.uk</span>
           </Link>
           <IconButton onClick={handleDrawerClose}>
             <BiArrowToLeft className="text-cblack" />
@@ -261,6 +294,7 @@ export default function Dashboard() {
             flexDirection: "column",
             gap: 2,
             width: "100%",
+            marginTop: "26px"
           }}
         >
           {open && (
@@ -271,7 +305,7 @@ export default function Dashboard() {
               Account
             </span>
           )}
-          {sidebarItems.slice(0, 4).map((item, index) => {
+          {sidebarItems.slice(0, 9).map((item, index) => {
             const { text, active, link, icon } = item;
             return (
               <ListItem
@@ -315,7 +349,7 @@ export default function Dashboard() {
               other
             </span>
           )}
-          {sidebarItems.slice(4).map((item, index) => {
+          {sidebarItems.slice(10).map((item, index) => {
             const { text, active, link, icon } = item;
             return (
               <ListItem

@@ -17,13 +17,24 @@ import { ToastContainer } from "react-toastify";
 import { ProtectedRoute, AdminRoute } from './utils';
 import "react-toastify/dist/ReactToastify.css";
 import AdminDashboard from "./components/admin/AdminDashboard";
-import UsersTable from "./components/admin/UsersTable";
+
+import EditContact from "./components/admin/EditContact";
+import UserManagement from "./components/admin/UserManagement";
+import EventBanner from "./components/admin/EventBanner";
+import Withdrawal from "./components/admin/Withdrawals";
+import WithdrawDetails from "./components/admin/WithdrawDetails";
+import UserDetails2 from "./components/admin/UserDetails2";
+import MainAdminDashboard from "./components/admin/Dashboard";
+import DepositTable from "./components/admin/DepositTable";
+import PaymentGateway from "./components/admin/PayementGateway";
 import Management from "./components/Management";
+import AffiliateManagement from "./components/AffiliateManagement";
 
 const App = () => {
   return (
     <div className="h-screen w-full">
       <ToastContainer />
+      {/* <div id="google_translate_element" style = {{width:'100%'}} ></div> */}
       <NavWrapper>
         <Route path="/" element={<Landing />}></Route>
         <Route path="ref/:id" element={<Landing />}></Route>
@@ -40,9 +51,23 @@ const App = () => {
           <Route path="/terms" element={<Terms />} />
           <Route path="/contacts" element={<Contacts />} />
         </Route>
-        <Route path="admin" element={<AdminRoute children={<AdminDashboard />} />}>
-          <Route path="" element={<UsersTable />} />
-          <Route path="management" element={<Management />} />
+        <Route path="admin" element= {<AdminRoute children={<AdminDashboard />}/>}>
+          <Route index element={<MainAdminDashboard/>} />
+          <Route path="users"  >
+            <Route index  element={<UserManagement />} />
+            <Route path="details/:id" element={<UserDetails2 />} />
+          </Route>
+          <Route path="deposit" element={<DepositTable />} />
+          <Route path="event-banner" element={<EventBanner />} />
+          <Route path="withdrawals">
+            <Route index  element={<Withdrawal />} />
+            <Route path="details/:id" element={<WithdrawDetails />} />
+          </Route>
+          {/* <Route path="language" element={<LanguageManager />} /> */}
+          <Route path="edit-contact" element={<EditContact />} />
+          <Route path="payment-gateway" element={<PaymentGateway />} />
+          <Route path="plan-management" element={<Management />} />
+          <Route path="affiliate-management" element={<AffiliateManagement />} />
         </Route>
         <Route path="/plans" element={<Pricing />} />
       </NavWrapper>

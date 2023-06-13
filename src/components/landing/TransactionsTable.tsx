@@ -4,7 +4,12 @@ import {
   GridRenderCellParams,
   //   GridValueGetterParams,
 } from "@mui/x-data-grid";
+import { useAuth } from "../../contexts/SessionContext";
+import { useApi } from "../../contexts/ApiContext";
 import { BiLinkExternal } from "react-icons/bi";
+import {useState, useEffect} from 'react'
+import {toast} from 'react-toastify'
+import { useTranslation } from "react-i18next";
 
 const columns: GridColDef[] = [
   // { field: "id", headerName: "ID", width: 80 },
@@ -14,6 +19,7 @@ const columns: GridColDef[] = [
     width : 300,
     editable: false,
     renderCell: (params: GridRenderCellParams) => {
+
       return (
         <div className="flex w-full items-center justify-center gap-4 text-center text-base font-medium text-white">
           <img
@@ -22,7 +28,7 @@ const columns: GridColDef[] = [
             alt=""
           />
           <span className="text-base font-medium text-cblack">
-            {params.row.amount.toFixed(12)}
+            {params.row.amount.substring(0,12)}
           </span>
         </div>
       );
@@ -58,15 +64,21 @@ const columns: GridColDef[] = [
     },
   },
   {
-    field: "txid",
+    field: "hash",
     width : 500,
     headerName: "TXID",
     editable: false,
+    flex : 1,
+    headerAlign:'center',
     renderCell: (params: GridRenderCellParams) => {
       return (
         <div className="flex w-full items-center justify-center gap-4 text-center text-base font-medium text-cblack">
-          <span className="">{params.row.txid}</span>
+          <a href="https://tronscan.org/#/transaction/e6ea3d50e0d4af512c5b5b96e3e90c8cea1c96117ebafd681e0ad9ad7cb11a83">
+            {params.row.hash}
+          </a>
+          <a href={"https://tronscan.org/#/transaction/"+params.row.hash}>
           <BiLinkExternal className="text-lg text-cblack" />
+          </a>
         </div>
       );
     },
@@ -197,10 +209,31 @@ const rows = [
 ];
 
 const TransactionsTable = () => {
+  const [{ doPost }] = useApi()
+  const [user,] = useAuth()
+  const token = user?.token
+  const [data,setData] = useState([])
+  const fetchData = async() =>{
+    const result = await doPost('transaction/all', {
+      'token': token
+    })
+    if (result.error || result['result'] == "failed") {
+      toast.error("Error")
+    } else {
+      const response_data = result['data']
+      setData(response_data)
+    }
+  }
+
+  useEffect(() => {
+   
+      fetchData()
+  
+  }, [])
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-8 ">
       <DataGrid
-        rows={rows}
+        rows={data}
         columns={columns}
        
         initialState={{

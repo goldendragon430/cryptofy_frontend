@@ -39,7 +39,8 @@ export default function WithdrawModal(props) {
   }, [token])
   function openModal() {
     if (balance > min_withdrawl) {
-      setStage(0)
+          setStage(0)
+
       setIsOpen(true);
     }
     else {
@@ -48,42 +49,56 @@ export default function WithdrawModal(props) {
   }
 
   const onSendCode = () => {
-    doPost('user/send_code', {
-      'token': token
-    })
-    setStage(1)
+    if(user?.verified == 0)
+      { 
+        doPost('user/send_code', {
+          'token': token
+        })
+        setStage(1)
+      }
+    else{
+      withdrawal()
+    }
   }
 
   const withdrawal = async () => {
+    if(user?.verified == 0) {
 
-    const result = await doPost('user/confirm_code', {
-      'token': token,
-      'code': code
-    })
-    if (result.error || result['result'] == "failed") {
-      toast.error("Error")
-      return
-    } else {
-      toast.success('Withdrawaling...')
+      const result = await doPost('user/confirm_code', {
+        'token': token,
+        'code': code
+      })
+      if (result.error || result['result'] == "failed") {
+        toast.error(result['msg'])
+        return
+      } 
+  
     }
+      toast.success('Withdrawaling...')
+    
 
     if (amount > balance) {
       toast.error("You set amount that is bigger than current balance.")
+      return
     }
-    else {
+    if (min_withdrawl > amount) {
+      toast.error("You set amount that is bigger than minimum withdrawal amount.")
+      return
+    }
+     
       const response = await doPost('mining/withdrawal', {
         token: token,
         amount: amount,
         address: address
       })
       if (response.error || response.result == 'failed') {
-        toast.error("Server Error")
+        toast.error('Confirm withdrawal Address or Network State again.')
       }
       else {
         toast.success("Success")
         onHide && onHide()
       }
-    }
+     
   }
   return (
     <>
@@ -206,7 +221,7 @@ export default function WithdrawModal(props) {
                           <GrFormClose className="cursor-pointer text-2xl text-cblack" />
                         </button>
                       </div>
-                      <div className="p-3 px-8 font-semibold leading-5">
+                      {user?.verified == 0 && <div className="p-3 px-8 font-semibold leading-5">
                         <h1 style={{ marginBottom: 10 }}>We sent {user?.email} 6 digits code.</h1>
                         <TextField
                           placeholder="Amount"
@@ -231,7 +246,7 @@ export default function WithdrawModal(props) {
 
                         />
 
-                      </div>
+                      </div>}
                       <div className="border-grey-500 flex items-center justify-end gap-2 border-t-[2px] p-3 px-8">
                         <button
                           onClick={closeModal}

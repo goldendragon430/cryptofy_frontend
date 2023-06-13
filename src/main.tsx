@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
+import './LanguageSelect.jsx'
+import "./i18init.jsx";
 import './index.css'
 import { ApiProvider } from './contexts/ApiContext';
 import { AuthProvider } from './contexts/SessionContext/index.jsx';

@@ -7,7 +7,7 @@ const OthersWrapper: React.FC = () => {
     <>
       <NavBar />
       <Nav2 />
-        <main className="main font-roboto">
+      <main className="main font-roboto">
         {/* <header className="hidden items-center justify-start gap-4 border-b border-b-gray-200  px-5 py-8 text-cblack lg:flex">
           <h1 className="text-xl font-bold">TX MINING</h1>
           <a href="/" className="flex items-center gap-1 text-lg font-bold">
@@ -82,10 +82,10 @@ const OthersWrapper: React.FC = () => {
               <img
                 src="footermain.png"
                 alt=""
-                className="w-[70%] bg-[#80808060]"
+                className="w-[70%]"
               />
               <span className="text-sm font-bold text-white">
-                company number <b className="underline"><a href = "https://find-and-update.company-information.service.gov.uk/company/12707554" >12707554</a></b>
+                company number <b className="underline"><a className="hover:text-red-600" href="https://find-and-update.company-information.service.gov.uk/company/12707554" >12707554</a></b>
               </span>
             </div>
             <span className="whitespace-pre-wrap text-sm font-bold text-white">
@@ -96,7 +96,7 @@ const OthersWrapper: React.FC = () => {
             <img src="tron.png" alt="" className="w-[60%]" />
             <img src="tronlink.png" alt="" className="w-[60%]" />
           </div>
-          <div className="flex w-full flex-col items-center justify-center">
+          <div className="flex w-full flex-col items-center justify-center gap-3">
             <img src="binance.png" alt="" className="w-[60%]" />
             <img src="trustwallet.png" alt="" className="w-[60%]" />
           </div>
@@ -104,31 +104,25 @@ const OthersWrapper: React.FC = () => {
             <img src="huobi.png" alt="" className="w-[60%]" />
             <img src="okex.png" alt="" className="w-[60%]" />
           </div>
-          <div className="flex w-full flex-col items-start justify-center gap-3 pl-11">
-            <span className="text-base font-bold uppercase text-white">
+          <div className="flex w-full flex-col items-center lg:items-start justify-center gap-3">
+            <span className="text-2xl lg:text-base font-bold uppercase text-white">
               quick link
             </span>
-            <div className="gap flex w-full flex-col items-start text-white text-sm font-medium">
-              <a href="/affiliate-program">Affiliate Program</a>
-              <a href="/faq">FAQ</a>
-              <a href="/about-us">About US</a>
-              <a href="/terms">Terms</a>
-              <a href="/plans">Plans</a>
-              <a href="/contacts">Contacts</a>
+            <div className="gap flex w-full flex-col items-center text-white text-xl font-medium lg:items-start lg:text-sm">
+              <a className="hover:text-red-600" href="/affiliate-program">Affiliate Program</a>
+              <a className="hover:text-red-600" href="/faq">FAQ</a>
+              <a className="hover:text-red-600" href="/about-us">About US</a>
+              <a className="hover:text-red-600" href="/terms">Terms</a>
+              <a className="hover:text-red-600" href="/plans">Plans</a>
+              <a className="hover:text-red-600" href="/contacts">Contacts</a>
             </div>
           </div>
         </div>
         <hr className="text-[#0e141f]" />
         <div className="flex h-full items-center pt-2 font-bold lg:pl-16">
           <p className="text-[#736e73]">
-            Copyright ©2023 All rights reserved by TRXM.UK
+            Copyright ©2023 All rights reserved by TRX.UK
           </p>
-          <div>
-            <a href="#"></a>
-            <a href="#"></a>
-            <a href="#"></a>
-            <a href="#"></a>
-          </div>
         </div>
       </footer>
     </>

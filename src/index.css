@@ -47,6 +47,29 @@
     background: -webkit-linear-gradient(45deg, #ee0979, #ff6a00) !important;
     background: linear-gradient(45deg, #ee0979, #ff6a00) !important;
   }
+  .fade-alert{
+   
+    animation-name: fadeInOut;
+    animation-duration: 10s;
+    animation-fill-mode: forwards;
+  
+    
+  }
+  
+  @keyframes fadeInOut {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+
+  }
+
+  a[aria-haspopup='true']{
+    display: flex !important;
+  }
+
   .form-select {
     color: #c0c8d1;
     background-color: #1e1e1e;
