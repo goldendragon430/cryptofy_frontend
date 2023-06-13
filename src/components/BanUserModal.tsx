@@ -1,6 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import { AiOutlineCheck } from "react-icons/ai";
 import { GrFormClose } from "react-icons/gr";
 import { ImBlocked } from "react-icons/im";
 const BanUserModal = () => {

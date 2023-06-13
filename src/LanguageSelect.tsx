@@ -1,11 +1,5 @@
 import i18next from "i18next";
-import { useEffect} from "react";
-const languageMap = {
-  en: { label: "English", dir: "ltr", active: true },
-  fr: { label: "Français", dir: "ltr", active: false },
-  gr: { label: "Deutsch", dir: "ltr", active: false }
-};
-
+ 
 const LanguageSelect = () => {
   const selected = localStorage.getItem("i18nextLng") || "en";
 

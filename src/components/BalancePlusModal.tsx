@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import { AiOutlineCheck, AiOutlinePlusCircle } from "react-icons/ai";
+import {  AiOutlinePlusCircle } from "react-icons/ai";
 import { GrFormClose } from "react-icons/gr";
 
 const BalancePlusModal = () => {

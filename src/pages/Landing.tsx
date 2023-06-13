@@ -204,9 +204,9 @@ function Landing() {
               </div>
               <div className="text-center">
                 <p className="text-sm">{t("Profit")}</p>
-                <p className="text-2xl ml-1">{Math.floor(bonus_rate * tron * 3)} TRX </p>
+                <p className="text-2xl ml-1">{Math.floor(bonus_rate * tron * day * dailyEarn)} TRX </p>
               </div>
-              <select className="form-select text-darkblue form-select-sm bg-white mx-2" aria-label=".form-select-sm example">
+              <select className="form-select text-darkblue form-select-sm bg-white mx-2" aria-label=".form-select-sm example" onChange={e=>setDays(parseInt(e.target.value))}>
                 <option value="1">{t("Per")} 1 {t("day")}</option>
                 <option value="10">{t("Per")} 10 {t("days")}</option>
                 <option value="30">{t("Per")} 30 {t("days")}</option>
@@ -305,7 +305,7 @@ function Landing() {
             <div className="box-shadow shadow-md bg-white rounded-lg p-4 flex items-center justify-between">
               <div className="font-black">
                 <p className="text-2xl text-gray-500">{t("Registered Users")}</p>
-                <h3 className="text-4xl font-bold">1234</h3>
+                <h3 className="text-4xl font-bold">{statisticsInfo['users']}</h3>
               </div>
               <svg
                 fill="none"
@@ -323,7 +323,7 @@ function Landing() {
             <div className="box-shadow bg-white rounded-lg p-4 flex items-center justify-between">
               <div className="font-black">
                 <p className="text-2xl text-gray-500">{t("Total Investments")}</p>
-                <h3 className="text-4xl font-bold">100,000 TRX</h3>
+                <h3 className="text-4xl font-bold">{statisticsInfo['d_amount']} TRX</h3>
               </div>
               <svg
                 fill="none"
@@ -342,7 +342,7 @@ function Landing() {
             <div className="box-shadow bg-white rounded-lg p-4 flex items-center justify-between">
               <div className="font-black">
                 <p className="text-2xl text-gray-500">{t("All Withdrawals")}</p>
-                <h3 className="text-4xl font-bold">50,000 TRX</h3>
+                <h3 className="text-4xl font-bold"> {statisticsInfo['w_amount']}TRX</h3>
               </div>
               <svg
                 fill="none"
@@ -362,7 +362,7 @@ function Landing() {
             <div className="box-shadow bg-white rounded-lg p-4 flex items-center justify-between">
               <div className="font-black">
                 <p className="text-2xl text-gray-500">{t("Days Online")}</p>
-                <h3 className="text-4xl font-bold">365</h3>
+                <h3 className="text-4xl font-bold">{statisticsInfo['day_users']}</h3>
               </div>
               <svg
                 fill="none"

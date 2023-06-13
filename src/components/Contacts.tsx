@@ -5,7 +5,6 @@ import {BsPhone} from 'react-icons/bs'
 import {TextField } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 import Button from '@mui/material/Button';
-import { useAuth } from "../contexts/SessionContext";
 import { useApi } from "../contexts/ApiContext";
 import {toast} from 'react-toastify'
 const Contacts: React.FC = () => {

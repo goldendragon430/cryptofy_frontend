@@ -1,10 +1,8 @@
 import React from "react";
-import ApproveModal from "../ApproveModal";
-import RejectModal from "../RejectModal";
+
 import { Link } from "react-router-dom";
 import { FaMoneyBillWaveAlt, FaWallet } from "react-icons/fa";
-import { GrDownload, GrUpload } from "react-icons/gr";
-import { GiReceiveMoney } from "react-icons/gi";
+
 import { BiLogInCircle, BiWallet } from "react-icons/bi";
 import { TbArrowsLeftRight } from "react-icons/tb";
 import BalancePlusModal from "../BalancePlusModal";

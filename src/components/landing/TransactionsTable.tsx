@@ -9,7 +9,6 @@ import { useApi } from "../../contexts/ApiContext";
 import { BiLinkExternal } from "react-icons/bi";
 import {useState, useEffect} from 'react'
 import {toast} from 'react-toastify'
-import { useTranslation } from "react-i18next";
 
 const columns: GridColDef[] = [
   // { field: "id", headerName: "ID", width: 80 },
@@ -114,99 +113,7 @@ const columns: GridColDef[] = [
   },
 ];
 
-const rows = [
-  {
-    id: 1,
-    amount: 30.0,
-    time: "Fri Jun 02 2023 18:52:00",
-    txid: "asd...dfhfajsdjflhjadsfklasdkjfanfahfvkavfh6...89hla",
-    type: "Deposit",
-  },
-  {
-    id: 2,
-    amount: 30.0,
-    time: "Fri Jun 02 2023 18:52:00",
-    txid: "asd...dfhfajsdjflhjadsfklasdkjfanfahfvkavfh6...89hla",
-    type: "Deposit",
-  },
-  {
-    id: 3,
-    amount: 30.0,
-    time: "Fri Jun 02 2023 18:52:00",
-    txid: "asd...dfhfajsdjflhjadsfklasdkjfanfahfvkavfh6...89hla",
-    type: "Deposit",
-  },
-  {
-    id: 4,
-    amount: 30.0,
-    time: "Fri Jun 02 2023 18:52:00",
-    txid: "asd...dfhfajsdjflhjadsfklasdkjfanfahfvkavfh6...89hla",
-    type: "Deposit",
-  },
-  {
-    id: 5,
-    amount: 30.0,
-    time: "Fri Jun 02 2023 18:52:00",
-    txid: "asd...dfhfajsdjflhjadsfklasdkjfanfahfvkavfh6...89hla",
-    type: "Deposit",
-  },
-  {
-    id: 6,
-    amount: 30.0,
-    time: "Fri Jun 02 2023 18:52:00",
-    txid: "asd...dfhfajsdjflhjadsfklasdkjfanfahfvkavfh6...89hla",
-    type: "Deposit",
-  },
-  {
-    id: 7,
-    amount: 30.0,
-    time: "Fri Jun 02 2023 18:52:00",
-    txid: "asd...dfhfajsdjflhjadsfklasdkjfanfahfvkavfh6...89hla",
-    type: "Deposit",
-  },
-  {
-    id: 8,
-    amount: 30.0,
-    time: "Fri Jun 02 2023 18:52:00",
-    txid: "asd...dfhfajsdjflhjadsfklasdkjfanfahfvkavfh6...89hla",
-    type: "Deposit",
-  },
-  {
-    id: 9,
-    amount: 30.0,
-    time: "Fri Jun 02 2023 18:52:00",
-    txid: "asd...dfhfajsdjflhjadsfklasdkjfanfahfvkavfh6...89hla",
-    type: "Deposit",
-  },
-  {
-    id: 10,
-    amount: 30.0,
-    time: "Fri Jun 02 2023 18:52:00",
-    txid: "asd...dfhfajsdjflhjadsfklasdkjfanfahfvkavfh6...89hla",
-    type: "Deposit",
-  },
-  {
-    id: 11,
-    amount: 30.0,
-    time: "Fri Jun 02 2023 18:52:00",
-    txid: "asd...dfhfajsdjflhjadsfklasdkjfanfahfvkavfh6...89hla",
-    type: "Deposit",
-  },
-  {
-    id: 12,
-    amount: 30.0,
-    time: "Fri Jun 02 2023 18:52:00",
-    txid: "asd...dfhfajsdjflhjadsfklasdkjfanfahfvkavfh6...89hla",
-    type: "Deposit",
-  },
-  {
-    id: 13,
-    amount: 30.0,
-    time: "Fri Jun 02 2023 18:52:00",
-    txid: "asd...dfhfajsdjflhjadsfklasdkjfanfahfvkavfh6...89hla",
-    type: "Deposit",
-  },
-];
+ 
 
 const TransactionsTable = () => {
   const [{ doPost }] = useApi()
