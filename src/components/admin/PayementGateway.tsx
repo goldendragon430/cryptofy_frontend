@@ -128,7 +128,7 @@ const upgrade = async() =>{
               </div>
             </div>
             <button
-              type="submit"
+              type="button"
               className="flex items-center justify-center rounded-md bg-cblack py-2 font-semibold text-white shadow-md"
               onClick = {upgrade}
             >

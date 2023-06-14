@@ -187,7 +187,7 @@ const MainAdminDashboard: React.FC = () => {
     const lastSixMonths = [];
     const result = []
     // Loop through the last 6 months and add the dates to the array
-    for (let i = 4; i >= 0; i--) {
+    for (let i = 6; i >= 0; i--) {
       const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
       const year = date.getFullYear();
       const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -213,7 +213,7 @@ const MainAdminDashboard: React.FC = () => {
     const lastSixMonths = [];
     const result = []
     // Loop through the last 6 months and add the dates to the array
-    for (let i = 4; i >= 0; i--) {
+    for (let i = 6; i >= 0; i--) {
       const date = new Date(now.getFullYear(), now.getMonth(), day_v - i);
       const year = date.getFullYear();
       const month = (date.getMonth() + 1).toString();
@@ -247,7 +247,7 @@ const MainAdminDashboard: React.FC = () => {
     const lastSixHours = [];
 
     // Loop through the last 6 hours and add the times to the array
-    for (let i = 4; i >= 0; i--) {
+    for (let i = 6; i >= 0; i--) {
       const date = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() - i);
       const month = (date.getMonth()).toString().padStart(2, '0');
       const day = date.getDate().toString().padStart(2, '0');
@@ -336,21 +336,6 @@ const MainAdminDashboard: React.FC = () => {
           </div>
         </div>
         <div className="relative flex w-full items-center justify-start gap-2 overflow-hidden rounded-md bg-white p-3 shadow-lg">
-          <Link to={'deposit'} className="absolute right-[4px] top-[4px] rounded-md border-[1px] border-blue-950 p-[1px] text-xs text-blue-950">
-            {t("view all")}
-          </Link >
-          <div className="absolute bottom-[-0.65rem] right-[-0.65rem] -rotate-45 text-5xl text-blue-950 opacity-20">
-            <FaRegMoneyBillAlt />
-          </div>
-          <div className="rounded-md bg-blue-950 p-2 text-3xl text-white">
-            <FaRegMoneyBillAlt />
-          </div>
-          <div>
-            <h1 className="text-xl">{miningAnalyticsInfo['total_deposit']}</h1>
-            <p>{t("Total deposit")}</p>
-          </div>
-        </div>
-        <div className="relative flex w-full items-center justify-start gap-2 overflow-hidden rounded-md bg-white p-3 shadow-lg">
           <Link to={'withdrawals'} className="absolute right-[4px] top-[4px] rounded-md border-[1px] border-blue-950 p-[1px] text-xs text-blue-950">
             {t("view all")}
           </Link >
@@ -365,6 +350,22 @@ const MainAdminDashboard: React.FC = () => {
             <p>{t("Total withdrawal")}</p>
           </div>
         </div>
+        <div className="relative flex w-full items-center justify-start gap-2 overflow-hidden rounded-md bg-white p-3 shadow-lg">
+          <Link to={'deposit'} className="absolute right-[4px] top-[4px] rounded-md border-[1px] border-blue-950 p-[1px] text-xs text-blue-950">
+            {t("view all")}
+          </Link >
+          <div className="absolute bottom-[-0.65rem] right-[-0.65rem] -rotate-45 text-5xl text-blue-950 opacity-20">
+            <FaRegMoneyBillAlt />
+          </div>
+          <div className="rounded-md bg-blue-950 p-2 text-3xl text-white">
+            <FaRegMoneyBillAlt />
+          </div>
+          <div>
+            <h1 className="text-xl">{miningAnalyticsInfo['total_deposit']}</h1>
+            <p>{t("Total deposit")}</p>
+          </div>
+        </div>
+       
         <div className="relative flex w-full items-center justify-start gap-2 overflow-hidden rounded-md bg-white p-3 shadow-lg">
           <Link to={'payment-gateway'} className="absolute right-[4px] top-[4px] rounded-md border-[1px] border-blue-950 p-[1px] text-xs text-blue-950">
             {t("view all")}
@@ -381,7 +382,7 @@ const MainAdminDashboard: React.FC = () => {
           </div>
         </div>
         <div className="relative flex w-full items-center justify-start gap-2 overflow-hidden rounded-md bg-white p-3 shadow-lg">
-          <Link to={'payment-gateway'} className="absolute right-[4px] top-[4px] rounded-md border-[1px] border-blue-950 p-[1px] text-xs text-blue-950">
+          <Link to={'withdrawals'} className="absolute right-[4px] top-[4px] rounded-md border-[1px] border-blue-950 p-[1px] text-xs text-blue-950">
             {t("view all")}
           </Link >
           <div className="absolute bottom-[-0.65rem] right-[-0.65rem] -rotate-45 text-5xl text-blue-950 opacity-20">
@@ -391,8 +392,8 @@ const MainAdminDashboard: React.FC = () => {
             <FaRegMoneyBillAlt />
           </div>
           <div>
-            <h1 className="text-xl">{miningAnalyticsInfo['day_number_deposit']}</h1>
-            <p>{t("First charge number")}</p>
+            <h1 className="text-xl">{miningAnalyticsInfo['number_withdrawal']}</h1>
+            <p>{t("Number of withdrawwals")}</p>
           </div>
         </div>
         <div className="relative flex w-full items-center justify-start gap-2 overflow-hidden rounded-md bg-white p-3 shadow-lg">
@@ -411,7 +412,7 @@ const MainAdminDashboard: React.FC = () => {
           </div>
         </div>
         <div className="relative flex w-full items-center justify-start gap-2 overflow-hidden rounded-md bg-white p-3 shadow-lg">
-          <Link to={'withdrawals'} className="absolute right-[4px] top-[4px] rounded-md border-[1px] border-blue-950 p-[1px] text-xs text-blue-950">
+          <Link to={'payment-gateway'} className="absolute right-[4px] top-[4px] rounded-md border-[1px] border-blue-950 p-[1px] text-xs text-blue-950">
             {t("view all")}
           </Link >
           <div className="absolute bottom-[-0.65rem] right-[-0.65rem] -rotate-45 text-5xl text-blue-950 opacity-20">
@@ -421,10 +422,11 @@ const MainAdminDashboard: React.FC = () => {
             <FaRegMoneyBillAlt />
           </div>
           <div>
-            <h1 className="text-xl">{miningAnalyticsInfo['number_withdrawal']}</h1>
-            <p>{t("Number of withdrawwals")}</p>
+            <h1 className="text-xl">{miningAnalyticsInfo['day_number_deposit']}</h1>
+            <p>{t("First charge number")}</p>
           </div>
         </div>
+        
       </div>
       <div className="flex w-full flex-col gap-4 px-2 lg:grid lg:grid-cols-2">
         <div className="flex flex-col items-center justify-center gap-2 rounded-lg bg-white p-4 shadow-md">

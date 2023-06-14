@@ -15,20 +15,7 @@ const Deposit: React.FC = () => {
   const [bonus_rate, setBonusRate] = useState(1)
   const [transactions, setTransactions] = useState([])
 
-  const checkDeposite = async () => {
-    const response = await doPost('mining/check_deposite', {
-      token: token
-    })
-    if (response.error || response.result == 'failed') {
 
-    }
-    else {
-      if (response['is_deposited']) {
-        const amount = response['amount']
-        toast.info(amount + "Trx is newly deposited.")
-      }
-    }
-  }
   const get_config = async () => {
     const result = await doPost('mining/get_configuration', {
       'token': token
@@ -63,14 +50,7 @@ const Deposit: React.FC = () => {
       refresh()
   }, [token])
 
-  useEffect(() => {
-    const timeout = setInterval(() => {
-      if (token)
-        checkDeposite()
-    }, 60000);
 
-    return () => clearInterval(timeout);
-  }, [token]);
 
   return (
     <div className="flex h-full w-[75%] flex-col items-center justify-center gap-8 py-[2rem] pt-[8rem]">

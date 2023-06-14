@@ -24,8 +24,8 @@ const Management: React.FC = () => {
   const [bonus1,setBonus1] = useState(0)
   const [bonus2,setBonus2] = useState(0)
   const [bonus3,setBonus3] = useState(0)
-
-
+  const [depositBonus,setDepositBonus] = useState(0)
+  const [depositTime, setDepositTime] = useState(0)
 
   useEffect(()=>{
     if(token){
@@ -49,6 +49,8 @@ const Management: React.FC = () => {
       setLev1(data['level_1'] * 100)
       setLev2(data['level_2']* 100)
       setLev3(data['level_3']* 100)
+      setDepositTime(data['limited_time'])
+      setDepositBonus(data['limited_bonus'])
     }
   }
 
@@ -82,6 +84,8 @@ const Management: React.FC = () => {
       'lev_1' : lev1/100,
       'lev_2' : lev2/100,
       'lev_3' : lev3/100,
+      'limited_time' : depositTime,
+      'limited_bonus' : depositBonus
     })
     if(result.error||result['result'] == "failed"){
       toast.error("Error")
@@ -125,7 +129,7 @@ const Management: React.FC = () => {
 
   return (
     <div className="flex h-full w-[75%] flex-col items-center justify-center gap-8 py-[2rem] pt-[8rem]">
-      <div className="flex w-full flex-col gap-4 lg:grid lg:grid-cols-2">
+      <div className="flex w-full flex-col gap-4 lg:grid lg:grid-cols-3">
         <div className="flex flex-col items-center justify-start gap-4">
           <h1 className="text-center text-2xl font-medium text-cblack">
             Mining management
@@ -161,7 +165,41 @@ const Management: React.FC = () => {
             </div>
           </div>
         </div>
-        
+        <div className="flex flex-col items-center justify-start gap-4">
+          <h1 className="text-center text-2xl font-medium text-cblack">
+            Limited Time Deposit Management
+          </h1>
+          <div className="flex w-full flex-col justify-start rounded-lg bg-cblack shadow-md">
+            <div className="px-3 py-5">
+              {/* <h1 className="mb-4 text-2xl font-medium text-white">Plan 1</h1> */}
+
+              <p className="mb-1 text-white">Time(mins) </p>
+              <input
+                type="text"
+                value = {depositTime}
+                onChange = {e=>setDepositTime(parseFloat(e.target.value))}
+                className="mb-4 w-[95%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
+              />
+              <p className="mb-1 text-white">Bonus(%)</p>
+              <input
+                type="text"
+                value = {depositBonus}
+                onChange = {e=>setDepositBonus(parseFloat(e.target.value))}
+                className="mb-2 w-[95%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
+              />
+
+             
+            </div>
+
+            <div className="mt-2 flex w-full justify-end border-t border-t-gray-200 p-2 px-10">
+              <button 
+               onClick={update_config}
+              className="bg-gradient-moonlit rounded-md px-3 py-[0.4rem] font-medium text-white">
+                update
+              </button>
+            </div>
+          </div>
+        </div>
         <div className="flex flex-col items-center justify-start gap-4">
           <h1 className="text-center text-2xl font-medium text-cblack">
             Mining Speed Management

@@ -23,8 +23,8 @@ const columns: GridColDef[] = [
     align: 'center'
   },
   {
-    field: "wallet",
-    headerName: "Wallet",
+    field: "email",
+    headerName: "Email",
     flex: 1,
     minWidth: 200,
     editable: false,

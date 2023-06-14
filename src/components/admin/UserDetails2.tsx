@@ -298,7 +298,7 @@ const [transactions,setTransactions] = useState([[],[],[]])
                           <td>{item.start_time}</td>
                           <td>{item.end_time}</td>
                           <td>{item.bonus}</td>
-                          <td>{item.active}</td>
+                          <td style = {{color : (item.active?'#00ff45':'red')}}>{item.active?'Active':'End'}</td>
                         </tr>
                       ))}
                   </tbody>

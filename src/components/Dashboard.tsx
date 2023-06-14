@@ -30,6 +30,7 @@ import { useApi } from "../contexts/ApiContext";
 import { useAuth } from '../contexts/SessionContext'
 import Imgsrc from '../assets/tron.svg'
 import { BACKEND_URL } from "../config";
+import { toast } from "react-toastify";
 
 const drawerWidth = 240;
 const image_url_1 = BACKEND_URL + 'get_file?name=banner_2.png'
@@ -107,7 +108,7 @@ export default function Dashboard() {
   const [open, setOpen] = useState(true);
   const [user, { logout }] = useAuth()
   const navigate = useNavigate()
-  const [bannerVisible, setbannerVisible] = useState(true);
+  const [bannerVisible, setbannerVisible] = useState(false);
   const token = user?.token;
   const [bonusinfo, setBonusInfo] = useState({
     start_day: '',
@@ -148,7 +149,28 @@ export default function Dashboard() {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+  const checkDeposite = async () => {
+    const response = await doPost('mining/check_deposite', {
+      token: token
+    })
+    if (response.error || response.result == 'failed') {
 
+    }
+    else {
+      if (response['is_deposited']) {
+        const amount = response['amount']
+        toast.info(amount + "Trx is newly deposited.")
+      }
+    }
+  }
+  useEffect(() => {
+    const timeout = setInterval(() => {
+      if (token)
+        checkDeposite()
+    }, 60000);
+
+    return () => clearInterval(timeout);
+  }, [token]);
   const [sidebarItems, setSidebarItems] = useState([
     {
       text: "Dashboard",
@@ -285,7 +307,7 @@ export default function Dashboard() {
             <div className=" fade-alert absolute isolate flex items-center gap-x-6 bg-gray-50 px-12 py-6 sm:px-3.5 sm:before:flex-1 top-0 rounded-b-lg w-full right-0 transform -transform-x-1/2 bg-img3 bg-cover bg-center" style={{ backgroundImage: `url(${image_url_1})` }}>
               <div className="flex flex-wrap items-center place-content-center gap-x-4 gap-y-2">
                 <p className="gap-4 flex items-center flex-col lg:flex-row">
-                  <span className="text-xl">{bonusinfo['start_day'].substring(0, 10)} ~ {bonusinfo['end_day'].substring(0, 10)}</span>
+                  <span className="text-xl">{bonusinfo['start_day'].substring(0, 16).replaceAll('T',' ')} ~ {bonusinfo['end_day'].substring(0, 16).replaceAll('T',' ')}</span>
                   <strong className="font-semibold text-black text-3xl">Deposit bonus {bonusinfo['bonus_rate']}%</strong>
                 </p>
                 <button type="button" className="flex gap-2 text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 mr-2 mb-2" onClick={() => { navigate('/dashboard/deposit') }}>

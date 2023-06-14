@@ -42,11 +42,12 @@ const MainDashboard: React.FC = () => {
   })
   const [earned,setEarned] = useState(0)
   const [stakedCount,setStakedCount] = useState(0)
-
+  const [limitedBonus, setLimitedBonus] = useState(300)
   const [{ doPost }] = useApi()
   const [user,] = useAuth()
   const username = user?.username
   const token = user?.token
+
   const [plan, setPlan] = useState([
     {
       "level": 1,
@@ -154,7 +155,15 @@ const MainDashboard: React.FC = () => {
       toast.error("Server Error")
     }
     else {
-       return response['data']
+       const result = response['data']
+       if(result['result'] == true){
+          if (!localStorage.getItem('showed')) {
+            localStorage.setItem('showed', '1')
+            setIsOpen(true)
+          }
+          setLimitedBonus(result['bonus_rate'])
+          return result['remains']
+       } 
     }
   }
   const refresh = () => {
@@ -168,8 +177,8 @@ const MainDashboard: React.FC = () => {
   const startTimer = async() => {
     var seconds =  await getRemainsTime()
     const timeout = setInterval(() => {
-      seconds = seconds + 1
-      setTime(1440 * 60 - seconds)
+      seconds = seconds - 1
+      setTime(seconds)
     }, 1000);
 
     return () => clearInterval(timeout);
@@ -198,10 +207,10 @@ const MainDashboard: React.FC = () => {
   useEffect(() => {
     if (token) {
       refresh()
-      if (user.remain < 1 && !localStorage.getItem('showed')) {
-        localStorage.setItem('showed', '1')
-        setIsOpen(true)
-      }
+      // if (user.remain < 1 && !localStorage.getItem('showed')) {
+      //   localStorage.setItem('showed', '1')
+      //   setIsOpen(true)
+      // }
     }
   }, [token])
 
@@ -395,7 +404,7 @@ const MainDashboard: React.FC = () => {
                       Limited Time Deposit Bonus
                     </h1>
                     <h1 className="text-6xl font-bold text-yellow-500">
-                      300% Bonus
+                      {limitedBonus}% Bonus
                     </h1>
                     <h2 className="text-white">Available for</h2>
                     <div className="flex items-center justify-center gap-3 ">
