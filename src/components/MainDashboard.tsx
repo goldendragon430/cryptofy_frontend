@@ -17,7 +17,8 @@ import { IoMdWallet } from 'react-icons/io'
 
 function useForceUpdate() {
   const [value, setValue] = useState(0); // integer state
-  console.log(value)
+  // console.log(value)
+  value == value
   return () => setValue(value => value + 1); // update state to force render
   // A function that increment 👆🏻 the previous state like here 
   // is better than directly setting `setValue(value + 1)`
@@ -145,6 +146,17 @@ const MainDashboard: React.FC = () => {
       setStakedCount(response['staked'])
     }
   }
+  const getRemainsTime = async() =>{
+    const response = await doPost('user/get_remains_limit', {
+      token: token
+    })
+    if (response.error || response.result == 'failed') {
+      toast.error("Server Error")
+    }
+    else {
+       return response['data']
+    }
+  }
   const refresh = () => {
     getPower()
     getPlanConfig()
@@ -153,15 +165,11 @@ const MainDashboard: React.FC = () => {
     getStakingInfo()
     startTimer()
   }
-  const startTimer = () => {
+  const startTimer = async() => {
+    var seconds =  await getRemainsTime()
     const timeout = setInterval(() => {
-      var currentTime = new Date();
-      // Time value to compare
-      var timeValue = new Date(user?.registered_time);
-      // Calculate the time difference in minutes
-      var diff_time = currentTime.getTime() - timeValue.getTime()
-      var timeDiffInMinutes = Math.floor((diff_time) / 1000);
-      setTime(1440 * 60 - timeDiffInMinutes)
+      seconds = seconds + 1
+      setTime(1440 * 60 - seconds)
     }, 1000);
 
     return () => clearInterval(timeout);
@@ -203,7 +211,7 @@ const MainDashboard: React.FC = () => {
     }, 100);
 
     return () => clearInterval(timeout);
-  }, [power, balance]);
+  }, [power, balance,mineInfo]);
 
   const closeModal = () => {
     setIsOpen(false)
