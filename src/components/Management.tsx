@@ -138,7 +138,7 @@ const Management: React.FC = () => {
             <div className=" px-3 py-5">
               {/* <h1 className="mb-4 text-2xl font-medium text-white">Plan 1</h1> */}
 
-              <p className="mb-1 text-white">Bonus rate</p>
+              <p className="mb-1 text-white">Deposit rate</p>
               <input
                 type="text"
                 value = {mind}

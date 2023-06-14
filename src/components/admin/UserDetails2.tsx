@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { GiReceiveMoney } from "react-icons/gi";
 import { GrDownload, GrUpload } from "react-icons/gr";
 import { FaMoneyBillWaveAlt } from "react-icons/fa";
@@ -7,26 +7,26 @@ import Example from "../DepTabs";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/SessionContext";
 import { useApi } from "../../contexts/ApiContext";
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 
 const UserDetails2: React.FC = () => {
-  const {id} = useParams()
+  const { id } = useParams()
   const [user,] = useAuth()
-  const [{doPost}] = useApi()
+  const [{ doPost }] = useApi()
   const navigate = useNavigate()
-  const [data,setData] = useState({
+  const [data, setData] = useState({
     "balance": 0,
     "total_deposit": 0,
     "total_withdrawl": 0,
     "user_details": {
-        "id": 0,
-        "ip": "",
-        "registered_time": "",
-        "last_seen_time": "",
-        "wallet": "",
-        "referral": '',
-        "verified": 0,
-        "state": 1
+      "id": 0,
+      "ip": "",
+      "registered_time": "",
+      "last_seen_time": "",
+      "wallet": "",
+      "referral": '',
+      "verified": 0,
+      "state": 1
     },
     "mining_speed": 0,
     "affiliate_earned": 0,
@@ -34,98 +34,97 @@ const UserDetails2: React.FC = () => {
     "staking_earned": 0,
     "staking_amount": 0,
     "total_earned": 0
-})
-const [transactions,setTransactions] = useState([[],[],[]])
-  const [transactionData,setTransactionData] = useState({
-    'deposite':[],
-    'withdrawl' :[]
   })
-  const [stakingData,setStakingData] = useState([])
+  const [transactions, setTransactions] = useState([[], [], []])
+  const [transactionData, setTransactionData] = useState({
+    'deposite': [],
+    'withdrawl': []
+  })
+  const [stakingData, setStakingData] = useState([])
   const token = user?.token
-  const fetchData = async()=>{
-    const response = await doPost('admin/user_details',{
-      token : token,
-      user_id : id
+  const fetchData = async () => {
+    const response = await doPost('admin/user_details', {
+      token: token,
+      user_id: id
     })
-    if(response.error || response.result == 'failed') {
+    if (response.error || response.result == 'failed') {
       toast.error('Server Error')
-    } 
-    else{
+    }
+    else {
       setData(response['data'])
     }
   }
-  const getStakingPlan = async()=>{
-    const response = await doPost('admin/get_staking_plan',{
-      token : token,
-      user_id : id
+  const getStakingPlan = async () => {
+    const response = await doPost('admin/get_staking_plan', {
+      token: token,
+      user_id: id
     })
-    if(response.error || response.result == 'failed') {
+    if (response.error || response.result == 'failed') {
       toast.error('Server Error')
-    } 
-    else{
+    }
+    else {
       setStakingData(response['data'])
-    }    
+    }
   }
-  const getTransactions = async()=>{
-    const response = await doPost('admin/get_user_transaction',{
-      token : token,
-      user_id : id
+  const getTransactions = async () => {
+    const response = await doPost('admin/get_user_transaction', {
+      token: token,
+      user_id: id
     })
-    if(response.error || response.result == 'failed') {
+    if (response.error || response.result == 'failed') {
       toast.error('Server Error')
-    } 
-    else{
+    }
+    else {
       setTransactionData(response['data'])
-    }    
+    }
   }
-  const getAffiliateTransaction = async()=>{
-    const response = await doPost('admin/get_user_affilates',{
-      token : token,
-      user_id : id
+  const getAffiliateTransaction = async () => {
+    const response = await doPost('admin/get_user_affilates', {
+      token: token,
+      user_id: id
     })
-    if(response.error || response.result == 'failed') {
+    if (response.error || response.result == 'failed') {
 
     }
-    else{
-     const result = response['data']
-     setTransactions(result)
+    else {
+      const result = response['data']
+      setTransactions(result)
     }
   }
-  const onFreeze = async() =>{
-    const response = await doPost('admin/set_user_state',{
-      token : token,
-      user : id,
-      state : !data['user_details']['state']
+  const onFreeze = async () => {
+    const response = await doPost('admin/set_user_state', {
+      token: token,
+      user: id,
+      state: !data['user_details']['state']
     })
-    if(response.error || response.result == 'failed') {
+    if (response.error || response.result == 'failed') {
       toast.error("Error")
     }
-    else{
-     toast.success('Success')
-     refresh()
+    else {
+      toast.success('Success')
+      refresh()
     }
   }
-  const refresh = () =>{
-        fetchData()
-        getStakingPlan()
-        getTransactions()
-        getAffiliateTransaction()
-    
+  const refresh = () => {
+    fetchData()
+    getStakingPlan()
+    getTransactions()
+    getAffiliateTransaction()
+
   }
-  useEffect(()=>{
-    if(token)
-      {
-        refresh()
-      }
-  },[token])
+  useEffect(() => {
+    if (token) {
+      refresh()
+    }
+  }, [token])
   return (
     <div className="flex h-full w-[95%] flex-col items-center justify-center gap-8 bg-[#f3f3f9] py-[2rem] pt-[6rem]">
       <div className="flex h-fit w-full flex-col items-center justify-center gap-4 px-2">
         <div className="flex w-full items-center justify-between">
-          <span className="self-start text-base font-bold uppercase" style = {{marginTop:3}}>
+          <span className="self-start text-base font-bold uppercase" style={{ marginTop: 3 }}>
             user management
           </span>
-          <button className=" rounded-md bg-red-600 py-2 font-semibold text-white " style = {{width:100}} onClick={()=>navigate('/admin/users')} >Back</button>
+          <button className=" rounded-md bg-red-600 py-2 font-semibold text-white " style={{ width: 100 }} onClick={() => navigate('/admin/users')} >Back</button>
         </div>
         <div className="w-full border-t border-t-gray-200 pt-6 text-sm">
           <div className="flex w-full flex-col gap-1 lg:grid lg:grid-cols-4">
@@ -217,13 +216,13 @@ const [transactions,setTransactions] = useState([[],[],[]])
                 <div className="flex items-center justify-between border-b border-b-gray-200 p-1 px-2">
                   <h1 className="font-semibold">email verified</h1>
                   <p className="rounded-lg border-[1px] border-green-500 px-1 text-green-500">
-                  {data?.user_details?.verified == 1?'verified':'unverified'}
+                    {data?.user_details?.verified == 1 ? 'verified' : 'unverified'}
                   </p>
                 </div>
                 <div className="flex items-center justify-between border-b border-b-gray-200 p-1 px-2">
                   <h1 className="font-semibold">status</h1>
                   <p className="rounded-lg border-[1px] border-green-500 px-1 text-green-500">
-                  {data?.user_details?.state == 1?'verified':'unverified'}
+                    {data?.user_details?.state == 1 ? 'verified' : 'unverified'}
                   </p>
                 </div>
               </div>
@@ -275,22 +274,22 @@ const [transactions,setTransactions] = useState([[],[],[]])
             </span>
             <div className="w-full overflow-x-scroll border-t border-t-gray-200 pt-6">
               <div className="flex w-[60rem] flex-col justify-center rounded-lg bg-cblack text-white shadow-lg lg:w-full">
-              <div className="flex w-[60rem] flex-col justify-center rounded-lg bg-cblack text-white shadow-lg lg:w-full">
-                
-                <table>
-                  <thead style = {{height:50}}>
-                    <th>Plan</th>
-                    <th>Amount Staked</th>
-                    <th>Active Date</th>
-                    <th>End Date</th>
-                    <th>Profit</th>
-                    <th>status</th>
-                  </thead>
-                  <tbody style={{textAlign:'center'}}>
-    
-                    {stakingData.map((item, i) => (
+                <div className="flex w-[60rem] flex-col justify-center rounded-lg bg-cblack text-white shadow-lg lg:w-full">
+
+                  <table>
+                    <thead style={{ height: 50 }}>
+                      <th>Plan</th>
+                      <th>Amount Staked</th>
+                      <th>Active Date</th>
+                      <th>End Date</th>
+                      <th>Profit</th>
+                      <th>status</th>
+                    </thead>
+                    <tbody style={{ textAlign: 'center' }}>
+
+                      {stakingData.map((item, i) => (
                         <tr
-                          style = {{height:40}}
+                          style={{ height: 40 }}
                           key={i}
                         >
                           <td>{item.level}</td>
@@ -298,21 +297,21 @@ const [transactions,setTransactions] = useState([[],[],[]])
                           <td>{item.start_time}</td>
                           <td>{item.end_time}</td>
                           <td>{item.bonus}</td>
-                          <td style = {{color : (item.active?'#00ff45':'red')}}>{item.active?'Active':'End'}</td>
+                          <td style={{ color: (item.active ? '#00ff45' : 'red') }}>{item.active ? 'Active' : 'End'}</td>
                         </tr>
                       ))}
-                  </tbody>
-                </table>
-               { stakingData.length == 0 &&<p style = {{margin:30,textAlign:'center'}} >No Transactions yet.</p>}
-              </div>
+                    </tbody>
+                  </table>
+                  {stakingData.length == 0 && <p style={{ margin: 30, textAlign: 'center' }} >No Transactions yet.</p>}
+                </div>
               </div>
             </div>
           </div>
           <div className="mt-6 flex w-full flex-col gap-3 px-2 lg:grid lg:grid-cols-2">
             <div className="flex flex-col justify-start rounded-md bg-white py-1 shadow-md">
-              <div className="flex w-full items-center justify-between border-b border-b-gray-200 px-2 py-1">
+              <div className="flex w-full items-center font-bold justify-between border-b border-b-gray-200 px-2 py-1">
                 <h1 className="text-lg">Latest Deposits</h1>
-                <button className="flex items-center justify-center rounded-md border-[1px] border-cblack p-2 text-cblack hover:bg-cblack hover:text-white" onClick = {()=>{navigate('/admin/deposit')}}>
+                <button className="flex items-center justify-center rounded-md border-[1px] border-cblack p-2 text-cblack hover:bg-cblack hover:text-white" onClick={() => { navigate('/admin/deposit') }}>
                   View all
                 </button>
               </div>
@@ -321,19 +320,19 @@ const [transactions,setTransactions] = useState([[],[],[]])
                 <h1 className="text-center">TRX ID</h1>
                 <h1 className="text-right">Amount</h1>
               </div>
-              
+
               {transactionData['deposite'].map((item, i) => (
-                         <div className="grid w-full  grid-cols-3 px-2 py-2 text-gray-800" key = {i}>
-                         <h1 className="text-left">{item.time}</h1>
-                         <h1 className="text-center">{item.hash.substring(0,35)}...</h1>
-                         <h1 className="text-right">{item.amount}</h1>
-                       </div>
-                      ))}
+                <div className="grid w-full  grid-cols-3 px-2 py-2 text-gray-800" key={i}>
+                  <h1 className="text-left">{item.time}</h1>
+                  <h1 className="text-center">{item.hash.substring(0, 35)}...</h1>
+                  <h1 className="text-right">{item.amount}</h1>
+                </div>
+              ))}
             </div>
             <div className="flex flex-col justify-start rounded-md bg-white py-1 shadow-md">
               <div className="flex w-full items-center justify-between border-b border-b-gray-200 px-2 py-1">
                 <h1 className="text-lg">Latest Withdrawals</h1>
-                <button className="flex items-center justify-center rounded-md border-[1px] border-cblack p-2 text-cblack hover:bg-cblack hover:text-white" onClick = {()=>{navigate('/admin/withdrawals')}}>
+                <button className="flex items-center justify-center rounded-md border-[1px] border-cblack p-2 text-cblack hover:bg-cblack hover:text-white" onClick={() => { navigate('/admin/withdrawals') }}>
                   View all
                 </button>
               </div>
@@ -342,13 +341,13 @@ const [transactions,setTransactions] = useState([[],[],[]])
                 <h1 className="text-center">TRX ID</h1>
                 <h1 className="text-right">Amount</h1>
               </div>
-                {transactionData['withdrawl'].map((item, i) => (
-                         <div className="grid w-full  grid-cols-3 px-2 py-2 text-gray-800" key = {i}>
-                         <h1 className="text-left">{item.time}</h1>
-                         <h1 className="text-center">{item.hash.substring(0,35)}...</h1>
-                         <h1 className="text-right">{item.amount}</h1>
-                       </div>
-                ))}
+              {transactionData['withdrawl'].map((item, i) => (
+                <div className="grid w-full  grid-cols-3 px-2 py-2 text-gray-800" key={i}>
+                  <h1 className="text-left">{item.time}</h1>
+                  <h1 className="text-center">{item.hash.substring(0, 35)}...</h1>
+                  <h1 className="text-right">{item.amount}</h1>
+                </div>
+              ))}
             </div>
           </div>
           <div className="mt-6 flex h-fit w-full flex-col items-center justify-center gap-4 px-2">
@@ -356,7 +355,7 @@ const [transactions,setTransactions] = useState([[],[],[]])
               Referal
             </span>
             <div className="w-full overflow-x-scroll border-t border-t-gray-200 pt-6">
-              <Example data = {transactions} />
+              <Example data={transactions} />
             </div>
           </div>
           {/* <div className="flex flex-col lg:grid lg:grid-cols-2">
@@ -388,11 +387,11 @@ const [transactions,setTransactions] = useState([[],[],[]])
             </span>
             <div className="w-full border-t border-t-gray-200 pt-6">
               <button
-                 
+
                 className="mx-2 flex w-full items-center justify-center rounded-md bg-red-600 py-2 font-semibold text-white shadow-md"
-                onClick = {onFreeze}
+                onClick={onFreeze}
               >
-                {data['user_details']['state']?'Freeze':'Activate'}
+                {data['user_details']['state'] ? 'Freeze' : 'Activate'}
               </button>
             </div>
           </div>

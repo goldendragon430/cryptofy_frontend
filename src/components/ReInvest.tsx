@@ -144,7 +144,7 @@ export default function ReinvestModal(props) {
                       <p className="mb-5">TRX</p>
 
                       <h1>Minimum reinvest amount:</h1>
-                      <p>7.5267198554870 TRX</p>
+                      <p>{min_reinvest} TRX</p>
                     </div>
                     <div className="border-grey-500 flex items-center justify-end gap-2 border-t-[2px] p-3 px-8">
                       <button
