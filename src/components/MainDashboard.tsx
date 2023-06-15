@@ -190,10 +190,14 @@ const MainDashboard: React.FC = () => {
   }
   const startTimer = async () => {
     let seconds = await getRemainsTime()
-      
+
     const timeout = setInterval(() => {
-      if(seconds > 0)
-          seconds--
+      if (seconds > 0) {
+        seconds--
+      } else {
+        setIsOpen(false)
+      }
+
       setTime(seconds)
     }, 1000);
 

@@ -1,89 +1,90 @@
 
 import NavBar from "./global/Navbar";
 import Nav2 from "./global/Nav2";
-import { useState,useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/SessionContext";
 import { useApi } from "../contexts/ApiContext";
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 function Landing() {
 
-  const [{doPost}] = useApi();
+  const [{ doPost }] = useApi();
   const [user,] = useAuth()
-  const [balance,setBalance] = useState(0)
+  const [balance, setBalance] = useState(0)
   const token = user?.token
-  const [plan,setPlan] = useState([
+
+  const [plan, setPlan] = useState([
     {
       "level": 1,
       "amount": 100,
       "period": 1,
       "bonus": 1.2
-  },
-  {
+    },
+    {
       "level": 2,
       "amount": 100,
       "period": 30,
       "bonus": 1.5
-  },
-  {
+    },
+    {
       "level": 3,
       "amount": 100,
       "period": 60,
       "bonus": 2
-  }
+    }
   ])
-  const getPlanConfig = async() =>{
-    
-    const result = await doPost('mining/get_plan_config',{
-      'token' : token
+  const getPlanConfig = async () => {
+
+    const result = await doPost('mining/get_plan_config', {
+      'token': token
     })
-    if(result.error||result['result'] == "failed"){
+    if (result.error || result['result'] == "failed") {
       toast.error("Error")
-    }else{
+    } else {
       const data = result['data']
-      setPlan(data)    
+      setPlan(data)
     }
   }
 
-  const getPower = async()=>{
-    const response = await doPost('mining/get_power',{
-      token : token,
+  const getPower = async () => {
+    const response = await doPost('mining/get_power', {
+      token: token,
     })
-    if(response.error || response.result == 'failed') {
+    if (response.error || response.result == 'failed') {
 
     }
-    else{
-       const result =  response['balance']
-        setBalance(result)
-      }
+    else {
+      const result = response['balance']
+      setBalance(result)
+    }
   }
-  const refresh = ()=>{
+  const refresh = () => {
     getPlanConfig()
     getPower()
-  
+
   }
-  useEffect(()=>{
-    if(token){
+  useEffect(() => {
+    if (token) {
       refresh()
     }
-  },[token])
+  }, [token])
 
-  const onInvest = async(level,amount)=>{
-    if(balance > amount){
-      console.log(plan,level)
-      const result = await doPost('mining/invest_plan',{
-        token : token,
-        amount : amount,
-        bonus : plan[level-1]['bonus']*amount,
-        period : plan[level-1]['period']
+  const onInvest = async (level, amount) => {
+    if (balance > amount) {
+      console.log(plan, level)
+      const result = await doPost('mining/invest_plan', {
+        token: token,
+        amount: amount,
+        bonus: plan[level - 1]['bonus'] * amount,
+        period: plan[level - 1]['period']
       })
-      if(result['result'] == 'success'){
+      if (result['result'] == 'success') {
         toast.success("Success")
         refresh()
-      }else{
+      } else {
         toast.error(result['msg'])
       }
     }
-    else{
+    else {
       toast.error(`Your balance is low( current - ${Math.floor(balance)}Trx )`)
     }
   }
@@ -128,9 +129,9 @@ function Landing() {
             and get your bitcoins today.
           </h2>
           <div className="grid grid-cols-1 gap-5 py-20 lg:grid-cols-3">
-            <PriceCard days={plan[0]['period']} min={plan[0]['amount']} perc={plan[0]['bonus']*100} plan={1} handler = {onInvest} />
-            <PriceCard days={plan[1]['period']} min={plan[1]['amount']} perc={plan[1]['bonus']*100} plan={2} handler = {onInvest}/>
-            <PriceCard days={plan[2]['period']} min={plan[2]['amount']} perc={plan[2]['bonus']*100} plan={3} handler = {onInvest}/>
+            <PriceCard days={plan[0]['period']} min={plan[0]['amount']} perc={plan[0]['bonus'] * 100} plan={1} handler={onInvest} />
+            <PriceCard days={plan[1]['period']} min={plan[1]['amount']} perc={plan[1]['bonus'] * 100} plan={2} handler={onInvest} />
+            <PriceCard days={plan[2]['period']} min={plan[2]['amount']} perc={plan[2]['bonus'] * 100} plan={3} handler={onInvest} />
           </div>
         </div>
       </section>
@@ -213,12 +214,21 @@ export function PriceCard({
   perc: number;
   days: number;
   min: number;
-  handler : any
+  handler: any
 }) {
   const [value, setValue] = useState(min);
-  useEffect(()=>{
+  const maxValue = 5000;
+
+  const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = Number(e.target.value);
+    if (newValue <= maxValue) {
+      setValue(newValue);
+    }
+  };
+
+  useEffect(() => {
     setValue(min)
-  },[min])
+  }, [min])
   return (
     <div className="box-2 box-shadow-2 flex flex-col items-center justify-center gap-8 rounded-lg p-10 text-2xl font-bold">
       <h1 className="text-4xl text-primred">Plan {plan}</h1>
@@ -233,28 +243,30 @@ export function PriceCard({
         className="w-full"
         value={value}
         min={min}
-        max={5000}
+        max={maxValue}
         onChange={(e) => void setValue(parseInt(e.target.value))}
       />
       <div className="flex w-full items-center justify-between text-[#877e78]">
         <div>
           <p className="font-light">Invest</p>
           <div className="flex">
-          <input
-            type="number"
-            value={value}
-            className="w-20 border-[1px] border-primred bg-white-500 bg-opacity-50 text-black"
-          />
-          <p>TRX</p>
+            <input
+              type="number"
+              value={value}
+              onChange={handleNumberChange}
+              max={maxValue}
+              className="w-20 border-[1px] border-primred bg-white-500 bg-opacity-50 text-black"
+            />
+            <p>TRX</p>
           </div>
         </div>
         <div className="flex flex-col items-end">
           <p className="font-light">get</p>
-          <h1 className="w-[80%]">{Math.floor(perc / 100 * value) }</h1>
+          <h1 className="w-[80%]">{Math.floor(perc / 100 * value)}</h1>
         </div>
       </div>
       <div>
-        <button className="rounded-full bg-primred p-3 px-5 font-thin text-white" onClick = {()=>handler(plan,value)} >
+        <button className="rounded-full bg-primred p-3 px-5 font-thin text-white" onClick={() => handler(plan, value)} >
           INVEST NOW
         </button>
       </div>

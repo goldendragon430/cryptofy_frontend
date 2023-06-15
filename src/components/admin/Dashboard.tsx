@@ -316,7 +316,7 @@ const MainAdminDashboard: React.FC = () => {
             <FaUsers />
           </div>
           <div>
-            <h1 className="text-xl">{userAnalyticsInfo['total_users']}</h1>
+            <h1 className="text-xl">{userAnalyticsInfo['total_users'] ? userAnalyticsInfo['total_users'] : 0}</h1>
             <p>{t("Total users")}</p>
           </div>
         </div>
@@ -331,7 +331,7 @@ const MainAdminDashboard: React.FC = () => {
             <LuUserCheck />
           </div>
           <div>
-            <h1 className="text-xl">{userAnalyticsInfo['today_users']}</h1>
+            <h1 className="text-xl">{userAnalyticsInfo['today_users'] ? userAnalyticsInfo['today_users'] : 0}</h1>
             <p>{t("New register")}</p>
           </div>
         </div>
@@ -346,7 +346,7 @@ const MainAdminDashboard: React.FC = () => {
             <FaRegMoneyBillAlt />
           </div>
           <div>
-            <h1 className="text-xl">{miningAnalyticsInfo['today_withdrawal']}</h1>
+            <h1 className="text-xl">{miningAnalyticsInfo['today_withdrawal'] ? miningAnalyticsInfo['today_withdrawal'] : 0}</h1>
             <p>{t("Total withdrawal")}</p>
           </div>
         </div>
@@ -361,7 +361,7 @@ const MainAdminDashboard: React.FC = () => {
             <FaRegMoneyBillAlt />
           </div>
           <div>
-            <h1 className="text-xl">{miningAnalyticsInfo['total_deposit']}</h1>
+            <h1 className="text-xl">{miningAnalyticsInfo['total_deposit'] ? miningAnalyticsInfo['total_deposit'] : 0}</h1>
             <p>{t("Total deposit")}</p>
           </div>
         </div>
@@ -377,7 +377,7 @@ const MainAdminDashboard: React.FC = () => {
             <FaRegMoneyBillAlt />
           </div>
           <div>
-            <h1 className="text-xl">{miningAnalyticsInfo['day_deposit'] == null ? 0 : miningAnalyticsInfo['day_deposit']}</h1>
+            <h1 className="text-xl">{miningAnalyticsInfo['day_deposit'] ? miningAnalyticsInfo['day_deposit'] : 0}</h1>
             <p>{t("First Charge Amount")}</p>
           </div>
         </div>
@@ -392,7 +392,7 @@ const MainAdminDashboard: React.FC = () => {
             <FaRegMoneyBillAlt />
           </div>
           <div>
-            <h1 className="text-xl">{miningAnalyticsInfo['number_withdrawal']}</h1>
+            <h1 className="text-xl">{miningAnalyticsInfo['number_withdrawal'] ? miningAnalyticsInfo['number_withdrawal'] : 0}</h1>
             <p>{t("Number of withdrawwals")}</p>
           </div>
         </div>
@@ -478,7 +478,7 @@ const MainAdminDashboard: React.FC = () => {
             }}
             series={[
               {
-                name: "total returned",
+                name: "Total Deposit Amount",
                 data: deposites['values'],
               },
             ]}
@@ -534,7 +534,7 @@ const MainAdminDashboard: React.FC = () => {
             }}
             series={[
               {
-                name: "total returned",
+                name: "Total Withdrawal Amount",
                 data: withdrawls['values'],
               },
             ]}
@@ -542,7 +542,7 @@ const MainAdminDashboard: React.FC = () => {
         </div>
         <div className="flex flex-col items-center justify-center gap-2 rounded-lg bg-white p-4 shadow-md">
           <div className="flex w-full items-center justify-between">
-            <h1 className="text-2xl">{t("Number of Registrants")}</h1>
+            <h1 className="text-2xl">{t("Total Registrants")}</h1>
             <select
               name="time"
               className="rounded-md border-[1px] border-gray-900 p-2 text-lg" onChange={val => onChangeUsers(val)}
@@ -588,7 +588,7 @@ const MainAdminDashboard: React.FC = () => {
             }}
             series={[
               {
-                name: "total returned",
+                name: "Total Number of Registrants",
                 data: users['values'],
               },
             ]}

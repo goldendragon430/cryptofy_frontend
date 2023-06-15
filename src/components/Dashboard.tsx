@@ -304,22 +304,24 @@ export default function Dashboard() {
 
           {/* //////////////Banner/////////// */}
           {bannerVisible &&
-            <div className=" fade-alert absolute isolate flex items-center gap-x-6 bg-gray-50 px-12 py-6 sm:px-3.5 sm:before:flex-1 top-0 rounded-b-lg w-full right-0 transform -transform-x-1/2 bg-img3 bg-cover bg-center" style={{ backgroundImage: `url(${image_url_1})` }}>
-              <div className="flex flex-wrap items-center place-content-center gap-x-4 gap-y-2">
-                <p className="gap-4 flex items-center flex-col lg:flex-row">
-                  <span className="text-xl">{bonusinfo['start_day'].substring(0, 16).replaceAll('T',' ')} ~ {bonusinfo['end_day'].substring(0, 16).replaceAll('T',' ')}</span>
-                  <strong className="font-semibold text-black text-3xl">Deposit bonus {bonusinfo['bonus_rate']}%</strong>
-                </p>
-                <button type="button" className="flex gap-2 text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 mr-2 mb-2" onClick={() => { navigate('/dashboard/deposit') }}>
+            <div className="fade-alert fixed left-0 top-0 shadow-xl rounded-b-lg z-[9999999] w-[100%] bg-orange-500  py-4 px-10 text-white w-full bg-center" style={{ backgroundImage: `url(${image_url_1})` }}>
+              <div className="flex flex-1 w-4/5 float-left justify-center gap-10 items-center">
+                <div className="flex-col">
+                  <h1 className="flex justify-between gap-4 text-xl font-semibold text-black">
+                    {bonusinfo['note'] ? bonusinfo['note'] : 'NEW BONUS EVENT'}, reacharge to get {bonusinfo['bonus_rate'] ? bonusinfo['bonus_rate'] : 100}% bonus
+                  </h1>
+                  <h3>{bonusinfo['start_day'].substring(0, 16).replaceAll('T', ' ')} ~ {bonusinfo['end_day'].substring(0, 16).replaceAll('T', ' ')}</h3>
+                  <p className="font-thin mt-3">SPECIAL</p>
+                </div>
+                <button type="button" className="h-min-content gap-4 flex text-gray-900 bg-gray-100 hover:bg-tansparent focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-2 py-1 text-center inline-flex items-center dark:focus:ring-gray-500" onClick={() => { navigate('/dashboard/deposit') }}>
                   <img src={Imgsrc} alt="" className="h-6 w-6" />
                   Deposit Now
                 </button>
-                {/* <a href="#" className="flex-none rounded-full bg-white px-3.5 py-1 text-sm font-semibold text-black shadow-sm hover:bg-black hover:text-white">Deposit now <span aria-hidden="true">→</span></a> */}
               </div>
-              <div className="flex flex-1 justify-end">
+              <div className="w-1/5 float-left text-center items-center">
                 <button type="button" className="-m-3 p-3 focus-visible:outline-offset-[-4px]" onClick={handleDismissBanner}>
                   <span className="sr-only">Dismiss</span>
-                  <svg className="h-5 w-5 text-gray-900" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <svg className="h-10 w-10 text-gray-900" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                     <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
                   </svg>
                 </button>
