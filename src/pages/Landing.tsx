@@ -342,7 +342,7 @@ function Landing() {
             <div className="box-shadow bg-white rounded-lg p-4 flex items-center justify-between">
               <div className="font-black">
                 <p className="text-2xl text-gray-500">{t("All Withdrawals")}</p>
-                <h3 className="text-4xl font-bold"> {statisticsInfo['w_amount']}TRX</h3>
+                <h3 className="text-4xl font-bold"> {statisticsInfo['w_amount'] ? statisticsInfo['w_amount'] : 0}TRX</h3>
               </div>
               <svg
                 fill="none"
@@ -362,7 +362,7 @@ function Landing() {
             <div className="box-shadow bg-white rounded-lg p-4 flex items-center justify-between">
               <div className="font-black">
                 <p className="text-2xl text-gray-500">{t("Days Online")}</p>
-                <h3 className="text-4xl font-bold">{statisticsInfo['day_users']}</h3>
+                <h3 className="text-4xl font-bold">{statisticsInfo['day_users'] ? statisticsInfo['day_users'] : 0}</h3>
               </div>
               <svg
                 fill="none"
