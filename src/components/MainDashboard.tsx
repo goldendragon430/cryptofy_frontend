@@ -156,7 +156,7 @@ const MainDashboard: React.FC = () => {
       toast.error("Server Error")
     }
     else {
-      setEarned(response['mining_earning'])
+      setEarned(response['earned'])
       setStakedCount(response['staked'])
     }
   }
@@ -189,9 +189,11 @@ const MainDashboard: React.FC = () => {
     getStakingPlan()
   }
   const startTimer = async () => {
-    var seconds = await getRemainsTime()
+    let seconds = await getRemainsTime()
+      
     const timeout = setInterval(() => {
-      seconds = seconds - 1
+      if(seconds > 0)
+          seconds--
       setTime(seconds)
     }, 1000);
 
@@ -295,7 +297,7 @@ const MainDashboard: React.FC = () => {
             <span className="text-sm font-light text-white">
               TOTAL EARNINGS
             </span>
-            <h1 className="text-lg font-bold text-white">{earned}</h1>
+            <h1 className="text-lg font-bold text-white">{(earned + balance).toFixed(10)}</h1>
           </div>
           <div className="flex items-center justify-center rounded-md bg-[#198ded5a] p-3 text-3xl text-[#0dcaf0]">
             <IoMdWallet />

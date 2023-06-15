@@ -21,6 +21,7 @@ const UserDetails2: React.FC = () => {
     "user_details": {
       "id": 0,
       "ip": "",
+      "email" : '',
       "registered_time": "",
       "last_seen_time": "",
       "wallet": "",
@@ -189,6 +190,10 @@ const UserDetails2: React.FC = () => {
                 <h1>Account details</h1>
               </div>
               <div className="mx-2 my-3 rounded-lg border border-gray-200">
+              <div className="flex items-center justify-between border-b border-b-gray-200 p-1 px-2">
+                  <h1 className="font-semibold">Email Address</h1>
+                  <p className="text-gray-400">{data?.user_details?.email}</p>
+                </div>
                 <div className="flex items-center justify-between border-b border-b-gray-200 p-1 px-2">
                   <h1 className="font-semibold">Unique Id</h1>
                   <p className="text-gray-400">{data?.user_details?.id}</p>

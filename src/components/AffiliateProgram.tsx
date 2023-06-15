@@ -32,14 +32,7 @@ const AffiliteProgram: React.FC = () => {
     }
     else{
       const result = response['data']
-      var total = 0
-      var data = [0,0,0,0]
-      for(var i = 0; i < result.length ;i ++ ){
-        data[i] = result[i]['count']  
-        total += result[i]['total']
-      }
-      data[3] = total
-      setCommissions(data)
+      setCommissions(result)
     }
   }
   const getAffiliateTransaction = async()=>{
