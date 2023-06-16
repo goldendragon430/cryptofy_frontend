@@ -31,20 +31,28 @@ const PaymentGateway: React.FC = () => {
   }
 }  
 const upgrade = async() =>{
-  const response = await doPost('admin/set_gateway', {
-    token: token,
-    pk:publicKey,
-    sk:privateKey,
-    min_d:minDeposit,
-    min_w:minWithdrawl,
-    max_w:maxWithdrawl
-  })
-  if (response.error || response.result == 'failed') {
-    toast.error('Server Error')
+
+  if(window.confirm("You Could be lost All balance. Did you confirm new address?")){
+    const response = await doPost('admin/set_gateway', {
+      token: token,
+      pk:publicKey,
+      sk:privateKey,
+      min_d:minDeposit,
+      min_w:minWithdrawl,
+      max_w:maxWithdrawl
+    })
+    if (response.error || response.result == 'failed') {
+      toast.error('Server Error')
+    }
+    else {
+      toast.success('Success')
+    }
+  
   }
-  else {
-    toast.success('Success')
+  else{
+    return
   }
+
 }
   useEffect(() => {
     if (token) {

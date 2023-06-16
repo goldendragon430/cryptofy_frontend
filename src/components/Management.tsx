@@ -8,7 +8,7 @@ const Management: React.FC = () => {
   const token = user?.token
   const [mind,setMind] = useState(5)
   const [minr,setMinr] = useState(7.5)
-  const [dailyEarning, setDailyEarning] = useState(0.5)
+  const [dailyEarning, setDailyEarning] = useState(0.50)
   const [regisetraionBonus, setRegisterationBonus] = useState(180)
 
   const [lev1,setLev1] = useState(1)
@@ -140,7 +140,7 @@ const Management: React.FC = () => {
 
               <p className="mb-1 text-white">Deposit rate</p>
               <input
-                type="text"
+                type="number"
                 value = {mind}
                 onChange = {e=>setMind(parseFloat(e.target.value))}
                 className="mb-4 w-[95%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
@@ -149,7 +149,7 @@ const Management: React.FC = () => {
 
               <p className="mb-1 text-white">Min investment amount</p>
               <input
-                type="text"
+                type="number"
                 value = {minr}
                 onChange = {e=>setMinr(parseFloat(e.target.value))}
                 className="w-[95%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
@@ -175,14 +175,14 @@ const Management: React.FC = () => {
 
               <p className="mb-1 text-white">Time(mins) </p>
               <input
-                type="text"
+                type="number"
                 value = {depositTime}
                 onChange = {e=>setDepositTime(parseFloat(e.target.value))}
                 className="mb-4 w-[95%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
               />
               <p className="mb-1 text-white">Bonus(%)</p>
               <input
-                type="text"
+                type="number"
                 value = {depositBonus}
                 onChange = {e=>setDepositBonus(parseFloat(e.target.value))}
                 className="mb-2 w-[95%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
@@ -210,14 +210,14 @@ const Management: React.FC = () => {
 
               <p className="mb-1 text-white">Daily Earning per GH/s </p>
               <input
-                type="text"
+                type="number"
                 value = {dailyEarning}
                 onChange = {e=>setDailyEarning(parseFloat(e.target.value))}
                 className="mb-4 w-[95%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
               />
               <p className="mb-1 text-white">Registration Bonus(Gh/s)</p>
               <input
-                type="text"
+                type="number"
                 value = {regisetraionBonus}
                 onChange = {e=>setRegisterationBonus(parseFloat(e.target.value))}
                 className="mb-2 w-[95%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
@@ -246,7 +246,7 @@ const Management: React.FC = () => {
             <div className=" lg:w-[100%] w-full items-center justify-between gap-20 self-start pl-1 lg:pl-5 text-lg">
               <p className="font-medium text-white">Amount(TRX):</p>
               <input
-                type="text"
+                type="number"
                 value = {amount1}
                 onChange = {e=>setAmount1(parseFloat(e.target.value))}
                 className=" w-[90%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
@@ -255,7 +255,7 @@ const Management: React.FC = () => {
             <div className=" lg:w-[100%] w-full items-center justify-between gap-20 self-start pl-1 lg:pl-5 text-lg">
               <p className="font-medium text-white">Period(day):</p>
               <input
-                type="text"
+                type="number"
                 value = {period1}
                 onChange = {e=>setPeriod1(parseFloat(e.target.value))}
                 className=" w-[90%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
@@ -264,7 +264,7 @@ const Management: React.FC = () => {
             <div className=" lg:w-[100%] w-full items-center justify-between gap-20 self-start pl-1 lg:pl-5 text-lg">
               <p className="font-medium text-white">Bonus rate:</p>
               <input
-                type="text"
+                type="number"
                 value = {bonus1}
                 onChange = {e=>setBonus1(parseFloat(e.target.value))}
                 className=" w-[90%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
@@ -288,7 +288,7 @@ const Management: React.FC = () => {
             <div className=" lg:w-[100%] w-full items-center justify-between gap-20 self-start pl-1 lg:pl-5 text-lg">
               <p className="font-medium text-white">Amount(TRX):</p>
               <input
-                type="text"
+                type="number"
                 value = {amount2}
                 onChange = {e=>setAmount2(parseFloat(e.target.value))}
                 className=" w-[90%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
@@ -297,7 +297,7 @@ const Management: React.FC = () => {
             <div className=" lg:w-[100%] w-full items-center justify-between gap-20 self-start pl-1 lg:pl-5 text-lg">
               <p className="font-medium text-white">Period(day):</p>
               <input
-                type="text"
+                type="number"
                 value = {period2}
                 onChange = {e=>setPeriod2(parseFloat(e.target.value))}
                 className=" w-[90%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
@@ -306,7 +306,7 @@ const Management: React.FC = () => {
             <div className=" lg:w-[100%] w-full items-center justify-between gap-20 self-start pl-1 lg:pl-5 text-lg">
               <p className="font-medium text-white">Bonus rate:</p>
               <input
-                type="text"
+                type="number"
                 value = {bonus2}
                 onChange = {e=>setBonus2(parseFloat(e.target.value))}
                 className=" w-[90%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
@@ -330,7 +330,7 @@ const Management: React.FC = () => {
             <div className=" lg:w-[100%] w-full items-center justify-between gap-20 self-start pl-1 lg:pl-5 text-lg">
               <p className="font-medium text-white">Amount(TRX):</p>
               <input
-                type="text"
+                type="number"
                 value = {amount3}
                 onChange = {e=>setAmount3(parseFloat(e.target.value))}
                 className=" w-[90%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
@@ -339,7 +339,7 @@ const Management: React.FC = () => {
             <div className=" lg:w-[100%] w-full items-center justify-between gap-20 self-start pl-1 lg:pl-5 text-lg">
               <p className="font-medium text-white">Period(day):</p>
               <input
-                type="text"
+                type="number"
                 value = {period3}
                 onChange = {e=>setPeriod3(parseFloat(e.target.value))}
                 className=" w-[90%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"
@@ -348,7 +348,7 @@ const Management: React.FC = () => {
             <div className=" lg:w-[100%] w-full items-center justify-between gap-20 self-start pl-1 lg:pl-5 text-lg">
               <p className="font-medium text-white">Bonus rate:</p>
               <input
-                type="text"
+                type="number"
                 value = {bonus3}
                 onChange = {e=>setBonus3(parseFloat(e.target.value))}
                 className=" w-[90%] rounded-md border-none bg-slate-500 bg-opacity-40 p-2 text-white outline-none text-white"

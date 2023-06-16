@@ -11,7 +11,7 @@ const EventBanner: React.FC = () => {
   const [title, setTitle] = useState('Celebrate World Television Day')
   const [rate, setRate] = useState(300)
   const [time, setTime] = useState(2)
-  const [isOn, setIsOn] = useState(false);
+
 
   const url = BACKEND_URL + 'get_file?name=banner_2.png' ;
   const [image, setImage] = useState(null)
@@ -22,7 +22,8 @@ const EventBanner: React.FC = () => {
   const [curDate, setCurDate] = useState('')
   const [endDate, setEndDate] = useState('')
   const [bannerVisible, setbannerVisible] = useState(true);
-
+  const [state,setState] = useState(false)
+  const [event,setEvent] = useState(false)
   useEffect(() => {
     // setEndDate(getEndDate(time))
     setImage(url);
@@ -40,9 +41,56 @@ const EventBanner: React.FC = () => {
     }
   }, [time])
 
-  const handleToggle = () => {
-    const newIsOn = !isOn;
-    setIsOn(newIsOn);
+const getEventInfo = async()=>{
+  const response = await doPost('mining/get_current_event', {
+    token: token
+  })
+  if (response.error || response.result == 'failed') {
+     toast.error('Error',{
+      position: toast.POSITION.BOTTOM_RIGHT
+    })
+  }
+  else {
+    if(response.data){
+      setEvent(true)
+      setTitle(response?.data?.note)
+      setTime(response?.data?.time)
+      setRate(response?.data?.bonus_rate)
+      setState(response?.data?.status==1?true:false)
+    }
+    else{
+      setEvent(false)
+    }
+  }
+
+}
+  useEffect(()=>{
+    getEventInfo()
+  },[token])
+
+  const handleToggle = async() => {
+    if(event){
+      setState(!state)
+      const response = await doPost('mining/update_event_state', {
+        token: token,
+        status : !state
+         
+      })
+      if(response.result =='success'){
+        toast.success('Success',{
+          position: toast.POSITION.BOTTOM_RIGHT
+        })
+      }
+      else{
+        toast.error("Failed",{
+          position: toast.POSITION.BOTTOM_RIGHT
+        })
+      }
+    }else{
+      toast.error("Event doesn't exist now!",{
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
+    }
   };
 
   const handleUploadImage = e => {
@@ -65,11 +113,7 @@ const EventBanner: React.FC = () => {
     const formData = new FormData();
     formData.append("files", imagedata);
     const url = BACKEND_URL + 'upload_file?name=banner_2.png';
-    if (imagedata)
-      await fetch(url, {
-        method: "POST",
-        body: formData
-      })
+
 
     const response = await doPost('admin/create_event', {
       token: token,
@@ -78,10 +122,23 @@ const EventBanner: React.FC = () => {
       time: time
     })
     if (response.error || response.result == 'failed') {
-      toast.error('Event is created already.')
+      toast.error('Event is created already.',{
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
     }
     else {
-      toast.success('Started!')
+      
+      if (imagedata)
+      await fetch(url, {
+        method: "POST",
+        body: formData
+      })
+
+      toast.success('Started!', {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
+      setEvent(true)
+      setState(true)
     }
 
   }
@@ -160,13 +217,13 @@ const EventBanner: React.FC = () => {
                           type="checkbox"
                           name="toggle"
                           id="toggle"
-                          className={`toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer ${isOn ? 'ml-[16px]' : ''}`}
-                          checked={isOn}
+                          className={`toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer ${state ? 'ml-[16px]' : ''}`}
+                          checked={state}
                           onChange={handleToggle}
                         />
                         <label
                           htmlFor="toggle"
-                          className={`toggle-label block overflow-hidden h-6 rounded-full ${isOn ? 'bg-blue-500' : 'bg-gray-500'} cursor-pointer`}
+                          className={`toggle-label block overflow-hidden h-6 rounded-full ${state ? 'bg-blue-500' : 'bg-gray-500'} cursor-pointer`}
                         ></label>
                       </div>
                     </div>
